@@ -7,6 +7,7 @@ import {
 import { landing_actions } from "../state/landing_control";
 import { publishLandingTelemetry } from "../state/landing_telemetry";
 import type { LanderStats } from "../state/rocket_config";
+import { advanceSimulationTime } from "../state/simulation_clock";
 import { drawEarth } from "./earth_renderer";
 import { createStarfield, drawStarfield } from "./starfield";
 
@@ -39,6 +40,7 @@ export class LunarLandingWorld implements GameWorld {
 	}
 
 	update(dt_seconds: number): void {
+		advanceSimulationTime(dt_seconds);
 		this.elapsed_seconds += dt_seconds;
 
 		if (this.input.consumePress("KeyR")) {

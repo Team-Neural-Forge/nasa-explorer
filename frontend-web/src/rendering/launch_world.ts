@@ -7,6 +7,7 @@ import {
 import { launch_actions } from "../state/launch_control";
 import { publishLaunchTelemetry } from "../state/launch_telemetry";
 import type { RocketStats } from "../state/rocket_config";
+import { advanceSimulationTime } from "../state/simulation_clock";
 import { createStarfield, drawStarfield } from "./starfield";
 
 const SIMULATION_SPEED = 4;
@@ -58,6 +59,7 @@ export class LaunchWorld implements GameWorld {
 	}
 
 	update(dt_seconds: number): void {
+		advanceSimulationTime(dt_seconds * SIMULATION_SPEED);
 		this.time_seconds += dt_seconds;
 
 		if (this.input.consumePress("Enter")) {

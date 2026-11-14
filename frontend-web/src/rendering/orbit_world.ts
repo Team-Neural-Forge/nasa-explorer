@@ -7,6 +7,7 @@ import {
 } from "../engine/orbit_simulation";
 import { orbit_actions } from "../state/orbit_control";
 import { publishOrbitTelemetry } from "../state/orbit_telemetry";
+import { advanceSimulationTime } from "../state/simulation_clock";
 import { drawEarth } from "./earth_renderer";
 import { createStarfield, drawStarfield } from "./starfield";
 
@@ -61,6 +62,7 @@ export class OrbitWorld implements GameWorld {
 			thrust_y -= 1;
 		}
 
+		advanceSimulationTime(dt_seconds * this.simulation.warp);
 		this.simulation.update(dt_seconds, { x: thrust_x, y: thrust_y });
 
 		this.telemetry_timer += dt_seconds;
