@@ -51,6 +51,11 @@ def check_transfer_legs() -> None:
     for leg in legs or []:
         for key in ("id", "from", "to", "source_url"):
             require(key in leg, f"transfer_legs.json: leg missing {key}")
+        if leg.get("approximate"):
+            require(
+                "method" in leg,
+                f"transfer_legs.json: {leg.get('id', '?')} approximate leg missing method",
+            )
 
 
 def check_quizzes() -> None:
