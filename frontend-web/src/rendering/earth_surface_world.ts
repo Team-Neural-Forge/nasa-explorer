@@ -5,12 +5,14 @@ import {
 	publishEarthLocation,
 	publishEarthWarning,
 } from "../state/earth_interaction";
+import { publishEarthStoreIndicator } from "../state/earth_navigation";
 import {
 	ASTRONAUT_HEIGHT_M,
 	ASTRONAUT_MASS_KG,
 	ASTRONAUT_START_X_M,
 	ASTRONAUT_WIDTH_M,
 	clamp_to_world,
+	compute_store_indicator,
 	GRAVITY_M_S2,
 	GROUND_MAX_M,
 	GROUND_MIN_M,
@@ -18,6 +20,7 @@ import {
 	move_toward,
 	ROCKET_INTERACTION_M,
 	ROCKET_X_M,
+	type RocketDimensions,
 	STORE_HEIGHT_M,
 	STORE_INTERACTION_M,
 	STORE_WIDTH_M,
@@ -26,19 +29,16 @@ import {
 	WALK_SPEED_M_S,
 } from "../state/earth_scene";
 import { advanceSimulationTime } from "../state/simulation_clock";
+import { drawRocketStack } from "./rocket_renderer";
 
 const WARNING_DURATION_S = 2.5;
 const CAMERA_FOLLOW_RATE = 6;
-
-export type RocketDimensions = {
-	height_m: number;
-	diameter_m: number;
-};
 
 export class EarthSurfaceWorld implements GameWorld {
 	private readonly input: KeyboardState;
 	private readonly jump_velocity_m_s = JUMP_IMPULSE_N_S / ASTRONAUT_MASS_KG;
 	private playing = false;
+	private inside_rocket = false;
 	private x_m = ASTRONAUT_START_X_M;
 	private y_m = 0;
 	private vx_m_s = 0;
@@ -61,6 +61,10 @@ export class EarthSurfaceWorld implements GameWorld {
 		this.playing = playing;
 	}
 
+	setInsideRocket(inside: boolean): void {
+		this.inside_rocket = inside;
+	}
+
 	set_rocket_dimensions(height_m: number, diameter_m: number): void {
 		this.rocket_height_m = Math.max(1, height_m);
 		this.rocket_diameter_m = Math.max(0.5, diameter_m);
@@ -72,18 +76,19 @@ export class EarthSurfaceWorld implements GameWorld {
 			advanceSimulationTime(dt_seconds);
 		}
 
-		const direction = this.playing
-			? Number(
-					this.input.isDown("ArrowRight") ||
-						this.input.isDown("KeyD") ||
-						earth_input.right,
-				) -
-				Number(
-					this.input.isDown("ArrowLeft") ||
-						this.input.isDown("KeyA") ||
-						earth_input.left,
-				)
-			: 0;
+		const direction =
+			this.playing && !this.inside_rocket
+				? Number(
+						this.input.isDown("ArrowRight") ||
+							this.input.isDown("KeyD") ||
+							earth_input.right,
+					) -
+					Number(
+						this.input.isDown("ArrowLeft") ||
+							this.input.isDown("KeyA") ||
+							earth_input.left,
+					)
+				: 0;
 		const target_speed = direction * WALK_SPEED_M_S;
 		const acceleration =
 			WALK_ACCELERATION_M_S2 * (direction === 0 ? 1.5 : 1) * dt;
@@ -91,6 +96,7 @@ export class EarthSurfaceWorld implements GameWorld {
 
 		const jumping =
 			this.playing &&
+			!this.inside_rocket &&
 			(this.input.isDown("Space") ||
 				this.input.isDown("KeyW") ||
 				this.input.isDown("ArrowUp") ||
@@ -121,7 +127,11 @@ export class EarthSurfaceWorld implements GameWorld {
 		}
 		publishEarthWarning(this.warning_timer_s > 0);
 
-		const target_camera = this.playing ? this.x_m : ROCKET_X_M - 4;
+		const target_camera = this.inside_rocket
+			? ROCKET_X_M
+			: this.playing
+				? this.x_m
+				: ROCKET_X_M - 4;
 		this.camera_x_m +=
 			(target_camera - this.camera_x_m) * Math.min(1, dt * CAMERA_FOLLOW_RATE);
 
@@ -149,10 +159,26 @@ export class EarthSurfaceWorld implements GameWorld {
 			1,
 			Math.min((height * 0.72) / this.rocket_height_m, width / 35),
 		);
-		const camera_x = this.playing ? this.camera_x_m : ROCKET_X_M - 4;
+		const camera_x = this.inside_rocket
+			? ROCKET_X_M
+			: this.playing
+				? this.camera_x_m
+				: ROCKET_X_M - 4;
 		const origin_x =
-			width * (this.playing ? 0.5 : 0.57) - camera_x * pixels_per_meter;
+			width * (this.playing || this.inside_rocket ? 0.5 : 0.57) -
+			camera_x * pixels_per_meter;
 		const ground_y = height * 0.78;
+		const store_indicator = compute_store_indicator(
+			this.x_m,
+			STORE_X_M,
+			camera_x,
+			width / pixels_per_meter,
+		);
+		publishEarthStoreIndicator(
+			this.inside_rocket
+				? { ...store_indicator, visible: false }
+				: store_indicator,
+		);
 
 		this.drawSky(ctx, width, height);
 
@@ -163,7 +189,9 @@ export class EarthSurfaceWorld implements GameWorld {
 		this.drawLaunchPadAndTower(ctx);
 		this.drawRocket(ctx);
 		this.drawStore(ctx);
-		this.drawAstronaut(ctx);
+		if (!this.inside_rocket) {
+			this.drawAstronaut(ctx);
+		}
 		ctx.restore();
 	}
 
@@ -227,59 +255,10 @@ export class EarthSurfaceWorld implements GameWorld {
 	}
 
 	private drawRocket(ctx: CanvasRenderingContext2D): void {
-		const total_height = this.rocket_height_m;
-		const radius = this.rocket_diameter_m / 2;
-		const core_height = total_height * 0.68;
-		const upper_height = total_height * 0.18;
-		const payload_height = total_height - core_height - upper_height;
-
-		ctx.fillStyle = "#39434a";
-		ctx.fillRect(-radius * 0.75, -1.2, radius * 1.5, 1.2);
-
-		ctx.fillStyle = "#dce5e8";
-		ctx.fillRect(-radius, 0, radius * 2, core_height);
-		ctx.fillStyle = "#aebdc7";
-		ctx.fillRect(-radius, core_height * 0.5, radius * 2, total_height * 0.012);
-		ctx.fillRect(-radius, core_height * 0.84, radius * 2, total_height * 0.008);
-
-		ctx.fillStyle = "#c4d0d9";
-		ctx.fillRect(-radius * 0.88, core_height, radius * 1.76, upper_height);
-
-		const payload_radius = Math.max(radius * 0.95, 2.1);
-		const payload_bottom = core_height + upper_height;
-		const service_height = payload_height * 0.45;
-		ctx.fillStyle = "#edf3f4";
-		ctx.fillRect(
-			-payload_radius,
-			payload_bottom,
-			payload_radius * 2,
-			service_height,
-		);
-		ctx.beginPath();
-		ctx.moveTo(-payload_radius, payload_bottom + service_height);
-		ctx.lineTo(payload_radius, payload_bottom + service_height);
-		ctx.lineTo(payload_radius * 0.55, total_height);
-		ctx.lineTo(-payload_radius * 0.55, total_height);
-		ctx.closePath();
-		ctx.fill();
-
-		ctx.fillStyle = "#324859";
-		ctx.beginPath();
-		ctx.arc(
-			0,
-			core_height * 0.55,
-			Math.max(0.6, radius * 0.28),
-			0,
-			Math.PI * 2,
-		);
-		ctx.fill();
-		ctx.fillStyle = "#c74b45";
-		ctx.fillRect(
-			-radius * 0.9,
-			core_height * 0.15,
-			radius * 0.35,
-			total_height * 0.02,
-		);
+		drawRocketStack(ctx, {
+			height_m: this.rocket_height_m,
+			diameter_m: this.rocket_diameter_m,
+		});
 	}
 
 	private drawStore(ctx: CanvasRenderingContext2D): void {

@@ -3,11 +3,14 @@ import type { KeyboardState } from "../engine/input";
 import {
 	LaunchSimulation,
 	type LaunchSnapshot,
+	type LaunchStatus,
 } from "../engine/launch_simulation";
+import type { RocketDimensions } from "../state/earth_scene";
 import { launch_actions } from "../state/launch_control";
 import { publishLaunchTelemetry } from "../state/launch_telemetry";
 import type { RocketStats } from "../state/rocket_config";
 import { advanceSimulationTime } from "../state/simulation_clock";
+import { drawRocketStack } from "./rocket_renderer";
 import { createStarfield, drawStarfield } from "./starfield";
 
 const SIMULATION_SPEED = 4;
@@ -39,13 +42,21 @@ function mixColor(from: string, to: string, t: number): string {
 export class LaunchWorld implements GameWorld {
 	private readonly simulation: LaunchSimulation;
 	private readonly input: KeyboardState;
+	private readonly rocket_height_m: number;
+	private readonly rocket_diameter_m: number;
 	private readonly stars = createStarfield(190);
 	private time_seconds = 0;
 	private telemetry_timer = 0;
 
-	constructor(stats: RocketStats, input: KeyboardState) {
+	constructor(
+		stats: RocketStats,
+		input: KeyboardState,
+		rocket: RocketDimensions,
+	) {
 		this.simulation = new LaunchSimulation(stats);
 		this.input = input;
+		this.rocket_height_m = Math.max(1, rocket.height_m);
+		this.rocket_diameter_m = Math.max(0.5, rocket.diameter_m);
 		launch_actions.current = {
 			ignite: () => this.simulation.ignite(),
 			retry: () => this.simulation.retry(),
@@ -58,8 +69,14 @@ export class LaunchWorld implements GameWorld {
 		this.publish();
 	}
 
+	get launch_status(): LaunchStatus {
+		return this.simulation.status_value;
+	}
+
 	update(dt_seconds: number): void {
-		advanceSimulationTime(dt_seconds * SIMULATION_SPEED);
+		if (this.simulation.status_value !== "prelaunch") {
+			advanceSimulationTime(dt_seconds * SIMULATION_SPEED);
+		}
 		this.time_seconds += dt_seconds;
 
 		if (this.input.consumePress("Enter")) {
@@ -205,7 +222,7 @@ export class LaunchWorld implements GameWorld {
 		snapshot: LaunchSnapshot,
 	): void {
 		const center_x = width * 0.5;
-		const center_y = height * 0.6;
+		const center_y = height * 0.78;
 		const guidance = (snapshot.guidance_angle_deg * Math.PI) / 180;
 
 		ctx.save();
@@ -235,61 +252,26 @@ export class LaunchWorld implements GameWorld {
 		height: number,
 		snapshot: LaunchSnapshot,
 	): void {
-		const center_x = width * 0.5;
-		const center_y = height * 0.6;
-		const scale = Math.max(1, Math.min(width, height) / 620);
+		const base_x = width * 0.5;
+		const base_y = height * 0.86;
+		const pixels_per_meter = Math.max(
+			1,
+			Math.min(width, height) / (this.rocket_height_m * 6.5),
+		);
 
 		ctx.save();
-		ctx.translate(center_x, center_y);
+		ctx.translate(base_x, base_y);
 		ctx.rotate((snapshot.attitude_deg * Math.PI) / 180);
-		ctx.scale(scale, scale);
-
-		const burning =
-			snapshot.status === "flying" &&
-			snapshot.throttle > 0 &&
-			snapshot.fuel_fraction > 0;
-		if (burning) {
-			const flame_length = 40 + 70 * snapshot.throttle;
-			const flame = ctx.createLinearGradient(0, 40, 0, 40 + flame_length);
-			flame.addColorStop(0, "rgba(255, 236, 170, 0.95)");
-			flame.addColorStop(0.45, "rgba(255, 160, 60, 0.8)");
-			flame.addColorStop(1, "rgba(255, 90, 30, 0)");
-			ctx.fillStyle = flame;
-			ctx.beginPath();
-			ctx.moveTo(-9, 40);
-			ctx.quadraticCurveTo(0, 40 + flame_length, 9, 40);
-			ctx.closePath();
-			ctx.fill();
-		}
-
-		ctx.fillStyle = "#dbe9fb";
-		ctx.fillRect(-9, -52, 18, 92);
-		ctx.beginPath();
-		ctx.moveTo(-9, -52);
-		ctx.lineTo(0, -82);
-		ctx.lineTo(9, -52);
-		ctx.closePath();
-		ctx.fill();
-
-		ctx.fillStyle = "#9fc6ee";
-		ctx.beginPath();
-		ctx.moveTo(-9, 40);
-		ctx.lineTo(-20, 58);
-		ctx.lineTo(-9, 52);
-		ctx.closePath();
-		ctx.fill();
-		ctx.beginPath();
-		ctx.moveTo(9, 40);
-		ctx.lineTo(20, 58);
-		ctx.lineTo(9, 52);
-		ctx.closePath();
-		ctx.fill();
-
-		ctx.fillStyle = "rgba(20, 40, 70, 0.9)";
-		ctx.beginPath();
-		ctx.arc(0, -30, 5, 0, Math.PI * 2);
-		ctx.fill();
-
+		ctx.scale(pixels_per_meter, -pixels_per_meter);
+		drawRocketStack(ctx, {
+			height_m: this.rocket_height_m,
+			diameter_m: this.rocket_diameter_m,
+			burning:
+				snapshot.status === "flying" &&
+				snapshot.throttle > 0 &&
+				snapshot.fuel_fraction > 0,
+			throttle: snapshot.throttle,
+		});
 		ctx.restore();
 	}
 }

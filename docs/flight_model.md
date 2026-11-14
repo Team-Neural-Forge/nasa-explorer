@@ -117,6 +117,8 @@ Space is mostly empty, so the game changes **what it shows** while keeping coord
 
 The transition between views is a **camera/frame change**, not a teleport. Compressed views use nonlinear scaling for display only; physics keeps SI coordinates.
 
+The post-start game is a single persistent sandbox. Phase changes crossfade inside the same canvas; the same rocket geometry is drawn on the pad and during ascent. The Earth scene publishes a store direction and distance for the HUD arrow.
+
 ## Rocket flight model
 
 - **Thrust:** `F = throttle * thrust_max(stage)`; fuel burns at `mdot = F / (Isp * g0)`.

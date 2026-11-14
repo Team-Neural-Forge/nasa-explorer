@@ -1,98 +1,40 @@
 import { useEffect, useRef } from "react";
 import { GameLoop } from "../engine/game_loop";
-import type { GameWorld } from "../engine/game_world";
 import { KeyboardState } from "../engine/input";
-import { CruiseWorld } from "../rendering/cruise_world";
-import { EarthSurfaceWorld } from "../rendering/earth_surface_world";
-import { LaunchWorld } from "../rendering/launch_world";
-import { LunarLandingWorld } from "../rendering/lunar_landing_world";
-import { OrbitWorld } from "../rendering/orbit_world";
-import { cruise_actions } from "../state/cruise_control";
-import { STARTING_BUDGET_USD_M } from "../state/economy";
+import { SandboxWorld } from "../rendering/sandbox_world";
 import { useGameState } from "../state/game_state";
-import { landing_actions } from "../state/landing_control";
-import { launch_actions } from "../state/launch_control";
-import { orbit_actions } from "../state/orbit_control";
-import {
-	computeLanderStats,
-	computeRocketStats,
-	getLaunchVehicleOption,
-} from "../state/rocket_config";
+import { getLaunchVehicleOption } from "../state/rocket_config";
 
 export function GameCanvas() {
-	const { scene, selection, orbit_state } = useGameState();
+	const { menu_open, selection } = useGameState();
 	const rocket_option = getLaunchVehicleOption(selection.launch_vehicle_id);
 	const rocket_height_m = rocket_option?.height_m ?? 50;
 	const rocket_diameter_m = rocket_option?.diameter_m ?? 3.7;
 	const canvas_ref = useRef<HTMLCanvasElement | null>(null);
 	const input_ref = useRef<KeyboardState | null>(null);
-	const live_world_ref = useRef<EarthSurfaceWorld | null>(null);
-	const active_world_ref = useRef<GameWorld | null>(null);
+	const sandbox_ref = useRef<SandboxWorld | null>(null);
 
 	if (!input_ref.current) {
 		input_ref.current = new KeyboardState();
 	}
-	if (!live_world_ref.current) {
-		if (input_ref.current)
-			live_world_ref.current = new EarthSurfaceWorld(input_ref.current, {
-				height_m: rocket_height_m,
-				diameter_m: rocket_diameter_m,
-			});
-	}
-	if (!active_world_ref.current) {
-		active_world_ref.current = live_world_ref.current;
+	if (!sandbox_ref.current && input_ref.current) {
+		sandbox_ref.current = new SandboxWorld(input_ref.current, selection, {
+			height_m: rocket_height_m,
+			diameter_m: rocket_diameter_m,
+		});
 	}
 
 	useEffect(() => {
-		live_world_ref.current?.setPlaying(scene === "earth");
-		launch_actions.current = null;
-		orbit_actions.current = null;
-		cruise_actions.current = null;
-		landing_actions.current = null;
-
-		if (scene === "launch" && input_ref.current) {
-			const stats = computeRocketStats(selection, STARTING_BUDGET_USD_M);
-			active_world_ref.current = new LaunchWorld(stats, input_ref.current);
-			return () => {
-				launch_actions.current = null;
-			};
-		}
-
-		if (scene === "orbit" && input_ref.current) {
-			active_world_ref.current = new OrbitWorld(orbit_state, input_ref.current);
-			return () => {
-				orbit_actions.current = null;
-			};
-		}
-
-		if (scene === "cruise" && input_ref.current) {
-			active_world_ref.current = new CruiseWorld(input_ref.current);
-			return () => {
-				cruise_actions.current = null;
-			};
-		}
-
-		if (scene === "landing" && input_ref.current) {
-			const lander_stats = computeLanderStats(selection);
-			active_world_ref.current = new LunarLandingWorld(
-				lander_stats,
-				input_ref.current,
-			);
-			return () => {
-				landing_actions.current = null;
-			};
-		}
-
-		active_world_ref.current = live_world_ref.current;
-		return undefined;
-	}, [scene, selection, orbit_state]);
+		sandbox_ref.current?.setPaused(menu_open);
+	}, [menu_open]);
 
 	useEffect(() => {
-		live_world_ref.current?.set_rocket_dimensions(
+		sandbox_ref.current?.set_selection(selection);
+		sandbox_ref.current?.set_rocket_dimensions(
 			rocket_height_m,
 			rocket_diameter_m,
 		);
-	}, [rocket_height_m, rocket_diameter_m]);
+	}, [selection, rocket_height_m, rocket_diameter_m]);
 
 	useEffect(() => {
 		const canvas = canvas_ref.current;
@@ -124,10 +66,10 @@ export function GameCanvas() {
 
 		const loop = new GameLoop({
 			update: (dt_seconds) => {
-				active_world_ref.current?.update(dt_seconds);
+				sandbox_ref.current?.update(dt_seconds);
 			},
 			render: () => {
-				const world = active_world_ref.current;
+				const world = sandbox_ref.current;
 				if (!world) {
 					return;
 				}

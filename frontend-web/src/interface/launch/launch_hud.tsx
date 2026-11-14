@@ -6,6 +6,7 @@ import {
 	getLaunchTelemetry,
 	subscribeLaunchTelemetry,
 } from "../../state/launch_telemetry";
+import { sandbox_actions } from "../../state/sandbox_actions";
 
 const STATUS_LABELS: Record<LaunchStatus, string> = {
 	prelaunch: "Ready",
@@ -37,7 +38,7 @@ export function LaunchHud() {
 		getLaunchTelemetry,
 		getLaunchTelemetry,
 	);
-	const { beginOrbit, returnToAssembly, returnToMenu } = useGameState();
+	const { openMenu } = useGameState();
 	const status = telemetry.status;
 	const is_prelaunch = status === "prelaunch";
 	const is_terminal = status === "orbit" || status === "crashed";
@@ -166,7 +167,7 @@ export function LaunchHud() {
 						type="button"
 						className="launch-button launch-button-primary"
 						onClick={() =>
-							beginOrbit({
+							sandbox_actions.current?.continue_to_orbit({
 								altitude_m: telemetry.altitude_m,
 								speed_m_s: telemetry.speed_m_s,
 							})
@@ -184,14 +185,23 @@ export function LaunchHud() {
 						Retry launch
 					</button>
 				)}
+				{is_prelaunch ? (
+					<button
+						type="button"
+						className="launch-button"
+						onClick={() => sandbox_actions.current?.exit_rocket()}
+					>
+						Exit rocket
+					</button>
+				) : null}
 				<button
 					type="button"
 					className="launch-button"
-					onClick={returnToAssembly}
+					onClick={() => sandbox_actions.current?.return_to_earth()}
 				>
 					Back to Earth
 				</button>
-				<button type="button" className="assembly-back" onClick={returnToMenu}>
+				<button type="button" className="assembly-back" onClick={openMenu}>
 					Return to menu
 				</button>
 			</div>

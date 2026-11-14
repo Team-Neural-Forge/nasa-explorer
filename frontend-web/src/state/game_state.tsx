@@ -7,8 +7,6 @@ import {
 	useRef,
 	useState,
 } from "react";
-import type { OrbitInsertion } from "../engine/orbit_simulation";
-import { canTransition, type SceneId } from "../engine/scene_manager";
 import {
 	DEFAULT_SELECTION,
 	type InstrumentId,
@@ -19,21 +17,13 @@ import {
 import { resetSimulationTime } from "./simulation_clock";
 
 type GameStateValue = {
-	scene: SceneId;
+	menu_open: boolean;
+	started: boolean;
 	mission_id: number;
-	restartMission: () => void;
 	selection: RocketSelection;
-	orbit_state: OrbitInsertion | null;
-	beginMission: () => void;
-	returnToMenu: () => void;
-	returnToAssembly: () => void;
-	beginLaunch: () => void;
-	beginOrbit: (state: OrbitInsertion) => void;
-	beginCruise: () => void;
-	beginLanding: () => void;
-	returnToOrbit: () => void;
-	returnToCruise: () => void;
-	returnToLaunch: () => void;
+	startOrResume: () => void;
+	openMenu: () => void;
+	restartMission: () => void;
 	setLaunchVehicle: (id: LaunchVehicleId) => void;
 	setSpacecraft: (id: SpacecraftId) => void;
 	toggleInstrument: (id: InstrumentId) => void;
@@ -43,83 +33,33 @@ type GameStateValue = {
 const GameStateContext = createContext<GameStateValue | null>(null);
 
 export function GameStateProvider({ children }: { children: ReactNode }) {
-	const [scene, setScene] = useState<SceneId>("menu");
+	const [menu_open, set_menu_open] = useState(true);
+	const [started, set_started] = useState(false);
 	const [mission_id, set_mission_id] = useState(0);
 	const started_ref = useRef(false);
 	const [selection, set_selection] =
 		useState<RocketSelection>(DEFAULT_SELECTION);
-	const [orbit_state, set_orbit_state] = useState<OrbitInsertion | null>(null);
 
-	const beginMission = useCallback(() => {
+	const startOrResume = useCallback(() => {
 		if (!started_ref.current) {
 			resetSimulationTime();
 			started_ref.current = true;
+			set_started(true);
 		}
-		setScene((current) =>
-			canTransition(current, "earth") ? "earth" : current,
-		);
+		set_menu_open(false);
+	}, []);
+
+	const openMenu = useCallback(() => {
+		set_menu_open(true);
 	}, []);
 
 	const restartMission = useCallback(() => {
 		resetSimulationTime();
 		started_ref.current = true;
+		set_started(true);
 		set_selection(DEFAULT_SELECTION);
-		set_orbit_state(null);
 		set_mission_id((current) => current + 1);
-		setScene("earth");
-	}, []);
-
-	const returnToMenu = useCallback(() => {
-		setScene((current) => (canTransition(current, "menu") ? "menu" : current));
-	}, []);
-
-	const returnToAssembly = useCallback(() => {
-		setScene((current) =>
-			canTransition(current, "earth") ? "earth" : current,
-		);
-	}, []);
-
-	const beginLaunch = useCallback(() => {
-		setScene((current) =>
-			canTransition(current, "launch") ? "launch" : current,
-		);
-	}, []);
-
-	const beginOrbit = useCallback((state: OrbitInsertion) => {
-		set_orbit_state(state);
-		setScene((current) =>
-			canTransition(current, "orbit") ? "orbit" : current,
-		);
-	}, []);
-
-	const beginCruise = useCallback(() => {
-		setScene((current) =>
-			canTransition(current, "cruise") ? "cruise" : current,
-		);
-	}, []);
-
-	const beginLanding = useCallback(() => {
-		setScene((current) =>
-			canTransition(current, "landing") ? "landing" : current,
-		);
-	}, []);
-
-	const returnToOrbit = useCallback(() => {
-		setScene((current) =>
-			canTransition(current, "orbit") ? "orbit" : current,
-		);
-	}, []);
-
-	const returnToCruise = useCallback(() => {
-		setScene((current) =>
-			canTransition(current, "cruise") ? "cruise" : current,
-		);
-	}, []);
-
-	const returnToLaunch = useCallback(() => {
-		setScene((current) =>
-			canTransition(current, "launch") ? "launch" : current,
-		);
+		set_menu_open(false);
 	}, []);
 
 	const setLaunchVehicle = useCallback((id: LaunchVehicleId) => {
@@ -153,42 +93,26 @@ export function GameStateProvider({ children }: { children: ReactNode }) {
 
 	const value = useMemo(
 		() => ({
-			scene,
+			menu_open,
+			started,
 			mission_id,
-			restartMission,
 			selection,
-			orbit_state,
-			beginMission,
-			returnToMenu,
-			returnToAssembly,
-			beginLaunch,
-			beginOrbit,
-			beginCruise,
-			beginLanding,
-			returnToOrbit,
-			returnToCruise,
-			returnToLaunch,
+			startOrResume,
+			openMenu,
+			restartMission,
 			setLaunchVehicle,
 			setSpacecraft,
 			toggleInstrument,
 			setDestination,
 		}),
 		[
-			scene,
+			menu_open,
+			started,
 			mission_id,
-			restartMission,
 			selection,
-			orbit_state,
-			beginMission,
-			returnToMenu,
-			returnToAssembly,
-			beginLaunch,
-			beginOrbit,
-			beginCruise,
-			beginLanding,
-			returnToOrbit,
-			returnToCruise,
-			returnToLaunch,
+			startOrResume,
+			openMenu,
+			restartMission,
 			setLaunchVehicle,
 			setSpacecraft,
 			toggleInstrument,

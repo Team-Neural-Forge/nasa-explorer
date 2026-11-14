@@ -6,6 +6,7 @@ import {
 	getOrbitTelemetry,
 	subscribeOrbitTelemetry,
 } from "../../state/orbit_telemetry";
+import { sandbox_actions } from "../../state/sandbox_actions";
 
 function formatAltitude(altitude_m: number): string {
 	if (altitude_m >= 1000) {
@@ -35,7 +36,7 @@ export function OrbitHud() {
 		getOrbitTelemetry,
 		getOrbitTelemetry,
 	);
-	const { beginCruise, returnToLaunch, returnToMenu } = useGameState();
+	const { openMenu } = useGameState();
 	const is_eva = telemetry.mode === "eva";
 	const can_toggle_eva = !is_eva || telemetry.can_reenter;
 
@@ -132,18 +133,18 @@ export function OrbitHud() {
 				<button
 					type="button"
 					className="launch-button launch-button-primary"
-					onClick={beginCruise}
+					onClick={() => sandbox_actions.current?.begin_cruise()}
 				>
 					Set course for the Moon
 				</button>
 				<button
 					type="button"
 					className="launch-button"
-					onClick={returnToLaunch}
+					onClick={() => sandbox_actions.current?.return_to_earth()}
 				>
-					Back to launch
+					Return to Earth
 				</button>
-				<button type="button" className="assembly-back" onClick={returnToMenu}>
+				<button type="button" className="assembly-back" onClick={openMenu}>
 					Return to menu
 				</button>
 			</div>

@@ -24,15 +24,17 @@ The player is a **NASA astronaut**. The astronaut designs and launches a rocket,
 
 The game opens on a **menu that is also the game**. There is no separate menu scene and no full-screen menu background:
 
-- On **desktop**, the menu options sit on the **left** of the screen with **no panel or backdrop** behind them. The world itself — an idle Earth, the launch site, drifting stars — is already running as the background.
+- On **desktop**, the menu options sit on the **left** of the screen with **no panel or backdrop** behind them. The world itself — the Earth launch site, the astronaut, and the rocket on the pad — is already running as the background.
 - Starting the game does **not** load a new scene. It simply retires the menu; the background was the game all along.
 - The transition should feel smooth and continuous, in the spirit of Black Myth: Wukong's intro, rather than a hard cut.
+
+After Start Game the game is a **single persistent sandbox**. There are no page or canvas swaps: the astronaut walks the launch site, enters the same rocket that stands on the pad, and launches it. The launch, orbit, cruise, and landing views are internal modes with contextual HUDs; phase changes are smooth transitions within the same canvas.
 
 **Menu options (current build):**
 
 | Option | Status | Behaviour |
 |---|---|---|
-| Start Game | Implemented | Retires the menu and begins Earth-side rocket assembly. |
+| Start Game | Implemented | Retires the menu and leaves the player on Earth in the same sandbox. |
 | Start Multiplayer | Stub | Shows "coming soon" for this build. |
 | Login | Stub | Shows "coming soon"; guest profile is used locally. |
 | Settings | Implemented (basic) | Audio/video/accessibility placeholders. |
@@ -157,6 +159,8 @@ Three complementary learning devices:
 The full teaching approach, lesson sequence, and content plan are in [`learning_design.md`](learning_design.md).
 
 ## Mission store and economy
+
+While on Earth, a screen-edge arrow points to the Mission Store with the current distance. It flips to the other edge when the store is behind the player and hides once the store is on-screen.
 
 - The player has a **budget** that grows slowly over time.
 - Because the budget grows slowly, the player is **encouraged to explore** while saving for better parts.

@@ -4,7 +4,7 @@ import { useGameState } from "../../state/game_state";
 const COMING_SOON = "Coming soon in a future build.";
 
 export function MenuOverlay() {
-	const { beginMission } = useGameState();
+	const { startOrResume, started } = useGameState();
 	const [notice, set_notice] = useState<string | null>(null);
 
 	return (
@@ -21,9 +21,9 @@ export function MenuOverlay() {
 				<button
 					type="button"
 					className="menu-option menu-option-primary"
-					onClick={beginMission}
+					onClick={startOrResume}
 				>
-					Start Game
+					{started ? "Resume" : "Start Game"}
 				</button>
 				<button
 					type="button"
