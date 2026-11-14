@@ -24,4 +24,4 @@ Follow this order for every change:
 
 1) Merge only when all checks pass: `gh pr merge --merge`
 2) Never merge while checks are failing or pending
-3) After merge: clean up worktree and delete the local/remote branch
+3) After merge: clean up the worktree if needed, but do NOT delete the local or remote branch — keep them for reference
