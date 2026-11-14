@@ -24,6 +24,7 @@
 - [x] Earth-side rocket assembly + budget/economy
 - [x] Launch → ascent → orbital insertion
 - [x] Low Earth orbit + EVA enter/exit
+- [x] Interplanetary cruise (Earth → Moon) with time warp
 - [ ] Moon: approach, landing, surface view
 - [ ] Mars: interplanetary cruise, time warp, landing
 

@@ -81,6 +81,10 @@ Rules:
 
 These are reference targets for the integrator; the actual simulated duration depends on the player's trajectory and launch window.
 
+### Current implementation note
+
+The first cruise build advances along the real Earth→Moon leg (`384,400 km`, `~3 days`) at the average speed implied by its transfer time, with time warp from ×1 to ×100,000. This is a **guided transfer**, not yet a patched-conic integration. The next refinement integrates the cruise under Earth and Moon gravity.
+
 ## Performance
 
 - The integrator should run in a **Web Worker** when warp is high, posting position snapshots to the render thread. The render loop interpolates between snapshots.

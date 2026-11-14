@@ -2,9 +2,11 @@ import { useEffect, useRef } from "react";
 import { GameLoop } from "../engine/game_loop";
 import type { GameWorld } from "../engine/game_world";
 import { KeyboardState } from "../engine/input";
+import { CruiseWorld } from "../rendering/cruise_world";
 import { LaunchWorld } from "../rendering/launch_world";
 import { LiveWorld } from "../rendering/live_world";
 import { OrbitWorld } from "../rendering/orbit_world";
+import { cruise_actions } from "../state/cruise_control";
 import { STARTING_BUDGET_USD_M } from "../state/economy";
 import { useGameState } from "../state/game_state";
 import { launch_actions } from "../state/launch_control";
@@ -31,6 +33,7 @@ export function GameCanvas() {
 	useEffect(() => {
 		launch_actions.current = null;
 		orbit_actions.current = null;
+		cruise_actions.current = null;
 
 		if (scene === "launch" && input_ref.current) {
 			const stats = computeRocketStats(selection, STARTING_BUDGET_USD_M);
@@ -44,6 +47,13 @@ export function GameCanvas() {
 			active_world_ref.current = new OrbitWorld(orbit_state, input_ref.current);
 			return () => {
 				orbit_actions.current = null;
+			};
+		}
+
+		if (scene === "cruise" && input_ref.current) {
+			active_world_ref.current = new CruiseWorld(input_ref.current);
+			return () => {
+				cruise_actions.current = null;
 			};
 		}
 
