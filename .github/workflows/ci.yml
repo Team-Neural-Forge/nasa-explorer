@@ -30,6 +30,8 @@ jobs:
         run: pnpm typecheck
       - name: Navigation model tests
         run: pnpm test:navigation
+      - name: Earth scene tests
+        run: pnpm test:earth
 
   backend:
     name: Backend lint, format, typecheck

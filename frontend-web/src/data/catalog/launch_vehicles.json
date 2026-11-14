@@ -1,6 +1,6 @@
 {
 	"meta": {
-		"description": "Launch vehicles available in the mission store. Specs are real-world references; cost/performance values used for gameplay balancing are approximate.",
+		"description": "Launch vehicles available in the mission store. Specs are real-world references; cost/performance values used for gameplay balancing are approximate. Height and diameter are approximate real-world references used for in-game scale.",
 		"sources": [
 			"https://www.nasa.gov/humans-in-space/space-launch-system/",
 			"https://elvperf.ksc.nasa.gov/"
@@ -12,6 +12,8 @@
 			"id": "sls_block_1",
 			"name": "NASA SLS Block 1",
 			"class": "super heavy",
+			"height_m": 98,
+			"diameter_m": 8.4,
 			"leo_kg": 95000,
 			"tli_kg": 27000,
 			"cost_usd_m": null,
@@ -22,6 +24,8 @@
 			"id": "sls_block_1b",
 			"name": "NASA SLS Block 1B",
 			"class": "super heavy",
+			"height_m": 111,
+			"diameter_m": 8.4,
 			"leo_kg": 105000,
 			"tli_kg": 38000,
 			"cost_usd_m": null,
@@ -32,6 +36,8 @@
 			"id": "medium_lift",
 			"name": "Medium-lift launcher",
 			"class": "medium",
+			"height_m": 50,
+			"diameter_m": 3.7,
 			"leo_kg": 20000,
 			"tli_kg": 6000,
 			"cost_usd_m": null,
@@ -42,6 +48,8 @@
 			"id": "small_lift",
 			"name": "Small-lift launcher / rideshare",
 			"class": "small",
+			"height_m": 30,
+			"diameter_m": 2.5,
 			"leo_kg": 1000,
 			"tli_kg": 200,
 			"cost_usd_m": null,

@@ -13,10 +13,17 @@ import { useGameState } from "../state/game_state";
 import { landing_actions } from "../state/landing_control";
 import { launch_actions } from "../state/launch_control";
 import { orbit_actions } from "../state/orbit_control";
-import { computeLanderStats, computeRocketStats } from "../state/rocket_config";
+import {
+	computeLanderStats,
+	computeRocketStats,
+	getLaunchVehicleOption,
+} from "../state/rocket_config";
 
 export function GameCanvas() {
 	const { scene, selection, orbit_state } = useGameState();
+	const rocket_option = getLaunchVehicleOption(selection.launch_vehicle_id);
+	const rocket_height_m = rocket_option?.height_m ?? 50;
+	const rocket_diameter_m = rocket_option?.diameter_m ?? 3.7;
 	const canvas_ref = useRef<HTMLCanvasElement | null>(null);
 	const input_ref = useRef<KeyboardState | null>(null);
 	const live_world_ref = useRef<EarthSurfaceWorld | null>(null);
@@ -27,7 +34,10 @@ export function GameCanvas() {
 	}
 	if (!live_world_ref.current) {
 		if (input_ref.current)
-			live_world_ref.current = new EarthSurfaceWorld(input_ref.current);
+			live_world_ref.current = new EarthSurfaceWorld(input_ref.current, {
+				height_m: rocket_height_m,
+				diameter_m: rocket_diameter_m,
+			});
 	}
 	if (!active_world_ref.current) {
 		active_world_ref.current = live_world_ref.current;
@@ -76,6 +86,13 @@ export function GameCanvas() {
 		active_world_ref.current = live_world_ref.current;
 		return undefined;
 	}, [scene, selection, orbit_state]);
+
+	useEffect(() => {
+		live_world_ref.current?.set_rocket_dimensions(
+			rocket_height_m,
+			rocket_diameter_m,
+		);
+	}, [rocket_height_m, rocket_diameter_m]);
 
 	useEffect(() => {
 		const canvas = canvas_ref.current;

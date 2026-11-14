@@ -69,6 +69,8 @@ Assembly exposes live, plain-language readouts:
 
 Assembly is where the challenge's trade-off idea is most visible: more instruments mean more mass; more mass means less Δv; a bigger vehicle costs more budget. See [`challenge_alignment.md`](challenge_alignment.md).
 
+The Earth launch site is rendered at one real-world scale. The astronaut is 1.8 m tall and 60 kg; the Mission Store is 10 m × 20 m; the rocket uses the selected launch vehicle's height and diameter (for example, about 50 m × 3.7 m for the starter medium-lift vehicle). The ground continues beyond the playable area: invisible walls at ±200 m stop the astronaut and show a boundary warning.
+
 ## Flight controls and progression
 
 Controls are introduced gradually so the game teaches itself. The table below is the intended progression; exact bindings and abilities per stage are refined during implementation.

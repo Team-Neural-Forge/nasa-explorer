@@ -159,6 +159,7 @@ The lunar descent build starts `2 km` above the surface with a small horizontal 
 
 - **EVA:** the astronaut is a rigid body with a small thrust/impulse budget; movement follows microgravity physics near the vehicle. Re-entry into the vehicle requires proximity and low relative velocity.
 - **On foot / rover:** movement is governed by local `gravity_m_s2`, surface friction/traction, and slope. A rover carries its own mass and fuel, so range is finite.
+- **Earth launch site (current build):** a meter-scale kinematic controller applies 9.81 m/s² gravity, 3 m/s walking, and a 60 kg mass-derived jump impulse for an approximately 0.8 m apex. Invisible walls at ±200 m stop the astronaut; the ground visual continues to ±1,200 m so its end is never visible.
 - **Transitions:** entering/exiting a vehicle is a state change that preserves position and velocity relative to the parent frame.
 
 ## Numerical validation
