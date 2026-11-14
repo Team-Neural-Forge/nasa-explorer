@@ -12,6 +12,7 @@ AI configuration rules for this project live in the rule files below. Load them 
 - `.opencode/rules/git_workflow.md` — commit, PR, checks, and merge flow
 
 Kilocode loads the same rules from `.kilo/rules/`.
+Claude Code loads the same rules from `.claude/rules/` (via `CLAUDE.md` → `@AGENTS.md`).
 
 ## Scope notes
 
