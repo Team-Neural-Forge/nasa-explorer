@@ -3,6 +3,7 @@ import { test } from "node:test";
 import {
 	ASTRONAUT_MASS_KG,
 	clamp_to_world,
+	compute_store_indicator,
 	GRAVITY_M_S2,
 	HALF_ASTRONAUT_WIDTH_M,
 	JUMP_APEX_M,
@@ -36,4 +37,27 @@ test("invisible world boundary stops the astronaut at both ends", () => {
 	assert.equal(right.x_m, WORLD_MAX_M - HALF_ASTRONAUT_WIDTH_M);
 
 	assert.deepEqual(clamp_to_world(0), { x_m: 0, at_wall: false });
+});
+
+test("store arrow points right when the store is beyond the right edge", () => {
+	const indicator = compute_store_indicator(-8, 90, -8, 111);
+	assert.deepEqual(indicator, {
+		visible: true,
+		direction: "right",
+		distance_m: 98,
+	});
+});
+
+test("store arrow points left when the store is beyond the left edge", () => {
+	const indicator = compute_store_indicator(250, 90, 250, 100);
+	assert.deepEqual(indicator, {
+		visible: true,
+		direction: "left",
+		distance_m: 160,
+	});
+});
+
+test("store arrow hides when the store is on-screen", () => {
+	const indicator = compute_store_indicator(80, 90, 90, 111);
+	assert.equal(indicator.visible, false);
 });

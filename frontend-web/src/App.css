@@ -119,6 +119,66 @@
 	}
 }
 
+.earth-store-arrow {
+	position: absolute;
+	top: 50%;
+	z-index: 3;
+	display: flex;
+	align-items: center;
+	gap: 0.6rem;
+	padding: 0.65rem 0.9rem;
+	border: 1px solid #9ed8ff;
+	border-radius: 0.5rem;
+	background: rgba(8, 25, 42, 0.92);
+	color: #eef8ff;
+	font-size: 0.8rem;
+	font-weight: 600;
+	pointer-events: none;
+	transform: translateY(-50%);
+	animation: earth-store-arrow-in 300ms ease-out;
+}
+
+.earth-store-arrow-right {
+	right: 1rem;
+}
+
+.earth-store-arrow-left {
+	left: 1rem;
+}
+
+.earth-store-arrow-icon {
+	font-size: 1.5rem;
+	line-height: 1;
+	color: #9ed8ff;
+}
+
+.earth-store-arrow-left .earth-store-arrow-icon {
+	order: -1;
+}
+
+@keyframes earth-store-arrow-in {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@media (max-width: 760px) {
+	.earth-store-arrow {
+		top: 38%;
+		padding: 0.5rem 0.65rem;
+		font-size: 0.7rem;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.earth-store-arrow {
+		animation: none;
+	}
+}
+
 .earth-hud-top,
 .earth-hud-bottom {
 	pointer-events: auto;

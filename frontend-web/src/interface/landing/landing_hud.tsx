@@ -5,6 +5,7 @@ import {
 	getLandingTelemetry,
 	subscribeLandingTelemetry,
 } from "../../state/landing_telemetry";
+import { sandbox_actions } from "../../state/sandbox_actions";
 
 const STATUS_LABELS = {
 	flying: "Descent",
@@ -29,7 +30,7 @@ export function LandingHud() {
 		getLandingTelemetry,
 		getLandingTelemetry,
 	);
-	const { returnToCruise, returnToMenu } = useGameState();
+	const { openMenu } = useGameState();
 	const status = telemetry.status;
 	const descending_too_fast =
 		Math.abs(telemetry.vertical_speed_m_s) > telemetry.safe_vertical_m_s;
@@ -170,11 +171,11 @@ export function LandingHud() {
 				<button
 					type="button"
 					className="launch-button"
-					onClick={returnToCruise}
+					onClick={() => sandbox_actions.current?.return_to_cruise()}
 				>
 					Return to cruise
 				</button>
-				<button type="button" className="assembly-back" onClick={returnToMenu}>
+				<button type="button" className="assembly-back" onClick={openMenu}>
 					Return to menu
 				</button>
 			</div>

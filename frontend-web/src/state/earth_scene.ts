@@ -27,10 +27,44 @@ export const HALF_ASTRONAUT_WIDTH_M = ASTRONAUT_WIDTH_M / 2;
 export const WALKABLE_MIN_M = WORLD_MIN_M + HALF_ASTRONAUT_WIDTH_M;
 export const WALKABLE_MAX_M = WORLD_MAX_M - HALF_ASTRONAUT_WIDTH_M;
 
+export type RocketDimensions = {
+	height_m: number;
+	diameter_m: number;
+};
+
+export type EarthStoreIndicator = {
+	visible: boolean;
+	direction: "left" | "right";
+	distance_m: number;
+};
+
 export type WorldClamp = {
 	x_m: number;
 	at_wall: boolean;
 };
+
+export function compute_store_indicator(
+	astronaut_x_m: number,
+	store_x_m: number,
+	camera_x_m: number,
+	visible_width_m: number,
+): EarthStoreIndicator {
+	const half_visible = visible_width_m / 2;
+	const left_edge = camera_x_m - half_visible;
+	const right_edge = camera_x_m + half_visible;
+	const distance_m = Math.abs(store_x_m - astronaut_x_m);
+	if (store_x_m > right_edge) {
+		return { visible: true, direction: "right", distance_m };
+	}
+	if (store_x_m < left_edge) {
+		return { visible: true, direction: "left", distance_m };
+	}
+	return {
+		visible: false,
+		direction: store_x_m >= astronaut_x_m ? "right" : "left",
+		distance_m,
+	};
+}
 
 export function clamp_to_world(x_m: number): WorldClamp {
 	if (x_m < WALKABLE_MIN_M) {

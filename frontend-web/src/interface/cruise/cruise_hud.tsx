@@ -6,6 +6,7 @@ import {
 	subscribeCruiseTelemetry,
 } from "../../state/cruise_telemetry";
 import { useGameState } from "../../state/game_state";
+import { sandbox_actions } from "../../state/sandbox_actions";
 
 function formatDistance(distance_m: number): string {
 	return `${Math.max(0, distance_m / 1000).toLocaleString("en-US", {
@@ -43,7 +44,7 @@ export function CruiseHud() {
 		getCruiseTelemetry,
 		getCruiseTelemetry,
 	);
-	const { beginLanding, returnToOrbit, returnToMenu } = useGameState();
+	const { openMenu } = useGameState();
 	const arrived = telemetry.status === "arrived";
 	const progress_percent = Math.round(telemetry.progress * 100);
 
@@ -134,20 +135,20 @@ export function CruiseHud() {
 						<button
 							type="button"
 							className="launch-button launch-button-primary"
-							onClick={beginLanding}
+							onClick={() => sandbox_actions.current?.begin_landing()}
 						>
 							Begin lunar approach
 						</button>
 						<button
 							type="button"
 							className="launch-button"
-							onClick={returnToOrbit}
+							onClick={() => sandbox_actions.current?.return_to_orbit()}
 						>
 							Return to orbit
 						</button>
 					</>
 				) : null}
-				<button type="button" className="assembly-back" onClick={returnToMenu}>
+				<button type="button" className="assembly-back" onClick={openMenu}>
 					Return to menu
 				</button>
 			</div>
