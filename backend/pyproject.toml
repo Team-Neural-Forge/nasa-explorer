@@ -1,7 +1,7 @@
 [project]
-name = "space-explorer-cheat-backend"
+name = "nasa-explorer-backend"
 version = "0.1.0"
-description = "FastAPI backend for space-explorer-cheat"
+description = "FastAPI backend for NASA Explorer"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [

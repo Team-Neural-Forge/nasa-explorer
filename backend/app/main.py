@@ -3,7 +3,7 @@ import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-app = FastAPI(title="Space Explorer Cheat API", version="0.1.0")
+app = FastAPI(title="NASA Explorer API", version="0.1.0")
 
 cors_origins = os.getenv("CORS_ORIGINS", "*")
 allowed_origins = [origin.strip() for origin in cors_origins.split(",")]
