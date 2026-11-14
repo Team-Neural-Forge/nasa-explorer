@@ -7,7 +7,7 @@ Use this list to prepare the final NASA Space Apps Challenge submission.
 - [ ] **Project name:** NASA Explorer
 - [ ] **Summary (50–200 words):** copied from [`project_overview.md`](project_overview.md)
 - [ ] **Demo:** slides (≤ 7) _or_ video (link, < 30 sec)
-- [ ] **Project link:** hosted game URL (Vercel)
+- [x] **Project link:** https://nasa-explorer-8s6l.vercel.app
 - [ ] **Source code:** linked from inside the hosted game (there is no dedicated repo field)
 
 ## Project details
@@ -42,10 +42,10 @@ Use this list to prepare the final NASA Space Apps Challenge submission.
 
 | Item | Link |
 |---|---|
-| Play (Vercel) | _TODO_ |
+| Play (Vercel) | https://nasa-explorer-8s6l.vercel.app |
 | Demo video (< 30 sec) | _TODO_ |
 | Slides | _TODO_ |
-| Backend API (Render) | _TODO_ |
+| Backend API (Render) | https://nasa-explorer-cpd9.onrender.com/health |
 | Source code | https://github.com/Team-Neural-Forge/nasa-explorer |
 
 ## Team

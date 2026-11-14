@@ -10,10 +10,10 @@ NASA Explorer is an interactive, physics-based space exploration game built for 
 
 | Item | Link |
 |---|---|
-| Play the game (Vercel) | _TODO: add deployment URL_ |
+| Play the game (Vercel) | https://nasa-explorer-8s6l.vercel.app |
 | Demo video (< 30 sec) | _TODO: add video URL_ |
 | Slides (≤ 7 slides) | _TODO: add slides URL_ |
-| Backend API (Render) | _TODO: add API URL_ |
+| Backend API (Render) | https://nasa-explorer-cpd9.onrender.com/health |
 | Source code | https://github.com/Team-Neural-Forge/nasa-explorer |
 
 > _TODO: add a gameplay screenshot to `docs/assets/` and embed it here._

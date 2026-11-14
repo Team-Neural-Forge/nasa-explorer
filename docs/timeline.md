@@ -37,7 +37,8 @@
 - **Project name:** NASA Explorer
 - **Summary:** 50–200 words (see [`project_overview.md`](project_overview.md))
 - **Demo:** slides (≤ 7) or video (< 30 sec)
-- **Project link:** hosted game URL (Vercel)
+- **Project link:** https://nasa-explorer-8s6l.vercel.app
+- **Backend API:** https://nasa-explorer-cpd9.onrender.com/health
 - **Repo link:** placed inside the hosted game (no dedicated field on the form)
 
 ## Roadmap (post-hackathon)

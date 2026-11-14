@@ -70,6 +70,6 @@ The result is a game where the player *feels* the trade-offs of mission design: 
 
 | Item | Link |
 |---|---|
-| Play the game (Vercel) | _TODO_ |
-| Backend API (Render) | _TODO_ |
+| Play the game (Vercel) | https://nasa-explorer-8s6l.vercel.app |
+| Backend API (Render) | https://nasa-explorer-cpd9.onrender.com/health |
 | Source code | https://github.com/Team-Neural-Forge/nasa-explorer |

@@ -98,11 +98,11 @@ MCP integrations are used for document and design tooling (LibreOffice, Obsidian
 
 ## Deployment topology
 
-| Component | Host | Notes |
-|---|---|---|
-| Frontend | **Vercel** | Static build (`pnpm build` → `dist`), SPA fallback rewrite, preview per PR |
-| Backend | **Render** | Python native runtime, `uv sync --frozen --no-dev`, health check `/health` |
-| Local (optional) | **Docker Compose** | Frontend on `:3000` (nginx), backend on `:8000` |
+| Component | Host | URL | Notes |
+|---|---|---|---|
+| Frontend | **Vercel** | https://nasa-explorer-8s6l.vercel.app | Static build (`pnpm build` → `dist`), SPA fallback rewrite, preview per PR |
+| Backend | **Render** | https://nasa-explorer-cpd9.onrender.com (health: `/health`) | Python native runtime, `uv sync --frozen --no-dev`, health check `/health` |
+| Local (optional) | **Docker Compose** | — | Frontend on `:3000` (nginx), backend on `:8000` |
 
 The frontend is a static site, so it is served from Vercel's CDN. The backend must set `CORS_ORIGINS` to the frontend origin(s) for cross-origin requests.
 
