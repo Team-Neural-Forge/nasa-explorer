@@ -28,20 +28,22 @@ Build settings come from `frontend-web/vercel.json` (`pnpm build` → `dist`, SP
 - Merging to `main` triggers a Production deployment.
 - Each pull request gets its own Preview URL.
 
-## Deploy backend to Vercel
+## Deploy backend to Render
 
-The FastAPI backend is deployed as a second Vercel project from the same repo. Vercel auto-detects FastAPI and uses `uv` with `backend/uv.lock`; no Dockerfile is involved on Vercel.
+The FastAPI backend is deployed as a Render Web Service using the Python native runtime. Render reads `backend/.python-version` (3.13) and installs `uv` automatically because `backend/uv.lock` is present.
 
-### One-time project setup (Vercel dashboard)
+### One-time service setup (Render dashboard)
 
-1. Create a **New Project** and import `Team-Neural-Forge/space-explorer-cheat`.
-2. Set **Root Directory** to `backend`.
-3. Leave the framework preset on **Auto** (it detects FastAPI), and leave install/build/output settings at their defaults.
-4. Deploy — the first deployment becomes Production.
-
-The function duration and region are set in `backend/vercel.json` (60s max, `iad1` / US East).
+1. Create a **New > Web Service** and connect `Team-Neural-Forge/space-explorer-cheat`.
+2. Set **Language** to `Python 3` and **Root Directory** to `backend`.
+3. Set **Build Command** to `uv sync --frozen --no-dev`.
+4. Set **Start Command** to `uv run --frozen --no-dev uvicorn app.main:app --host 0.0.0.0 --port $PORT`.
+5. Set **Health Check Path** to `/health`.
+6. Set the `CORS_ORIGINS` environment variable to your frontend origin(s), e.g. `https://<your-frontend>.vercel.app`.
+7. Create the service — the first deploy becomes live.
 
 ### CORS
 
-The backend reads allowed origins from the `CORS_ORIGINS` environment variable (comma-separated, defaults to `*`). Set it in the Vercel project's environment variables when the frontend starts calling the API.
+The backend reads allowed origins from the `CORS_ORIGINS` environment variable (comma-separated, defaults to `*`).
+
 
