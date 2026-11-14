@@ -25,7 +25,8 @@
 - [x] Launch → ascent → orbital insertion
 - [x] Low Earth orbit + EVA enter/exit
 - [x] Interplanetary cruise (Earth → Moon) with time warp
-- [ ] Moon: approach, landing, surface view
+- [x] Moon: approach and landing
+- [ ] Moon: surface exploration + whole-planet view
 - [ ] Mars: interplanetary cruise, time warp, landing
 
 ## 15 November 2026

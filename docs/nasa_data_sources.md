@@ -36,7 +36,7 @@ No NASA-partner datasets are currently used. If partner data is added, list it h
 
 ## Gameplay values (not NASA data)
 
-Some numbers are tuned for play rather than taken from NASA: spacecraft dry mass, thrust, specific impulse, propellant load, part costs, budget growth, drag coefficients, and safe-landing thresholds. These live in `data/gameplay_tuning.json` (and are marked as gameplay values in [`flight_model.md`](flight_model.md)). They are derived from public specs where possible but must **not** be presented as official NASA figures.
+Some numbers are tuned for play rather than taken from NASA: spacecraft dry mass, thrust, specific impulse, propellant load, part costs, budget growth, drag coefficients, descent-stage mass/thrust/Isp/propellant, and safe-landing thresholds. These live in `data/gameplay_tuning.json` (and are marked as gameplay values in [`flight_model.md`](flight_model.md)). They are derived from public specs where possible but must **not** be presented as official NASA figures.
 
 ## Attribution
 
