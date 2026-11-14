@@ -29,9 +29,24 @@ The challenge's central idea — *a decision that improves one aspect can create
 
 These tensions are what make the game a *mission design* game rather than a simple explorer.
 
+## Official challenge resources we used
+
+The challenge's Resources tab lists mission-design guides and tools rather than datasets. We used them for framing:
+
+- **Design and Develop Science Missions:** https://www.nasa.gov/wp-content/uploads/2025/04/250323-design-and-develop-science-mission.pdf
+- **General Mission Analysis Tool (GMAT):** https://software.nasa.gov/software/GSC-19468-1
+- **Concept Maturity Levels (CMLs):** https://dataverse.jpl.nasa.gov/dataset.xhtml?persistentId=hdl:2014/44299
+- **Mission Design Lab:** https://etd.gsfc.nasa.gov/capabilities/integrated-design-center/mission-design-lab/
+- **NASA Mission Viz:** https://nasa.github.io/mission-viz/
+- **CubeSat 101:** https://www3.nasa.gov/sites/default/files/atoms/files/nasa_csli_cubesat_101_508.pdf
+
+How they shaped the design:
+
+- **CMLs** informed how mission maturity grows from concept to a concrete, budgeted design — mirrored by the store and budget pacing.
+- **GMAT / Mission Viz** informed the physics-and-orbit framing and the ambition for real orbital values.
+- **Design and Develop Science Missions / CubeSat 101** informed the instrument and trade-off vocabulary used in the store and quizzes.
+
 ## Scope notes
 
 - **Communications** and **mission lifetime** are deliberately **NIL** for this build. They are listed as future work in [`project_overview.md`](project_overview.md).
 - Exact numeric tuning (budget rate, mass values, power costs) is refined during implementation.
-
-> _TODO: verify this mapping against the official challenge page and resources tab once accessible, and adjust wording if the challenge defines any dimension differently._

@@ -31,7 +31,8 @@ The challenge asks teams to disclose how AI was used for images, audio, code, an
 
 ## Data
 
-- **NASA data and NASA-partner data** power in-game facts and quiz content.
+- **NASA data** (NSSDCA fact sheets, JPL Horizons, NASA Image & Video Library, APOD) powers physics constants, journey timing, imagery, and quiz content. No NASA-partner datasets are currently used.
+- AI assisted in curating, formatting, and documenting the data snapshots; values are checked against the cited NASA sources.
 - Sources and attribution are tracked in [`nasa_data_sources.md`](nasa_data_sources.md).
 
 ## Human oversight
