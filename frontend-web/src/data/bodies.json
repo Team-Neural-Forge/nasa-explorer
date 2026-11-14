@@ -1,0 +1,93 @@
+{
+	"meta": {
+		"description": "Physical and orbital constants for journey bodies, sourced from NASA NSSDCA Planetary Fact Sheets.",
+		"source_index": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/",
+		"fetched_at": "2026-11-14",
+		"note": "Real-world values. Gameplay may scale gravity and distances; keep these as the reference values."
+	},
+	"bodies": {
+		"earth": {
+			"name": "Earth",
+			"kind": "planet",
+			"mass_kg": 5.9722e+24,
+			"radius_km": 6371.0,
+			"gm_km3_s2": 398600.4418,
+			"gravity_m_s2": 9.80665,
+			"semi_major_axis_km": 149600000,
+			"eccentricity": 0.0167,
+			"inclination_deg": 0.0,
+			"orbital_period_days": 365.256,
+			"mean_temp_c": 15,
+			"surface_pressure_pa": 101325,
+			"albedo": 0.306,
+			"source_url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/earthfact.html"
+		},
+		"moon": {
+			"name": "Moon",
+			"kind": "moon",
+			"parent": "earth",
+			"mass_kg": 7.346e+22,
+			"radius_km": 1737.4,
+			"gm_km3_s2": 4902.800066,
+			"gravity_m_s2": 1.62,
+			"semi_major_axis_km": 384400,
+			"eccentricity": 0.0549,
+			"inclination_deg": 5.145,
+			"orbital_period_days": 27.32,
+			"mean_temp_c": -23,
+			"surface_pressure_pa": 0,
+			"albedo": 0.12,
+			"source_url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/moonfact.html"
+		},
+		"mars": {
+			"name": "Mars",
+			"kind": "planet",
+			"mass_kg": 6.4171e+23,
+			"radius_km": 3389.5,
+			"gm_km3_s2": 42828.375662,
+			"gravity_m_s2": 3.71,
+			"semi_major_axis_km": 227900000,
+			"eccentricity": 0.0935,
+			"inclination_deg": 1.85,
+			"orbital_period_days": 686.98,
+			"mean_temp_c": -65,
+			"surface_pressure_pa": 610,
+			"albedo": 0.25,
+			"source_url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/marsfact.html"
+		},
+		"europa": {
+			"name": "Europa",
+			"kind": "moon",
+			"parent": "jupiter",
+			"mass_kg": 4.7998e+22,
+			"radius_km": 1560.8,
+			"gm_km3_s2": 3202.7121,
+			"gravity_m_s2": 1.315,
+			"semi_major_axis_km": 671000,
+			"eccentricity": 0.00981,
+			"inclination_deg": 0.462,
+			"orbital_period_days": 3.551,
+			"mean_temp_c": -171,
+			"surface_pressure_pa": 0,
+			"albedo": 0.67,
+			"source_url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/joviansatfact.html"
+		},
+		"enceladus": {
+			"name": "Enceladus",
+			"kind": "moon",
+			"parent": "saturn",
+			"mass_kg": 1.0802e+20,
+			"radius_km": 252.3,
+			"gm_km3_s2": 7.210367,
+			"gravity_m_s2": 0.113,
+			"semi_major_axis_km": 238040,
+			"eccentricity": 0.0047,
+			"inclination_deg": 0.009,
+			"orbital_period_days": 1.370218,
+			"mean_temp_c": -198,
+			"surface_pressure_pa": 0,
+			"albedo": 0.99,
+			"source_url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/saturniansatfact.html"
+		}
+	}
+}

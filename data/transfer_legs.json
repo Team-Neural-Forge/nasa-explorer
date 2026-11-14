@@ -1,0 +1,64 @@
+{
+	"meta": {
+		"description": "Approximate inter-body leg metrics for the journey, for gameplay pacing and scoring.",
+		"source": "JPL Horizons (https://ssd.jpl.nasa.gov/api/horizons.api); values below are real-world references, approximated and scaled for play.",
+		"fetched_at": "2026-11-14",
+		"note": "Regenerate precise elements and travel times with scripts/build_space_data.py. Unknown values are null and should be filled by the build script or tuned in-game.",
+		"approximate": true
+	},
+	"legs": [
+		{
+			"id": "earth_moon",
+			"from": "earth",
+			"to": "moon",
+			"distance_km": 384400,
+			"transfer_days": 3,
+			"delta_v_km_s": 3.9,
+			"synodic_days": null,
+			"source_url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/moonfact.html"
+		},
+		{
+			"id": "earth_mars",
+			"from": "earth",
+			"to": "mars",
+			"distance_km": 225000000,
+			"transfer_days": 259,
+			"delta_v_km_s": 3.6,
+			"synodic_days": 780,
+			"source_url": "https://ssd.jpl.nasa.gov/api/horizons.api"
+		},
+		{
+			"id": "mars_europa",
+			"from": "mars",
+			"to": "europa",
+			"distance_km": null,
+			"transfer_days": null,
+			"delta_v_km_s": null,
+			"synodic_days": null,
+			"source_url": "https://ssd.jpl.nasa.gov/api/horizons.api",
+			"note": "Outer-solar-system leg; requires gravity-assist tour. Compute with Horizons/GMAT."
+		},
+		{
+			"id": "mars_enceladus",
+			"from": "mars",
+			"to": "enceladus",
+			"distance_km": null,
+			"transfer_days": null,
+			"delta_v_km_s": null,
+			"synodic_days": null,
+			"source_url": "https://ssd.jpl.nasa.gov/api/horizons.api",
+			"note": "Outer-solar-system leg; requires gravity-assist tour. Compute with Horizons/GMAT."
+		},
+		{
+			"id": "mars_living_mars",
+			"from": "mars",
+			"to": "living_mars",
+			"distance_km": 0,
+			"transfer_days": 0,
+			"delta_v_km_s": 0,
+			"synodic_days": null,
+			"source_url": "https://science.nasa.gov/mars/",
+			"note": "Surface colony branch; no interplanetary transfer."
+		}
+	]
+}

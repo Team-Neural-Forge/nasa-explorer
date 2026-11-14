@@ -1,0 +1,92 @@
+{
+	"meta": {
+		"description": "Quiz bank shown between journeys. Each item cites a NASA source.",
+		"fetched_at": "2026-11-14"
+	},
+	"quizzes": [
+		{
+			"id": "q_mars_moons",
+			"stage": "mars",
+			"question": "How many moons does Mars have?",
+			"options": [
+				"0",
+				"1",
+				"2",
+				"4"
+			],
+			"answer": "2",
+			"explanation": "Mars has two small moons, Phobos and Deimos.",
+			"source_url": "https://science.nasa.gov/mars/moons/"
+		},
+		{
+			"id": "q_europa_ocean",
+			"stage": "europa",
+			"question": "Which icy moon is thought to hide a global ocean beneath its crust?",
+			"options": [
+				"Io",
+				"Europa",
+				"Titan",
+				"Callisto"
+			],
+			"answer": "Europa",
+			"explanation": "Europa likely has a salty ocean under its icy shell and is the target of NASA's Europa Clipper mission.",
+			"source_url": "https://science.nasa.gov/jupiter/moons/europa/"
+		},
+		{
+			"id": "q_enceladus_plumes",
+			"stage": "enceladus",
+			"question": "What do the plumes at Enceladus's south pole mostly contain?",
+			"options": [
+				"Liquid methane",
+				"Water vapor and ice",
+				"Iron dust",
+				"Carbon dioxide snow"
+			],
+			"answer": "Water vapor and ice",
+			"explanation": "Cassini flew through Enceladus's plumes and found water vapor, ice grains, and organic compounds.",
+			"source_url": "https://science.nasa.gov/saturn/moons/enceladus/"
+		},
+		{
+			"id": "q_moon_gravity",
+			"stage": "moon",
+			"question": "About how strong is gravity on the Moon compared with Earth?",
+			"options": [
+				"1/2",
+				"1/6",
+				"1/10",
+				"The same"
+			],
+			"answer": "1/6",
+			"explanation": "The Moon's surface gravity is about one-sixth of Earth's.",
+			"source_url": "https://science.nasa.gov/moon/"
+		},
+		{
+			"id": "q_orbit_force",
+			"stage": "low_earth_orbit",
+			"question": "What keeps a spacecraft in orbit around a body?",
+			"options": [
+				"Air resistance",
+				"Gravity",
+				"Magnetism",
+				"Solar wind"
+			],
+			"answer": "Gravity",
+			"explanation": "Orbiting is free-fall: gravity continuously pulls the spacecraft toward the body while it moves sideways fast enough to keep missing it.",
+			"source_url": "https://science.nasa.gov/learn/basics-of-space-flight/"
+		},
+		{
+			"id": "q_mars_transfer",
+			"stage": "mars",
+			"question": "Roughly how long does a fuel-efficient (Hohmann) transfer from Earth to Mars take?",
+			"options": [
+				"About 3 days",
+				"About 3 weeks",
+				"About 8 months",
+				"About 5 years"
+			],
+			"answer": "About 8 months",
+			"explanation": "A minimum-energy Earth-to-Mars transfer takes roughly 7-9 months depending on the launch window.",
+			"source_url": "https://science.nasa.gov/mars/"
+		}
+	]
+}

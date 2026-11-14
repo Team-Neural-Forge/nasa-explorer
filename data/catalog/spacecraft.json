@@ -1,0 +1,41 @@
+{
+	"meta": {
+		"description": "Spacecraft referenced by the game. Real NASA missions for authenticity; gameplay stats are assigned in-game.",
+		"sources": [
+			"https://science.nasa.gov/mission/europa-clipper/",
+			"https://science.nasa.gov/mission/mars-2020-perseverance/",
+			"https://www.nasa.gov/humans-in-space/orion-spacecraft/"
+		],
+		"fetched_at": "2026-11-14"
+	},
+	"spacecraft": [
+		{
+			"id": "orion",
+			"name": "Orion",
+			"operator": "NASA",
+			"target": "Moon / deep space",
+			"source_url": "https://www.nasa.gov/humans-in-space/orion-spacecraft/"
+		},
+		{
+			"id": "europa_clipper",
+			"name": "Europa Clipper",
+			"operator": "NASA",
+			"target": "Europa",
+			"source_url": "https://science.nasa.gov/mission/europa-clipper/"
+		},
+		{
+			"id": "perseverance",
+			"name": "Perseverance",
+			"operator": "NASA",
+			"target": "Mars",
+			"source_url": "https://science.nasa.gov/mission/mars-2020-perseverance/"
+		},
+		{
+			"id": "cassini",
+			"name": "Cassini",
+			"operator": "NASA / ESA / ASI",
+			"target": "Saturn / Enceladus",
+			"source_url": "https://science.nasa.gov/mission/cassini/"
+		}
+	]
+}

@@ -1,0 +1,52 @@
+{
+	"meta": {
+		"description": "Launch vehicles available in the mission store. Specs are real-world references; cost/performance values used for gameplay balancing are approximate.",
+		"sources": [
+			"https://www.nasa.gov/humans-in-space/space-launch-system/",
+			"https://elvperf.ksc.nasa.gov/"
+		],
+		"fetched_at": "2026-11-14"
+	},
+	"vehicles": [
+		{
+			"id": "sls_block_1",
+			"name": "NASA SLS Block 1",
+			"class": "super heavy",
+			"leo_kg": 95000,
+			"tli_kg": 27000,
+			"cost_usd_m": null,
+			"reliability": null,
+			"source_url": "https://www.nasa.gov/humans-in-space/space-launch-system/"
+		},
+		{
+			"id": "sls_block_1b",
+			"name": "NASA SLS Block 1B",
+			"class": "super heavy",
+			"leo_kg": 105000,
+			"tli_kg": 38000,
+			"cost_usd_m": null,
+			"reliability": null,
+			"source_url": "https://www.nasa.gov/humans-in-space/space-launch-system/"
+		},
+		{
+			"id": "medium_lift",
+			"name": "Medium-lift launcher",
+			"class": "medium",
+			"leo_kg": 20000,
+			"tli_kg": 6000,
+			"cost_usd_m": null,
+			"reliability": null,
+			"source_url": "https://elvperf.ksc.nasa.gov/"
+		},
+		{
+			"id": "small_lift",
+			"name": "Small-lift launcher / rideshare",
+			"class": "small",
+			"leo_kg": 1000,
+			"tli_kg": 200,
+			"cost_usd_m": null,
+			"reliability": null,
+			"source_url": "https://elvperf.ksc.nasa.gov/"
+		}
+	]
+}

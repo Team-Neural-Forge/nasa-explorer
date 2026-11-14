@@ -1,0 +1,41 @@
+{
+	"meta": {
+		"description": "Bundled NASA imagery with required attribution. NASA media is generally not subject to U.S. copyright; credit NASA/JPL-Caltech and do not use the NASA insignia as branding.",
+		"license_note": "https://www.nasa.gov/nasa-brand-center/images-and-media/",
+		"fetched_at": "2026-11-14"
+	},
+	"images": [
+		{
+			"id": "moon",
+			"file": null,
+			"title": "The Moon",
+			"credit": "NASA",
+			"source_url": "https://science.nasa.gov/moon/",
+			"status": "pending-download"
+		},
+		{
+			"id": "mars",
+			"file": null,
+			"title": "Mars",
+			"credit": "NASA/JPL-Caltech",
+			"source_url": "https://science.nasa.gov/mars/",
+			"status": "pending-download"
+		},
+		{
+			"id": "europa",
+			"file": null,
+			"title": "Europa",
+			"credit": "NASA/JPL-Caltech",
+			"source_url": "https://science.nasa.gov/jupiter/moons/europa/",
+			"status": "pending-download"
+		},
+		{
+			"id": "enceladus",
+			"file": null,
+			"title": "Enceladus",
+			"credit": "NASA/JPL-Caltech",
+			"source_url": "https://science.nasa.gov/saturn/moons/enceladus/",
+			"status": "pending-download"
+		}
+	]
+}

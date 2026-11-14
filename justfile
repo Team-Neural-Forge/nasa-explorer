@@ -45,5 +45,12 @@ check_frontend:
 check_backend:
     cd backend && uv run ruff format . && uv run ruff check . && uv run ty check
 
+# NASA data snapshots (offline)
+data_build:
+    python3 scripts/build_space_data.py
+
+data_check:
+    python3 scripts/validate_space_data.py
+
 [parallel]
-check: check_frontend check_backend
+check: check_frontend check_backend data_check
