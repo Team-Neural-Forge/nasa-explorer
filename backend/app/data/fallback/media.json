@@ -1,0 +1,32 @@
+{
+  "items": [
+    {
+      "nasa_id": null,
+      "title": "The Moon",
+      "description": "Earth's Moon, explored by NASA's Apollo and Artemis programs.",
+      "image_url": null,
+      "source_url": "https://science.nasa.gov/moon/"
+    },
+    {
+      "nasa_id": null,
+      "title": "Mars",
+      "description": "The red planet, explored by NASA rovers and orbiters.",
+      "image_url": null,
+      "source_url": "https://science.nasa.gov/mars/"
+    },
+    {
+      "nasa_id": null,
+      "title": "Europa",
+      "description": "An icy moon of Jupiter with a likely subsurface ocean, target of Europa Clipper.",
+      "image_url": null,
+      "source_url": "https://science.nasa.gov/jupiter/moons/europa/"
+    },
+    {
+      "nasa_id": null,
+      "title": "Enceladus",
+      "description": "A moon of Saturn with water-ice plumes, studied by Cassini.",
+      "image_url": null,
+      "source_url": "https://science.nasa.gov/saturn/moons/enceladus/"
+    }
+  ]
+}
