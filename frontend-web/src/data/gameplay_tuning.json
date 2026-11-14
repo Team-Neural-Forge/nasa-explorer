@@ -8,6 +8,12 @@
 		"starting_budget_usd_m": 500,
 		"accrual_usd_m_per_minute": 2.5
 	},
+	"descent_stage": {
+		"dry_mass_kg": 8000,
+		"propellant_kg": 9000,
+		"thrust_kn": 90,
+		"isp_s": 311
+	},
 	"destinations": [
 		{
 			"id": "low_earth_orbit",
