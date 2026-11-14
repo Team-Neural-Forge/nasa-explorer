@@ -115,7 +115,7 @@ just lint    # read-only lint (matches CI)
 
 ### Frontend — Vercel
 
-The frontend is deployed as a static site on Vercel using the GitHub integration.
+The frontend is deployed as a static site on Vercel.
 
 1. Create a **New Project** and import `Team-Neural-Forge/nasa-explorer`.
 2. Set **Root Directory** to `frontend-web` (the repo root has no `package.json`).
@@ -123,7 +123,18 @@ The frontend is deployed as a static site on Vercel using the GitHub integration
 4. Set **Node.js Version** to **22.x**.
 5. Deploy — the first deployment becomes Production.
 
-Build settings come from `frontend-web/vercel.json` (`pnpm build` → `dist`, SPA fallback rewrite). Merging to `main` triggers a Production deployment; each pull request gets its own Preview URL.
+Build settings come from `frontend-web/vercel.json` (`pnpm build` → `dist`, SPA fallback rewrite). Production deployments are run by the `Deploy Frontend` GitHub Actions workflow after CI passes on `main`.
+
+### Automatic deploy (GitHub Actions)
+
+The `Deploy Frontend` workflow (`.github/workflows/deploy-frontend.yml`) deploys production after the CI workflow succeeds on `main`. It can also be started manually from the Actions tab.
+
+Required repository configuration:
+
+- Secret `VERCEL_TOKEN` — a Vercel account token with access to the project.
+- Variables `VERCEL_ORG_ID` and `VERCEL_PROJECT_ID` — taken from the Vercel project link (`.vercel/project.json`).
+
+The workflow runs `vercel deploy --prod` from the repository root because the Vercel project's Root Directory is `frontend-web`; deploying from inside `frontend-web` fails with "Root Directory does not exist".
 
 ### Backend — Render
 
