@@ -17,6 +17,8 @@
 | 4 | NASA Astronomy Picture of the Day (new endpoint) | https://science.nasa.gov/wp-json/wp/v2/apod-basic | Daily NASA fact/loading screen → `GET /nasa/facts/daily` |
 | 5 | NSSDC Master Catalog, NASA TechPort, KSC ELV Performance | https://nssdc.gsfc.nasa.gov/nmc/ · https://techport.nasa.gov/api/projects?format=json · https://elvperf.ksc.nasa.gov/ | Curated spacecraft, instruments, and launch-vehicle catalogs → `data/catalog/*.json` |
 
+> **Approximations and tools.** The outer-solar legs (Mars → Europa, Mars → Enceladus) are filled with an idealised Hohmann approximation computed from NSSDCA semi-major axes (each leg carries a `method` field and `approximate: true`); they ignore gravity assists, so real tours are cheaper. **GMAT is referenced as design inspiration only and is not run** at build or runtime.
+
 All core sources are accessed **without an API key**. Live endpoints are proxied through the FastAPI backend and cached; the critical data is committed as snapshots so the game runs fully offline.
 
 ## Data from NASA partners

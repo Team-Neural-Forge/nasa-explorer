@@ -43,7 +43,7 @@ The challenge's Resources tab lists mission-design guides and tools rather than 
 How they shaped the design:
 
 - **CMLs** informed how mission maturity grows from concept to a concrete, budgeted design — mirrored by the store and budget pacing.
-- **GMAT / Mission Viz** informed the physics-and-orbit framing and the ambition for real orbital values.
+- **GMAT / Mission Viz** informed the physics-and-orbit framing (GMAT is a reference only — not run). Transfer-leg numbers are idealised Hohmann approximations from NSSDCA semi-major axes.
 - **Design and Develop Science Missions / CubeSat 101** informed the instrument and trade-off vocabulary used in the store and quizzes.
 
 ## Scope notes
