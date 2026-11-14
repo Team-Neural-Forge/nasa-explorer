@@ -3,7 +3,7 @@
 ## Project
 
 - **Name:** NASA Explorer
-- **Tagline:** The Inquisitive Explorer of NASA
+- **Tagline:** NASAExplorer
 - **Challenge:** [NASA Space Apps Challenge 2026](https://www.spaceappschallenge.org/2026/) — Space Mission Design Game
 - **Genre:** Interactive, physics-based space exploration game
 - **Platform:** Web (React + TypeScript)
@@ -38,7 +38,7 @@ The result is a game where the player *feels* the trade-offs of mission design: 
 - **Inspire** a broader audience — especially young players — to engage with space exploration and NASA science.
 - **Build intuition** for the real constraints of mission design, so players understand why space missions are hard.
 - **Showcase NASA data and history** in a form that is memorable and enjoyable.
-- **Model a friendly, curious astronaut** who learns by exploring — the "inquisitive explorer" of the title.
+- **Model a friendly, curious astronaut** who learns by exploring — the curious astronaut at the heart of NASAExplorer.
 
 ## How is the project creative?
 
@@ -72,4 +72,4 @@ The result is a game where the player *feels* the trade-offs of mission design: 
 |---|---|
 | Play the game (Vercel) | _TODO_ |
 | Backend API (Render) | _TODO_ |
-| Source code | https://github.com/Team-Neural-Forge/space-explorer-cheat |
+| Source code | https://github.com/Team-Neural-Forge/nasa-explorer |

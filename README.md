@@ -1,6 +1,6 @@
 # NASA Explorer
 
-**The Inquisitive Explorer of NASA** — an interactive, physics-based space exploration game for the [NASA Space Apps Challenge 2026](https://www.spaceappschallenge.org/2026/) "Space Mission Design Game" challenge.
+**NASAExplorer** — an interactive, physics-based space exploration game for the [NASA Space Apps Challenge 2026](https://www.spaceappschallenge.org/2026/) "Space Mission Design Game" challenge.
 
 ## Summary
 
@@ -14,7 +14,7 @@ NASA Explorer is an interactive, physics-based space exploration game built for 
 | Demo video (< 30 sec) | _TODO: add video URL_ |
 | Slides (≤ 7 slides) | _TODO: add slides URL_ |
 | Backend API (Render) | _TODO: add API URL_ |
-| Source code | https://github.com/Team-Neural-Forge/space-explorer-cheat |
+| Source code | https://github.com/Team-Neural-Forge/nasa-explorer |
 
 > _TODO: add a gameplay screenshot to `docs/assets/` and embed it here._
 
@@ -114,7 +114,7 @@ just lint    # read-only lint (matches CI)
 
 The frontend is deployed as a static site on Vercel using the GitHub integration.
 
-1. Create a **New Project** and import `Team-Neural-Forge/space-explorer-cheat`.
+1. Create a **New Project** and import `Team-Neural-Forge/nasa-explorer`.
 2. Set **Root Directory** to `frontend-web` (the repo root has no `package.json`).
 3. Set **Framework Preset** to **Other** (there is no Rsbuild preset).
 4. Set **Node.js Version** to **22.x**.
@@ -126,7 +126,7 @@ Build settings come from `frontend-web/vercel.json` (`pnpm build` → `dist`, SP
 
 The FastAPI backend is deployed as a Render Web Service using the Python native runtime. Render reads `backend/.python-version` (3.13) and installs `uv` automatically because `backend/uv.lock` is present.
 
-1. Create a **New > Web Service** and connect `Team-Neural-Forge/space-explorer-cheat`.
+1. Create a **New > Web Service** and connect `Team-Neural-Forge/nasa-explorer`.
 2. Set **Language** to `Python 3` and **Root Directory** to `backend`.
 3. Set **Build Command** to `uv sync --frozen --no-dev`.
 4. Set **Start Command** to `uv run --frozen --no-dev uvicorn app.main:app --host 0.0.0.0 --port $PORT`.

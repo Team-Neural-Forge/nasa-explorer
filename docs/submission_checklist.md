@@ -46,7 +46,7 @@ Use this list to prepare the final NASA Space Apps Challenge submission.
 | Demo video (< 30 sec) | _TODO_ |
 | Slides | _TODO_ |
 | Backend API (Render) | _TODO_ |
-| Source code | https://github.com/Team-Neural-Forge/space-explorer-cheat |
+| Source code | https://github.com/Team-Neural-Forge/nasa-explorer |
 
 ## Team
 
