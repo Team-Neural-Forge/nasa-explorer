@@ -60,6 +60,7 @@ export type RocketStats = {
 	propellant_kg: number;
 	total_mass_kg: number;
 	thrust_n: number;
+	isp_s: number;
 	twr: number;
 	delta_v_m_s: number;
 	required_delta_v_m_s: number;
@@ -213,6 +214,7 @@ export function computeRocketStats(
 		propellant_kg,
 		total_mass_kg,
 		thrust_n,
+		isp_s: vehicle.isp_s,
 		twr,
 		delta_v_m_s,
 		required_delta_v_m_s,

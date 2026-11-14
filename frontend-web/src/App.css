@@ -395,6 +395,152 @@ body {
 	color: var(--ink-strong);
 }
 
+.launch-hud {
+	display: flex;
+	flex-direction: column;
+	gap: 0.9rem;
+	width: min(23rem, 34vw);
+	max-height: 100dvh;
+	margin-left: auto;
+	padding: clamp(1.2rem, 2.6vw, 2.2rem) clamp(1.2rem, 3vw, 2.4rem);
+	overflow-y: auto;
+	background: linear-gradient(
+		270deg,
+		rgba(4, 9, 20, 0.94),
+		rgba(4, 9, 20, 0.74) 72%,
+		rgba(4, 9, 20, 0)
+	);
+	border-left: 1px solid rgba(140, 180, 240, 0.08);
+	animation: panel-reveal 520ms ease-out both;
+}
+
+.launch-hud-header {
+	display: flex;
+	flex-direction: column;
+	gap: 0.45rem;
+}
+
+.launch-status {
+	font-size: clamp(1.5rem, 2.4vw, 2.1rem);
+}
+
+.launch-status-orbit {
+	color: #9be7b0;
+}
+
+.launch-status-crashed {
+	color: #ff9b9b;
+}
+
+.launch-status-suborbital {
+	color: #ffd58a;
+}
+
+.launch-message {
+	margin: 0;
+	font-size: 0.82rem;
+	line-height: 1.45;
+	color: var(--ink);
+}
+
+.launch-readouts {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 0.55rem 0.9rem;
+	margin: 0;
+}
+
+.launch-guidance {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 0.5rem;
+	padding: 0.7rem;
+	border: 1px solid rgba(140, 180, 240, 0.14);
+	border-radius: 0.7rem;
+	background: rgba(8, 16, 32, 0.55);
+}
+
+.launch-guidance div {
+	display: flex;
+	flex-direction: column;
+	gap: 0.15rem;
+}
+
+.launch-guidance span {
+	font-size: 0.6rem;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	color: var(--ink-muted);
+}
+
+.launch-guidance strong {
+	font-size: 1rem;
+	color: var(--ink-strong);
+}
+
+.launch-controls {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 0.45rem;
+}
+
+.launch-button {
+	appearance: none;
+	padding: 0.55rem 0.6rem;
+	border: 1px solid rgba(140, 180, 240, 0.22);
+	border-radius: 0.55rem;
+	background: rgba(10, 22, 42, 0.7);
+	color: var(--ink);
+	font: inherit;
+	font-size: 0.72rem;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	cursor: pointer;
+	transition:
+		background 140ms ease,
+		border-color 140ms ease,
+		color 140ms ease;
+}
+
+.launch-button:hover:not(:disabled),
+.launch-button:focus-visible {
+	border-color: var(--accent);
+	color: var(--ink-strong);
+	background: rgba(90, 150, 255, 0.16);
+	outline: none;
+}
+
+.launch-button:disabled {
+	opacity: 0.35;
+	cursor: not-allowed;
+}
+
+.launch-button-primary {
+	border-color: transparent;
+	background: linear-gradient(180deg, #b8dcff, #6fb4ff);
+	color: #04101f;
+	font-weight: 600;
+}
+
+.launch-button-primary:hover:not(:disabled),
+.launch-button-primary:focus-visible {
+	color: #04101f;
+}
+
+.launch-keys {
+	margin: 0;
+	font-size: 0.66rem;
+	line-height: 1.5;
+	color: var(--ink-muted);
+}
+
+.launch-actions {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	margin-top: auto;
+}
+
 @keyframes menu-reveal {
 	from {
 		opacity: 0;
@@ -429,6 +575,10 @@ body {
 	.assembly-summary {
 		position: static;
 	}
+
+	.launch-hud {
+		width: min(20rem, 42vw);
+	}
 }
 
 @media (max-width: 760px) {
@@ -451,6 +601,15 @@ body {
 		border-right: 0;
 	}
 
+	.launch-hud {
+		width: 100%;
+		max-height: 62dvh;
+		margin-left: 0;
+		padding: 1rem 1.2rem 1.4rem;
+		background: rgba(4, 9, 20, 0.94);
+		border-left: 0;
+	}
+
 	.menu-tagline {
 		max-width: none;
 	}
@@ -458,7 +617,8 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
 	.menu-overlay,
-	.assembly-overlay {
+	.assembly-overlay,
+	.launch-hud {
 		animation: none;
 	}
 

@@ -107,10 +107,10 @@ The transition between views is a **camera/frame change**, not a teleport. Compr
 
 - **Thrust:** `F = throttle * thrust_max(stage)`; fuel burns at `mdot = F / (Isp * g0)`.
 - **Mass:** `m = dry_mass + remaining_propellant + payload`; acceleration follows `a = F/m + gravity + drag`.
-- **Staging:** discarding a stage removes its dry mass and stops its thrust; the next stage ignites.
+- **Staging:** discarding a stage removes its dry mass and stops its thrust; the next stage ignites. The current build models a single stage, so the stage control is a placeholder until multi-stage vehicles arrive.
 - **Atmosphere:** exponential density model; drag `F_d = 0.5 * ρ * v² * Cd * A`, acting opposite the velocity vector. Density falls with altitude, so the gravity turn becomes efficient above the thick lower atmosphere.
-- **Gravity turn:** the HUD coaches the player to pitch over gradually; rotating too early wastes Δv to drag, too late wastes it fighting gravity.
-- **Orbital insertion:** success is measured by the resulting apoapsis/periapsis. The game surfaces the numbers so the player can see *why* the insertion succeeded or failed.
+- **Gravity turn:** the HUD coaches the player to pitch over gradually; rotating too early wastes Δv to drag, too late wastes it fighting gravity. The guidance line leads the velocity vector so following it produces a working gravity turn.
+- **Orbital insertion:** the vehicle must reach roughly 100 km with orbital velocity and a mostly horizontal trajectory. For playability, a **circularization assist** then finishes the insertion so the player gets a stable, readable orbit; the HUD still shows altitude, apoapsis, periapsis, and speed so the result is explainable.
 
 Gameplay-only part values (thrust, Isp, dry mass, propellant, cost) live in `gameplay_tuning.json` and are clearly marked as tuning, not NASA specifications.
 

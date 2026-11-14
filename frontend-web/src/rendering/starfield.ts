@@ -32,6 +32,7 @@ export function drawStarfield(
 	time_seconds: number,
 	drift_x: number,
 	drift_y: number,
+	opacity = 1,
 ): void {
 	for (const star of stars) {
 		const parallax_x = drift_x * star.depth;
@@ -41,7 +42,7 @@ export function drawStarfield(
 		const twinkle =
 			0.65 +
 			0.35 * Math.sin(time_seconds * star.twinkle_speed + star.twinkle_offset);
-		const alpha = star.base_alpha * twinkle;
+		const alpha = star.base_alpha * twinkle * opacity;
 
 		ctx.beginPath();
 		ctx.fillStyle = `rgba(220, 234, 255, ${alpha})`;
