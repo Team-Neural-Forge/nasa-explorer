@@ -38,6 +38,8 @@
 		".opencode/rules/libreoffice.md",
 		".opencode/rules/obsidian.md",
 		".opencode/rules/structure.md",
-		".opencode/rules/variable.md"
+		".opencode/rules/variable.md",
+		".opencode/rules/env_example.md",
+		".opencode/rules/git_workflow.md"
 	]
 }
