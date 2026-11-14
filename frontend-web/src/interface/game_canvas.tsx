@@ -1,13 +1,49 @@
 import { useEffect, useRef } from "react";
 import { GameLoop } from "../engine/game_loop";
+import type { GameWorld } from "../engine/game_world";
+import { KeyboardState } from "../engine/input";
+import { LaunchWorld } from "../rendering/launch_world";
 import { LiveWorld } from "../rendering/live_world";
+import { STARTING_BUDGET_USD_M } from "../state/economy";
+import { useGameState } from "../state/game_state";
+import { launch_actions } from "../state/launch_control";
+import { computeRocketStats } from "../state/rocket_config";
 
 export function GameCanvas() {
+	const { scene, selection } = useGameState();
 	const canvas_ref = useRef<HTMLCanvasElement | null>(null);
+	const input_ref = useRef<KeyboardState | null>(null);
+	const live_world_ref = useRef<LiveWorld | null>(null);
+	const active_world_ref = useRef<GameWorld | null>(null);
+
+	if (!input_ref.current) {
+		input_ref.current = new KeyboardState();
+	}
+	if (!live_world_ref.current) {
+		live_world_ref.current = new LiveWorld();
+	}
+	if (!active_world_ref.current) {
+		active_world_ref.current = live_world_ref.current;
+	}
+
+	useEffect(() => {
+		if (scene === "launch" && input_ref.current) {
+			const stats = computeRocketStats(selection, STARTING_BUDGET_USD_M);
+			active_world_ref.current = new LaunchWorld(stats, input_ref.current);
+			return () => {
+				launch_actions.current = null;
+			};
+		}
+
+		active_world_ref.current = live_world_ref.current;
+		launch_actions.current = null;
+		return undefined;
+	}, [scene, selection]);
 
 	useEffect(() => {
 		const canvas = canvas_ref.current;
-		if (!canvas) {
+		const input = input_ref.current;
+		if (!canvas || !input) {
 			return;
 		}
 		const context = canvas.getContext("2d");
@@ -30,13 +66,17 @@ export function GameCanvas() {
 		resize();
 		const observer = new ResizeObserver(resize);
 		observer.observe(canvas);
+		input.attach(window);
 
-		const world = new LiveWorld();
 		const loop = new GameLoop({
 			update: (dt_seconds) => {
-				world.update(dt_seconds);
+				active_world_ref.current?.update(dt_seconds);
 			},
 			render: () => {
+				const world = active_world_ref.current;
+				if (!world) {
+					return;
+				}
 				context.clearRect(0, 0, width, height);
 				world.draw(context, width, height);
 			},
@@ -45,6 +85,7 @@ export function GameCanvas() {
 
 		return () => {
 			observer.disconnect();
+			input.detach(window);
 			loop.stop();
 		};
 	}, []);

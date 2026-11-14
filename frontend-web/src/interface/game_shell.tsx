@@ -1,7 +1,7 @@
 import { useGameState } from "../state/game_state";
 import { AssemblyPanel } from "./assembly/assembly_panel";
 import { GameCanvas } from "./game_canvas";
-import { LaunchPlaceholder } from "./launch/launch_placeholder";
+import { LaunchHud } from "./launch/launch_hud";
 import { MenuOverlay } from "./menu/menu_overlay";
 
 export function GameShell() {
@@ -13,7 +13,7 @@ export function GameShell() {
 			<div className="game-ui">
 				{scene === "menu" ? <MenuOverlay /> : null}
 				{scene === "assembly" ? <AssemblyPanel /> : null}
-				{scene === "launch" ? <LaunchPlaceholder /> : null}
+				{scene === "launch" ? <LaunchHud /> : null}
 			</div>
 		</main>
 	);
