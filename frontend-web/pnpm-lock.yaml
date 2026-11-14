@@ -194,6 +194,9 @@ importers:
       '@rsbuild/plugin-react':
         specifier: ^2.1.1
         version: 2.1.1(@rsbuild/core@2.3.2)(@rspack/core@2.3.2(@swc/helpers@0.5.24))
+      '@types/matter-js':
+        specifier: ^0.20.2
+        version: 0.20.2
       '@types/node':
         specifier: ^26.6.6
         version: 26.6.6
@@ -430,6 +433,9 @@ packages:
 
   '@tybys/wasm-util@0.10.4':
     resolution: {integrity: sha512-W3c4gRigFS0T/Ma4qIYF3GDAc5AQdHb1yL5znJT1Zv1YaD9Kitx656wBjvr19qbiosmZT8lWDM5BEMynUqX65A==}
+
+  '@types/matter-js@0.20.2':
+    resolution: {integrity: sha512-3PPKy3QxvZ89h9+wdBV2488I1JLVs7DEpIkPvgO8JC1mUdiVSO37ZIvVctOTD7hIq8OAL2gJ3ugGSuUip6DhCw==}
 
   '@types/node@26.6.6':
     resolution: {integrity: sha512-MzQj+8Kx3XI40OmUAE6Qoh58ZMNstNNMwn2nfd3qWsfe7nDNSqJNzes4njhz6AHwrSHOffSLwXU6yb474Q4aog==}
@@ -830,6 +836,8 @@ snapshots:
     dependencies:
       tslib: 2.9.1
     optional: true
+
+  '@types/matter-js@0.20.2': {}
 
   '@types/node@26.6.6':
     dependencies:

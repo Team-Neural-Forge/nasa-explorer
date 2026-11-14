@@ -3,8 +3,8 @@ import { GameLoop } from "../engine/game_loop";
 import type { GameWorld } from "../engine/game_world";
 import { KeyboardState } from "../engine/input";
 import { CruiseWorld } from "../rendering/cruise_world";
+import { EarthSurfaceWorld } from "../rendering/earth_surface_world";
 import { LaunchWorld } from "../rendering/launch_world";
-import { LiveWorld } from "../rendering/live_world";
 import { LunarLandingWorld } from "../rendering/lunar_landing_world";
 import { OrbitWorld } from "../rendering/orbit_world";
 import { cruise_actions } from "../state/cruise_control";
@@ -19,20 +19,22 @@ export function GameCanvas() {
 	const { scene, selection, orbit_state } = useGameState();
 	const canvas_ref = useRef<HTMLCanvasElement | null>(null);
 	const input_ref = useRef<KeyboardState | null>(null);
-	const live_world_ref = useRef<LiveWorld | null>(null);
+	const live_world_ref = useRef<EarthSurfaceWorld | null>(null);
 	const active_world_ref = useRef<GameWorld | null>(null);
 
 	if (!input_ref.current) {
 		input_ref.current = new KeyboardState();
 	}
 	if (!live_world_ref.current) {
-		live_world_ref.current = new LiveWorld();
+		if (input_ref.current)
+			live_world_ref.current = new EarthSurfaceWorld(input_ref.current);
 	}
 	if (!active_world_ref.current) {
 		active_world_ref.current = live_world_ref.current;
 	}
 
 	useEffect(() => {
+		live_world_ref.current?.setPlaying(scene === "earth");
 		launch_actions.current = null;
 		orbit_actions.current = null;
 		cruise_actions.current = null;

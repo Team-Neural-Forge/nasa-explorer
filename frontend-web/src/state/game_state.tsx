@@ -46,7 +46,7 @@ export function GameStateProvider({ children }: { children: ReactNode }) {
 
 	const beginMission = useCallback(() => {
 		setScene((current) =>
-			canTransition(current, "assembly") ? "assembly" : current,
+			canTransition(current, "earth") ? "earth" : current,
 		);
 	}, []);
 
@@ -56,7 +56,7 @@ export function GameStateProvider({ children }: { children: ReactNode }) {
 
 	const returnToAssembly = useCallback(() => {
 		setScene((current) =>
-			canTransition(current, "assembly") ? "assembly" : current,
+			canTransition(current, "earth") ? "earth" : current,
 		);
 	}, []);
 
