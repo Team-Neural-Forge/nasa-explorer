@@ -41,6 +41,7 @@
 		".opencode/rules/variable.md",
 		".opencode/rules/env_example.md",
 		".opencode/rules/git_workflow.md",
-		".opencode/rules/responsiveness.md"
+		".opencode/rules/responsiveness.md",
+		".opencode/rules/approval.md"
 	]
 }

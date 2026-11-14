@@ -11,6 +11,7 @@ AI configuration rules for this project live in the rule files below. Load them 
 - `.opencode/rules/env_example.md` — keep `.env.example` in sync with env-related code
 - `.opencode/rules/git_workflow.md` — commit, PR, checks, and merge flow
 - `.opencode/rules/responsiveness.md` — always plan for responsive frontend UI
+- `.opencode/rules/approval.md` — ask for user approval before commit/push/PR/merge after code changes
 
 Kilocode loads the same rules from `.kilo/rules/`.
 Claude Code loads the same rules from `.claude/rules/` (via `CLAUDE.md` → `@AGENTS.md`).
