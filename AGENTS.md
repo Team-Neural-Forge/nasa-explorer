@@ -8,6 +8,8 @@ AI configuration rules for this project live in the rule files below. Load them 
 - `.opencode/rules/variable.md` — variable naming conventions
 - `.opencode/rules/libreoffice.md` — **only** for LibreOffice MCP operations
 - `.opencode/rules/obsidian.md` — **only** for Obsidian MCP operations
+- `.opencode/rules/env_example.md` — keep `.env.example` in sync with env-related code
+- `.opencode/rules/git_workflow.md` — commit, PR, checks, and merge flow
 
 Kilocode loads the same rules from `.kilocode/rules/`.
 
