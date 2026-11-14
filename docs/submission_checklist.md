@@ -50,4 +50,8 @@ Use this list to prepare the final NASA Space Apps Challenge submission.
 
 ## Team
 
-- [ ] Team name and members — _TODO_
+- [x] Team name and members
+  - Mohammad Hisan (@mohammadabkarinh) — United States — Team Owner
+  - Soo Zhan Thong (@szt_00) — Malaysia
+  - Bulbul Hassan (@supernova77) — India
+  - Harshit Bansal (@survivoro) — India

@@ -5,6 +5,7 @@
 		"allow": [
 			"Read(*)",
 			"Edit(*)",
+			"Write(*)",
 			"Bash(*)"
 		]
 	}
