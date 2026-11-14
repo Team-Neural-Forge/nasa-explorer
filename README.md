@@ -142,12 +142,12 @@ This project is built with AI assistance (OpenCode, Kilocode, Claude Code) and M
 
 ## Team
 
-| Name | GitHub | Country | Role |
+| Name | NASA Space Apps | Country | Role |
 |---|---|---|---|
-| Mohammad Hisan | [@mohammadabkarinh](https://github.com/mohammadabkarinh) | United States | Team Owner |
-| Soo Zhan Thong | [@szt_00](https://github.com/szt_00) | Malaysia | Member |
-| Bulbul Hassan | [@supernova77](https://github.com/supernova77) | India | Member |
-| Harshit Bansal | [@survivoro](https://github.com/survivoro) | India | Member |
+| Mohammad Hisan | mohammadabkarinh | United States | Team Owner |
+| Soo Zhan Thong | szt_00 | Malaysia | Member |
+| Bulbul Hassan | supernova77 | India | Member |
+| Harshit Bansal | survivoro | India | Member |
 
 ## License
 
