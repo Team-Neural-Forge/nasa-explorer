@@ -23,6 +23,8 @@ export type LaunchVehicleOption = {
 	id: LaunchVehicleId;
 	name: string;
 	vehicle_class: string;
+	height_m: number;
+	diameter_m: number;
 	cost_usd_m: number;
 	dry_mass_kg: number;
 	propellant_kg: number;
@@ -107,6 +109,8 @@ export function getLaunchVehicleOptions(): LaunchVehicleOption[] {
 				id,
 				name: catalog?.name ?? id,
 				vehicle_class: catalog?.class ?? "unknown",
+				height_m: catalog?.height_m ?? 50,
+				diameter_m: catalog?.diameter_m ?? 3.7,
 				cost_usd_m: stats.cost_usd_m,
 				dry_mass_kg: stats.dry_mass_kg,
 				propellant_kg: stats.propellant_kg,

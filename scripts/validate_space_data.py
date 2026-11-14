@@ -79,6 +79,12 @@ def check_catalogs() -> None:
         for entry in entries or []:
             require("id" in entry, f"catalog/{name}: entry missing id")
             require("source_url" in entry, f"catalog/{name}: {entry.get('id', '?')} missing source_url")
+            if name == "launch_vehicles.json":
+                for key in ("height_m", "diameter_m"):
+                    require(
+                        entry.get(key, 0) > 0,
+                        f"catalog/{name}: {entry.get('id', '?')} needs positive {key}",
+                    )
 
 
 def check_gameplay_tuning() -> None:
