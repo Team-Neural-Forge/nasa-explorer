@@ -79,8 +79,8 @@ jobs:
       - name: Backend dependency audit
         working-directory: backend
         run: uv audit
+      - name: Install gitleaks
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/gitleaks/gitleaks/master/install.sh | sh -s -- -b /usr/local/bin
       - name: "Secret scan: gitleaks"
-        uses: gitleaks/gitleaks-action@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITLEAKS_ENABLE_UPLOAD_ARTIFACT: "false"
+        run: gitleaks detect --source . --redact -v
