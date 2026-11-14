@@ -11,11 +11,12 @@
 
 | # | Dataset / resource | Source (URL) | What we use it for |
 |---|---|---|---|
-| 1 | NSSDCA Planetary Fact Sheets | https://nssdc.gsfc.nasa.gov/planetary/factsheet/ | Body mass, radius, GM/gravity, semi-major axis, eccentricity, inclination, orbital period, temperature, pressure, and albedo → `data/bodies.json` |
-| 2 | JPL Horizons | https://ssd.jpl.nasa.gov/api/horizons.api | Real orbital elements and leg/travel references → `data/transfer_legs.json` (approximate gameplay values; regenerate with `scripts/build_space_data.py`) |
+| 1 | NSSDCA Planetary Fact Sheets | https://nssdc.gsfc.nasa.gov/planetary/factsheet/ | Body mass, radius, GM/gravity, semi-major axis, eccentricity, inclination, orbital period, temperature, pressure, and albedo → `data/bodies.json`. `GM` and mass drive the **full numerical gravity model**; surface gravity drives surface movement and landing limits. |
+| 2 | JPL Horizons | https://ssd.jpl.nasa.gov/api/horizons.api | Real orbital elements and leg/travel references → `data/transfer_legs.json` (approximate gameplay values; regenerate with `scripts/build_space_data.py`). Used to validate simulated travel times. |
 | 3 | NASA Image and Video Library | https://images-api.nasa.gov | Destination imagery for cards, reveals, and quiz visuals → `GET /nasa/media/search` (+ bundled fallbacks) |
 | 4 | NASA Astronomy Picture of the Day (new endpoint) | https://science.nasa.gov/wp-json/wp/v2/apod-basic | Daily NASA fact/loading screen → `GET /nasa/facts/daily` |
 | 5 | NSSDC Master Catalog, NASA TechPort, KSC ELV Performance | https://nssdc.gsfc.nasa.gov/nmc/ · https://techport.nasa.gov/api/projects?format=json · https://elvperf.ksc.nasa.gov/ | Curated spacecraft, instruments, and launch-vehicle catalogs → `data/catalog/*.json` |
+| 6 | NASA Science mission and topic pages | https://science.nasa.gov/ (per-topic URLs on each card) | Science cards, far-side discoveries, and quiz explanations → `data/science_cards.json`, `data/quizzes.json`. Every claim carries its own source URL. |
 
 > **Approximations and tools.** The outer-solar legs (Mars → Europa, Mars → Enceladus) are filled with an idealised Hohmann approximation computed from NSSDCA semi-major axes (each leg carries a `method` field and `approximate: true`); they ignore gravity assists, so real tours are cheaper. **GMAT is referenced as design inspiration only and is not run** at build or runtime.
 
@@ -27,11 +28,15 @@ No NASA-partner datasets are currently used. If partner data is added, list it h
 
 ## How the data is used
 
-- **Physics and movement** — real surface gravity and body constants from NSSDCA drive scaled `matter.js` gravity, so each world feels physically distinct.
-- **Journey pace and scoring** — Horizons-derived leg metrics inform travel time and distance for Earth → Moon → Mars → Europa / Enceladus / Living on Mars.
-- **Mission store** — curated spacecraft, instruments, and launch vehicles provide authentic choices with gameplay trade-offs.
-- **Learning** — quizzes and movement-triggered facts draw on the cited NASA pages.
+- **Physics and movement** — body mass and `GM` from NSSDCA feed the full numerical gravity model, so gravity and trajectories are physical. Surface gravity drives walking, rovers, and landing limits.
+- **Journey pace and scoring** — Horizons-derived leg metrics provide reference travel times for Earth → Moon → Mars → Europa / Enceladus / Living on Mars, and validate the integrator.
+- **Earth-side assembly** — curated spacecraft, instruments, and launch vehicles provide authentic choices with gameplay trade-offs.
+- **Learning** — science cards, far-side discoveries, and quizzes draw on the cited NASA pages.
 - **Art and atmosphere** — NASA imagery (credited) supports destination cards and reveals.
+
+## Gameplay values (not NASA data)
+
+Some numbers are tuned for play rather than taken from NASA: spacecraft dry mass, thrust, specific impulse, propellant load, part costs, budget growth, drag coefficients, and safe-landing thresholds. These live in `data/gameplay_tuning.json` (and are marked as gameplay values in [`flight_model.md`](flight_model.md)). They are derived from public specs where possible but must **not** be presented as official NASA figures.
 
 ## Attribution
 
