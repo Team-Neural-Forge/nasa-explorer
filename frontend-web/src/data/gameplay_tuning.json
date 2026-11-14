@@ -1,0 +1,122 @@
+{
+	"meta": {
+		"description": "Gameplay-only tuning values for Earth-side rocket assembly. These are NOT NASA specifications; real vehicle references live in data/catalog/*.json.",
+		"fetched_at": "2026-11-14",
+		"note": "Cost is in millions of USD, mass in kg, thrust in kN, Isp in seconds. Tuned for play, not engineering accuracy."
+	},
+	"economy": {
+		"starting_budget_usd_m": 500,
+		"accrual_usd_m_per_minute": 2.5
+	},
+	"destinations": [
+		{
+			"id": "low_earth_orbit",
+			"name": "Low Earth orbit",
+			"required_delta_v_m_s": 9200,
+			"note": "Includes gravity and drag losses from the surface."
+		},
+		{
+			"id": "moon",
+			"name": "Moon",
+			"required_delta_v_m_s": 12500,
+			"note": "Simplified budget from the surface to lunar arrival."
+		},
+		{
+			"id": "mars",
+			"name": "Mars",
+			"required_delta_v_m_s": 16000,
+			"note": "Simplified interplanetary budget; real missions use gravity assists."
+		},
+		{
+			"id": "europa",
+			"name": "Europa",
+			"required_delta_v_m_s": 20000,
+			"note": "Simplified outer-system budget; real missions use gravity assists."
+		},
+		{
+			"id": "enceladus",
+			"name": "Enceladus",
+			"required_delta_v_m_s": 23000,
+			"note": "Simplified outer-system budget; real missions use gravity assists."
+		}
+	],
+	"launch_vehicles": {
+		"small_lift": {
+			"cost_usd_m": 45,
+			"dry_mass_kg": 1500,
+			"propellant_kg": 45000,
+			"thrust_kn": 900,
+			"isp_s": 290,
+			"reliability": 0.9
+		},
+		"medium_lift": {
+			"cost_usd_m": 120,
+			"dry_mass_kg": 6000,
+			"propellant_kg": 300000,
+			"thrust_kn": 5000,
+			"isp_s": 320,
+			"reliability": 0.93
+		},
+		"sls_block_1": {
+			"cost_usd_m": 320,
+			"dry_mass_kg": 85000,
+			"propellant_kg": 2500000,
+			"thrust_kn": 39000,
+			"isp_s": 380,
+			"reliability": 0.95
+		},
+		"sls_block_1b": {
+			"cost_usd_m": 420,
+			"dry_mass_kg": 90000,
+			"propellant_kg": 2800000,
+			"thrust_kn": 42000,
+			"isp_s": 385,
+			"reliability": 0.95
+		}
+	},
+	"spacecraft": {
+		"orion": {
+			"cost_usd_m": 120,
+			"dry_mass_kg": 10500
+		},
+		"europa_clipper": {
+			"cost_usd_m": 160,
+			"dry_mass_kg": 6000
+		},
+		"perseverance": {
+			"cost_usd_m": 140,
+			"dry_mass_kg": 1025
+		},
+		"cassini": {
+			"cost_usd_m": 180,
+			"dry_mass_kg": 2500
+		}
+	},
+	"instruments": {
+		"europa_imaging_system": {
+			"mass_kg": 32,
+			"power_w": 25,
+			"cost_usd_m": 45
+		},
+		"maspex": {
+			"mass_kg": 40,
+			"power_w": 50,
+			"cost_usd_m": 60
+		},
+		"reason": {
+			"mass_kg": 25,
+			"power_w": 40,
+			"cost_usd_m": 55
+		},
+		"pixl": {
+			"mass_kg": 5,
+			"power_w": 15,
+			"cost_usd_m": 30
+		},
+		"sherloc": {
+			"mass_kg": 8,
+			"power_w": 20,
+			"cost_usd_m": 35
+		}
+	}
+}

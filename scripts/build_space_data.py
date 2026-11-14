@@ -171,7 +171,12 @@ def build_horizons_snapshot() -> None:
 
 
 def mirror_to_frontend() -> None:
-    mirrored = ["bodies.json", "transfer_legs.json", "quizzes.json"]
+    mirrored = [
+        "bodies.json",
+        "transfer_legs.json",
+        "quizzes.json",
+        "gameplay_tuning.json",
+    ]
     catalogs = ["launch_vehicles.json", "instruments.json", "spacecraft.json"]
     for name in mirrored:
         write_json(FRONTEND_DATA_DIR / name, read_json(DATA_DIR / name))
