@@ -166,6 +166,9 @@ importers:
 
   .:
     dependencies:
+      astronomy-engine:
+        specifier: ^2.1.19
+        version: 2.1.19
       gsap:
         specifier: ^3.15.1
         version: 3.15.1
@@ -580,6 +583,9 @@ packages:
     engines: {node: '>=0.4.0'}
     hasBin: true
 
+  astronomy-engine@2.1.19:
+    resolution: {integrity: sha512-8yWKNf7UeNbH458h3sAJ6ZgAjE5jTXp/mNNRFoC20j2SHwZIjAQeEsBB2Q3uCFRaTCCJRv33K2XhkhZQMXoX6w==}
+
   colorjs.io@0.6.1:
     resolution: {integrity: sha512-8lyR2wHzuIykCpqHKgluGsqQi5iDm3/a2IgP2GBZrasn2sBRkE4NOGsglZxWLs/jZQoNkmA/KM/8NV16rLUdBg==}
 
@@ -918,6 +924,8 @@ snapshots:
       acorn: 8.19.0
 
   acorn@8.19.0: {}
+
+  astronomy-engine@2.1.19: {}
 
   colorjs.io@0.6.1: {}
 
