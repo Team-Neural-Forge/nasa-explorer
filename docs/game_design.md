@@ -1,6 +1,6 @@
 # Game Design — NASA Explorer
 
-> The Inquisitive Explorer of NASA: a physics-based adventure that teaches mission design by letting players live it.
+> NASAExplorer: a physics-based adventure that teaches mission design by letting players live it.
 
 ## Concept
 
