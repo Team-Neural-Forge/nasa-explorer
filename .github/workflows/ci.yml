@@ -49,6 +49,14 @@ jobs:
       - name: Typecheck
         run: uv run ty check
 
+  data:
+    name: NASA data validation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate NASA data snapshots
+        run: python3 scripts/validate_space_data.py
+
   security:
     name: Security checks
     runs-on: ubuntu-latest
