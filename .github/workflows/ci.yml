@@ -1,0 +1,82 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  frontend:
+    name: Frontend lint, format, typecheck
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend-web
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: frontend-web/pnpm-lock.yaml
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Lint and format check
+        run: pnpm check
+      - name: Typecheck
+        run: pnpm typecheck
+
+  backend:
+    name: Backend lint, format, typecheck
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+      - name: Install dependencies
+        run: uv sync --locked
+      - name: Lint check
+        run: uv run ruff check .
+      - name: Format check
+        run: uv run ruff format --check .
+      - name: Typecheck
+        run: uv run ty check
+
+  security:
+    name: Security checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: frontend-web/pnpm-lock.yaml
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+      - name: Install frontend dependencies
+        working-directory: frontend-web
+        run: pnpm install --frozen-lockfile
+      - name: Install backend dependencies
+        working-directory: backend
+        run: uv sync --locked
+      - name: Frontend dependency audit
+        working-directory: frontend-web
+        run: pnpm audit --prod
+      - name: Backend dependency audit
+        working-directory: backend
+        run: uv audit
+      - name: Secret scan: gitleaks
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_ENABLE_UPLOAD_ARTIFACT: "false"
