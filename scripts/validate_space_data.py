@@ -90,6 +90,14 @@ def check_gameplay_tuning() -> None:
             economy.get("starting_budget_usd_m", 0) > 0,
             "gameplay_tuning.json: starting budget must be positive",
         )
+    descent_stage = payload.get("descent_stage")
+    require(isinstance(descent_stage, dict), "gameplay_tuning.json: missing descent_stage")
+    if isinstance(descent_stage, dict):
+        for key in ("dry_mass_kg", "propellant_kg", "thrust_kn", "isp_s"):
+            require(
+                descent_stage.get(key, 0) > 0,
+                f"gameplay_tuning.json: descent_stage needs positive {key}",
+            )
     for group in ("launch_vehicles", "spacecraft", "instruments"):
         entries = payload.get(group)
         require(isinstance(entries, dict) and entries, f"gameplay_tuning.json: missing {group}")

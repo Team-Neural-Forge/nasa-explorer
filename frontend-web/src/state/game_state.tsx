@@ -26,7 +26,9 @@ type GameStateValue = {
 	beginLaunch: () => void;
 	beginOrbit: (state: OrbitInsertion) => void;
 	beginCruise: () => void;
+	beginLanding: () => void;
 	returnToOrbit: () => void;
+	returnToCruise: () => void;
 	returnToLaunch: () => void;
 	setLaunchVehicle: (id: LaunchVehicleId) => void;
 	setSpacecraft: (id: SpacecraftId) => void;
@@ -77,9 +79,21 @@ export function GameStateProvider({ children }: { children: ReactNode }) {
 		);
 	}, []);
 
+	const beginLanding = useCallback(() => {
+		setScene((current) =>
+			canTransition(current, "landing") ? "landing" : current,
+		);
+	}, []);
+
 	const returnToOrbit = useCallback(() => {
 		setScene((current) =>
 			canTransition(current, "orbit") ? "orbit" : current,
+		);
+	}, []);
+
+	const returnToCruise = useCallback(() => {
+		setScene((current) =>
+			canTransition(current, "cruise") ? "cruise" : current,
 		);
 	}, []);
 
@@ -129,7 +143,9 @@ export function GameStateProvider({ children }: { children: ReactNode }) {
 			beginLaunch,
 			beginOrbit,
 			beginCruise,
+			beginLanding,
 			returnToOrbit,
+			returnToCruise,
 			returnToLaunch,
 			setLaunchVehicle,
 			setSpacecraft,
@@ -146,7 +162,9 @@ export function GameStateProvider({ children }: { children: ReactNode }) {
 			beginLaunch,
 			beginOrbit,
 			beginCruise,
+			beginLanding,
 			returnToOrbit,
+			returnToCruise,
 			returnToLaunch,
 			setLaunchVehicle,
 			setSpacecraft,

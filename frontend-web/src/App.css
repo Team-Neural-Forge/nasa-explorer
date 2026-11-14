@@ -622,6 +622,14 @@ body {
 	color: var(--ink-muted);
 }
 
+.landing-danger {
+	color: #ff9b9b;
+}
+
+.landing-autopilot {
+	grid-column: 1 / -1;
+}
+
 @keyframes menu-reveal {
 	from {
 		opacity: 0;

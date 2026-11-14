@@ -2,6 +2,7 @@ import instrumentsJson from "../data/catalog/instruments.json";
 import launchVehiclesJson from "../data/catalog/launch_vehicles.json";
 import spacecraftJson from "../data/catalog/spacecraft.json";
 import tuningJson from "../data/gameplay_tuning.json";
+import { getBodyConstants } from "../engine/gravity_bodies";
 
 const tuning = tuningJson;
 const STANDARD_GRAVITY = 9.80665;
@@ -53,6 +54,16 @@ export type DestinationOption = {
 	name: string;
 	required_delta_v_m_s: number;
 	note: string;
+};
+
+export type LanderStats = {
+	dry_mass_kg: number;
+	propellant_kg: number;
+	total_mass_kg: number;
+	thrust_n: number;
+	isp_s: number;
+	twr_moon: number;
+	delta_v_m_s: number;
 };
 
 export type RocketStats = {
@@ -225,6 +236,35 @@ export function computeRocketStats(
 			delta_v_m_s >= required_delta_v_m_s &&
 			within_budget,
 		warnings,
+	};
+}
+
+export function computeLanderStats(selection: RocketSelection): LanderStats {
+	const stage = tuning.descent_stage;
+	const spacecraft = tuning.spacecraft[selection.spacecraft_id];
+	const instruments = selection.instrument_ids.map(
+		(id) => tuning.instruments[id],
+	);
+	const instrument_mass_kg = instruments.reduce(
+		(total, instrument) => total + instrument.mass_kg,
+		0,
+	);
+	const dry_mass_kg =
+		stage.dry_mass_kg + spacecraft.dry_mass_kg + instrument_mass_kg;
+	const propellant_kg = stage.propellant_kg;
+	const total_mass_kg = dry_mass_kg + propellant_kg;
+	const thrust_n = stage.thrust_kn * 1000;
+	const moon_gravity = getBodyConstants("moon").surface_gravity_m_s2;
+
+	return {
+		dry_mass_kg,
+		propellant_kg,
+		total_mass_kg,
+		thrust_n,
+		isp_s: stage.isp_s,
+		twr_moon: thrust_n / (total_mass_kg * moon_gravity),
+		delta_v_m_s:
+			stage.isp_s * STANDARD_GRAVITY * Math.log(total_mass_kg / dry_mass_kg),
 	};
 }
 

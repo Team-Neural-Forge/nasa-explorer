@@ -83,6 +83,7 @@ Travel is simulated with realistic durations (see [`flight_model.md`](flight_mod
 - **Mechanic:** Landing within velocity/angle limits; jumping and landing tuned by lunar gravity.
 - **Learning focus:** Gravity differences, descent burns, and how lunar exploration works.
 - **Failure:** A hard landing destroys the vehicle and explains the safe thresholds.
+- **Status:** approach and powered descent are implemented; surface exploration and the whole-planet view are next.
 - **NASA facts:** _TODO._
 
 ### 4. Mars

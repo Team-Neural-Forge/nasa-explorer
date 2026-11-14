@@ -3,6 +3,7 @@ const TRACKED_CODES = new Set([
 	"Space",
 	"KeyR",
 	"KeyE",
+	"KeyP",
 	"BracketLeft",
 	"BracketRight",
 	"ArrowUp",

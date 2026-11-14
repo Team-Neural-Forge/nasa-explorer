@@ -141,6 +141,10 @@ Illustrative safe-descent limits (tuned during implementation):
 | Europa | 1.315 | ≤ 2 m/s |
 | Enceladus | 0.113 | ≤ 1 m/s |
 
+### Current implementation note (lunar descent)
+
+The lunar descent build starts `2 km` above the surface with a small horizontal drift. Safe touchdown requires vertical ≤ `3 m/s`, horizontal ≤ `1.5 m/s`, and tilt ≤ `15°`. An optional **auto-land** assist flies the same physics for players who want to watch a nominal descent; manual control uses throttle and pitch.
+
 ## EVA and surface vehicles
 
 - **EVA:** the astronaut is a rigid body with a small thrust/impulse budget; movement follows microgravity physics near the vehicle. Re-entry into the vehicle requires proximity and low relative velocity.

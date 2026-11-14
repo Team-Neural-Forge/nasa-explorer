@@ -205,11 +205,11 @@ Mission dimensions such as **communications** and **mission lifetime** are inten
 
 Implemented in the current build:
 
-- Live menu, Earth-only assembly with budget trade-offs, launch and ascent, orbital insertion, low Earth orbit with time warp, EVA enter/exit, and the Earth→Moon cruise with time warp.
+- Live menu, Earth-only assembly with budget trade-offs, launch and ascent, orbital insertion, low Earth orbit with time warp, EVA enter/exit, the Earth→Moon cruise with time warp, and lunar descent and landing.
 
 Next up:
 
-- Lunar approach and landing, two planet views, and optional quizzes.
+- Moon surface exploration, the whole-planet view, optional quizzes, and the Mars journey.
 
 Stubbed or deferred:
 
