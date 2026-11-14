@@ -22,6 +22,7 @@ flowchart TD
 | 0b | Rocket assembly (Earth) | Part selection, mass / thrust / cost trade-offs | Spacecraft, instruments, launch vehicle, mass, budget |
 | 1 | Rocket launch | Rotation, power/throttle, staging | TWR, gravity turn, staging, orbital insertion |
 | 2 | Low Earth orbit | Orbital motion, EVA enter/exit | Orbits, free-fall, leaving the vehicle |
+| 2.5 | Cruise (Earth → Moon) | Time warp | Real distances, transfer time, time acceleration |
 | 3 | Moon | Low-gravity surface traversal, landing | Gravity differences, powered descent, lunar exploration |
 | 4 | Mars | Heavier-gravity surface traversal, rover | Interplanetary travel, surface conditions |
 | 5a | Europa | Swimming | Subsurface oceans and icy moons |
@@ -65,6 +66,14 @@ Travel is simulated with realistic durations (see [`flight_model.md`](flight_mod
 - **Gameplay:** Adjust to microgravity movement; leave and re-enter the rocket.
 - **Mechanic:** Orbital motion and momentum control; EVA in free-fall.
 - **Learning focus:** Why orbiting is continuous free-fall, and how spacecraft stay in space.
+- **NASA facts:** _TODO._
+
+### 2.5. Cruise (Earth → Moon)
+
+- **Narrative:** The spacecraft leaves low Earth orbit for the Moon.
+- **Gameplay:** Set course and accelerate time; the distance is real and the clock can run up to ×100,000.
+- **Mechanic:** The `384,400 km` leg at a `~3 day` transfer time, advanced by time warp (see [`flight_model.md`](flight_model.md)).
+- **Learning focus:** Distance, transfer duration, and why time acceleration is needed for real spaceflight.
 - **NASA facts:** _TODO._
 
 ### 3. Moon
