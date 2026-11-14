@@ -1,11 +1,12 @@
 import "./App.css";
+import { GameShell } from "./interface/game_shell";
+import { GameStateProvider } from "./state/game_state";
 
 const App = () => {
 	return (
-		<div className="content">
-			<h1>Rsbuild with React</h1>
-			<p>Start building amazing things with Rsbuild.</p>
-		</div>
+		<GameStateProvider>
+			<GameShell />
+		</GameStateProvider>
 	);
 };
 
