@@ -35,11 +35,11 @@
 		}
 	},
 	"instructions": [
-		".kilocode/rules/libreoffice.md",
-		".kilocode/rules/obsidian.md",
-		".kilocode/rules/structure.md",
-		".kilocode/rules/variable.md",
-		".kilocode/rules/env_example.md",
-		".kilocode/rules/git_workflow.md"
+		".kilo/rules/libreoffice.md",
+		".kilo/rules/obsidian.md",
+		".kilo/rules/structure.md",
+		".kilo/rules/variable.md",
+		".kilo/rules/env_example.md",
+		".kilo/rules/git_workflow.md"
 	]
 }
