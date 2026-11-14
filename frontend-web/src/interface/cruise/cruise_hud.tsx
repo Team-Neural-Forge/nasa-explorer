@@ -43,7 +43,7 @@ export function CruiseHud() {
 		getCruiseTelemetry,
 		getCruiseTelemetry,
 	);
-	const { returnToOrbit, returnToMenu } = useGameState();
+	const { beginLanding, returnToOrbit, returnToMenu } = useGameState();
 	const arrived = telemetry.status === "arrived";
 	const progress_percent = Math.round(telemetry.progress * 100);
 
@@ -130,13 +130,22 @@ export function CruiseHud() {
 
 			<div className="launch-actions">
 				{arrived ? (
-					<button
-						type="button"
-						className="launch-button"
-						onClick={returnToOrbit}
-					>
-						Return to orbit
-					</button>
+					<>
+						<button
+							type="button"
+							className="launch-button launch-button-primary"
+							onClick={beginLanding}
+						>
+							Begin lunar approach
+						</button>
+						<button
+							type="button"
+							className="launch-button"
+							onClick={returnToOrbit}
+						>
+							Return to orbit
+						</button>
+					</>
 				) : null}
 				<button type="button" className="assembly-back" onClick={returnToMenu}>
 					Return to menu

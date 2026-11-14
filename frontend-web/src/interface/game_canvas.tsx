@@ -5,13 +5,15 @@ import { KeyboardState } from "../engine/input";
 import { CruiseWorld } from "../rendering/cruise_world";
 import { LaunchWorld } from "../rendering/launch_world";
 import { LiveWorld } from "../rendering/live_world";
+import { LunarLandingWorld } from "../rendering/lunar_landing_world";
 import { OrbitWorld } from "../rendering/orbit_world";
 import { cruise_actions } from "../state/cruise_control";
 import { STARTING_BUDGET_USD_M } from "../state/economy";
 import { useGameState } from "../state/game_state";
+import { landing_actions } from "../state/landing_control";
 import { launch_actions } from "../state/launch_control";
 import { orbit_actions } from "../state/orbit_control";
-import { computeRocketStats } from "../state/rocket_config";
+import { computeLanderStats, computeRocketStats } from "../state/rocket_config";
 
 export function GameCanvas() {
 	const { scene, selection, orbit_state } = useGameState();
@@ -34,6 +36,7 @@ export function GameCanvas() {
 		launch_actions.current = null;
 		orbit_actions.current = null;
 		cruise_actions.current = null;
+		landing_actions.current = null;
 
 		if (scene === "launch" && input_ref.current) {
 			const stats = computeRocketStats(selection, STARTING_BUDGET_USD_M);
@@ -54,6 +57,17 @@ export function GameCanvas() {
 			active_world_ref.current = new CruiseWorld(input_ref.current);
 			return () => {
 				cruise_actions.current = null;
+			};
+		}
+
+		if (scene === "landing" && input_ref.current) {
+			const lander_stats = computeLanderStats(selection);
+			active_world_ref.current = new LunarLandingWorld(
+				lander_stats,
+				input_ref.current,
+			);
+			return () => {
+				landing_actions.current = null;
 			};
 		}
 
