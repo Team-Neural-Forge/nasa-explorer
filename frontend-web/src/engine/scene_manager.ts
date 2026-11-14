@@ -1,10 +1,11 @@
-export type SceneId = "menu" | "assembly" | "launch" | "orbit";
+export type SceneId = "menu" | "assembly" | "launch" | "orbit" | "cruise";
 
 const ALLOWED_TRANSITIONS: Record<SceneId, SceneId[]> = {
 	menu: ["assembly"],
 	assembly: ["menu", "launch"],
 	launch: ["assembly", "menu", "orbit"],
-	orbit: ["menu", "launch"],
+	orbit: ["menu", "launch", "cruise"],
+	cruise: ["orbit", "menu"],
 };
 
 export function canTransition(from: SceneId, to: SceneId): boolean {
