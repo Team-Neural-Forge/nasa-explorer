@@ -91,7 +91,7 @@ Current surface:
 | Biome | Frontend lint + format |
 | Ruff | Backend lint + format |
 | ty | Backend type checking |
-| GitHub Actions | CI: frontend lint/typecheck, backend lint/format/typecheck, security checks |
+| GitHub Actions | CI: frontend lint/typecheck, backend lint/format/typecheck, security checks; `Deploy Frontend`: production deploy to Vercel after CI passes |
 | gitleaks | Secret scanning in CI |
 
 ## AI assistants and MCP
@@ -150,7 +150,7 @@ Stable values (body constants, travel references, gameplay tuning, cited educati
 
 | Component | Host | URL | Notes |
 |---|---|---|---|
-| Frontend | **Vercel** | https://nasa-explorer-8s6l.vercel.app | Static build (`pnpm build` → `dist`), SPA fallback rewrite, preview per PR |
+| Frontend | **Vercel** | https://nasa-explorer-8s6l.vercel.app | Static build (`pnpm build` → `dist`), SPA fallback rewrite; production deployed by the `Deploy Frontend` GitHub Actions workflow after CI passes |
 | Backend | **Render** | https://nasa-explorer-cpd9.onrender.com (health: `/health`) | Python native runtime, `uv sync --frozen --no-dev`, health check `/health` |
 | Local (optional) | **Docker Compose** | — | Frontend on `:3000` (nginx), backend on `:8000` |
 
