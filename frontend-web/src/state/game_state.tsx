@@ -6,6 +6,7 @@ import {
 	useMemo,
 	useState,
 } from "react";
+import type { OrbitInsertion } from "../engine/orbit_simulation";
 import { canTransition, type SceneId } from "../engine/scene_manager";
 import {
 	DEFAULT_SELECTION,
@@ -18,10 +19,13 @@ import {
 type GameStateValue = {
 	scene: SceneId;
 	selection: RocketSelection;
+	orbit_state: OrbitInsertion | null;
 	beginMission: () => void;
 	returnToMenu: () => void;
 	returnToAssembly: () => void;
 	beginLaunch: () => void;
+	beginOrbit: (state: OrbitInsertion) => void;
+	returnToLaunch: () => void;
 	setLaunchVehicle: (id: LaunchVehicleId) => void;
 	setSpacecraft: (id: SpacecraftId) => void;
 	toggleInstrument: (id: InstrumentId) => void;
@@ -34,6 +38,7 @@ export function GameStateProvider({ children }: { children: ReactNode }) {
 	const [scene, setScene] = useState<SceneId>("menu");
 	const [selection, set_selection] =
 		useState<RocketSelection>(DEFAULT_SELECTION);
+	const [orbit_state, set_orbit_state] = useState<OrbitInsertion | null>(null);
 
 	const beginMission = useCallback(() => {
 		setScene((current) =>
@@ -52,6 +57,19 @@ export function GameStateProvider({ children }: { children: ReactNode }) {
 	}, []);
 
 	const beginLaunch = useCallback(() => {
+		setScene((current) =>
+			canTransition(current, "launch") ? "launch" : current,
+		);
+	}, []);
+
+	const beginOrbit = useCallback((state: OrbitInsertion) => {
+		set_orbit_state(state);
+		setScene((current) =>
+			canTransition(current, "orbit") ? "orbit" : current,
+		);
+	}, []);
+
+	const returnToLaunch = useCallback(() => {
 		setScene((current) =>
 			canTransition(current, "launch") ? "launch" : current,
 		);
@@ -90,10 +108,13 @@ export function GameStateProvider({ children }: { children: ReactNode }) {
 		() => ({
 			scene,
 			selection,
+			orbit_state,
 			beginMission,
 			returnToMenu,
 			returnToAssembly,
 			beginLaunch,
+			beginOrbit,
+			returnToLaunch,
 			setLaunchVehicle,
 			setSpacecraft,
 			toggleInstrument,
@@ -102,10 +123,13 @@ export function GameStateProvider({ children }: { children: ReactNode }) {
 		[
 			scene,
 			selection,
+			orbit_state,
 			beginMission,
 			returnToMenu,
 			returnToAssembly,
 			beginLaunch,
+			beginOrbit,
+			returnToLaunch,
 			setLaunchVehicle,
 			setSpacecraft,
 			toggleInstrument,
