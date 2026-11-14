@@ -38,6 +38,17 @@ Use this list to prepare the final NASA Space Apps Challenge submission.
 - [ ] Demo recordings — for Lovable
 - [ ] Screenshot added to `docs/assets/` and embedded in README
 
+## Demo beats (what the video/slides must show)
+
+- [ ] **Live menu** — options over the running world; Start retires the menu without a cut.
+- [ ] **Earth-side assembly** — parts, mass/thrust/Δv/budget trade-offs, design locks at launch.
+- [ ] **Launch & ascent** — rotation, power, staging, gravity turn, orbital insertion.
+- [ ] **EVA** — astronaut exits and re-enters the rocket in space.
+- [ ] **Time warp** — realistic cruise time accelerated up to ×100,000.
+- [ ] **Landing risk** — safe touchdown versus a crash with an explanation.
+- [ ] **Two views** — character-level and whole-planet, with a far-side discovery.
+- [ ] **Optional quiz** — a per-body quiz with a cited explanation.
+
 ## Links
 
 | Item | Link |

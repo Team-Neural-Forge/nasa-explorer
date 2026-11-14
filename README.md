@@ -4,7 +4,7 @@
 
 ## Summary
 
-NASA Explorer is an interactive, physics-based space exploration game built for the NASA Space Apps Challenge 2026 "Space Mission Design Game" challenge. Players step into the role of a NASA astronaut and journey from an Earth launch pad through low Earth orbit, the Moon, and Mars, branching onward to Europa, Enceladus, and a colony on Mars. Along the way the game quietly introduces new movement abilities — jetpack flight, swimming, and more — while environmental interactions surface real NASA science. A mission-store menu lets players spend a slowly growing budget on scientific instruments, spacecraft upgrades, and launch vehicles, so every purchase reflects the trade-offs between power, mass, orbit, and budget that real mission designers face. With melodic music, physics-driven environments, and a light quiz between journeys, NASA Explorer makes mission design feel like an adventure.
+NASA Explorer is an interactive, physics-based space exploration game built for the NASA Space Apps Challenge 2026 "Space Mission Design Game" challenge. The game opens on a live menu — the world behind it is already the game — then the player assembles a rocket on Earth, balancing mass, thrust, and budget before launch. Flight is fully simulated: the astronaut controls rotation, power, and staging, can leave and re-enter the rocket in space, and travels real distances that take real time, accelerated up to ×100,000. Arrival is dangerous — land within safe speed and angle limits or crash and learn why. On every body the player can switch between a character-level view and a whole-planet view that reveals what humanity has discovered on the far side, while cited NASA science and optional quizzes reinforce the journey. With melodic music and physics-driven environments, NASA Explorer makes mission design feel like an adventure.
 
 ## Links
 
@@ -20,20 +20,21 @@ NASA Explorer is an interactive, physics-based space exploration game built for 
 
 ## Features
 
+- **Live menu** — menu options sit over the running game world; starting the game retires the menu instead of loading a new scene.
 - **Play as a NASA astronaut** on a journey from Earth to the outer solar system.
+- **Earth-only rocket assembly** — choose a launch vehicle, stages, and instruments, balancing mass, thrust, Δv, and budget. The design locks at launch.
+- **Full physics simulation** — launch, orbit, interplanetary cruise, EVA, rovers, and landing are numerically integrated, not scripted.
+- **Realistic travel time with time warp** — accelerate from real time up to ×100,000 while the real coordinates keep simulating.
+- **Exit and re-enter the rocket** — including during spaceflight.
+- **Careful landings** — arrive within safe speed and angle limits or crash; the game explains why.
+- **Two planet views** — character-level and whole-planet, revealing humanity's discoveries on the far side.
+- **Cited NASA science** — mission-control coaching, science cards, and optional per-body quizzes, all sourced.
 - **Controls revealed gradually** — jetpack flight, swimming, and more are introduced from journey to journey.
-- **Physics-based movement and environments** powered by `matter.js`.
-- **Mission-design store** with scientific instruments, spacecraft upgrades, and launch vehicles.
-- **Budget economy** that grows over time, encouraging exploration between purchases.
-- **Launch control** — players tune launch power and direction, and choose their launch vehicle.
-- **Environmental storytelling** — moving through the world triggers NASA facts and mission information.
-- **Quiz between journeys** to reinforce what players have learned.
-- **Melodic soundtrack** and a simple yet polished environment-art style.
-- **Responsive UI** across desktop and mobile.
+- **Responsive UI** across desktop and mobile, with status clearly marked: multiplayer and login are stubs in this build.
 
 ## The journey
 
-Rocket launch → Low Earth orbit → Moon → Mars → { Living on Mars · Europa · Enceladus }
+Live menu → Rocket assembly (Earth) → Launch → Low Earth orbit → Moon → Mars → { Living on Mars · Europa · Enceladus }
 
 See [`docs/journey_map.md`](docs/journey_map.md) for the full stage breakdown and diagram.
 
@@ -70,10 +71,12 @@ See [`docs/journey_map.md`](docs/journey_map.md) for the full stage breakdown an
 | Document | Description |
 |---|---|
 | [Project overview](docs/project_overview.md) | Submission summary, benefits, impact, and creativity |
-| [Game design](docs/game_design.md) | Concept, controls, physics, art, audio, and core loop |
+| [Game design](docs/game_design.md) | Concept, live menu, assembly, controls, time and scale, art, audio |
 | [Journey map](docs/journey_map.md) | Stage-by-stage flow and diagram |
+| [Flight model](docs/flight_model.md) | Simulation, integrator, time warp, landing and failure spec |
+| [Learning design](docs/learning_design.md) | Teaching approach, mission-control coaching, science cards, quizzes |
 | [Challenge alignment](docs/challenge_alignment.md) | How the game maps to the mission-design dimensions |
-| [Technical architecture](docs/technical_architecture.md) | Stack, diagrams, tooling, and deployment |
+| [Technical architecture](docs/technical_architecture.md) | Stack, engine architecture, diagrams, tooling, and deployment |
 | [NASA data sources](docs/nasa_data_sources.md) | NASA and partner data used (compulsory) |
 | [AI usage disclosure](docs/ai_usage_disclosure.md) | Image, audio, code, and data AI usage |
 | [Submission checklist](docs/submission_checklist.md) | Deliverables required by the challenge |
