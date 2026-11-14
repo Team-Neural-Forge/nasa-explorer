@@ -4,13 +4,15 @@ import type { GameWorld } from "../engine/game_world";
 import { KeyboardState } from "../engine/input";
 import { LaunchWorld } from "../rendering/launch_world";
 import { LiveWorld } from "../rendering/live_world";
+import { OrbitWorld } from "../rendering/orbit_world";
 import { STARTING_BUDGET_USD_M } from "../state/economy";
 import { useGameState } from "../state/game_state";
 import { launch_actions } from "../state/launch_control";
+import { orbit_actions } from "../state/orbit_control";
 import { computeRocketStats } from "../state/rocket_config";
 
 export function GameCanvas() {
-	const { scene, selection } = useGameState();
+	const { scene, selection, orbit_state } = useGameState();
 	const canvas_ref = useRef<HTMLCanvasElement | null>(null);
 	const input_ref = useRef<KeyboardState | null>(null);
 	const live_world_ref = useRef<LiveWorld | null>(null);
@@ -27,6 +29,9 @@ export function GameCanvas() {
 	}
 
 	useEffect(() => {
+		launch_actions.current = null;
+		orbit_actions.current = null;
+
 		if (scene === "launch" && input_ref.current) {
 			const stats = computeRocketStats(selection, STARTING_BUDGET_USD_M);
 			active_world_ref.current = new LaunchWorld(stats, input_ref.current);
@@ -35,10 +40,16 @@ export function GameCanvas() {
 			};
 		}
 
+		if (scene === "orbit" && input_ref.current) {
+			active_world_ref.current = new OrbitWorld(orbit_state, input_ref.current);
+			return () => {
+				orbit_actions.current = null;
+			};
+		}
+
 		active_world_ref.current = live_world_ref.current;
-		launch_actions.current = null;
 		return undefined;
-	}, [scene, selection]);
+	}, [scene, selection, orbit_state]);
 
 	useEffect(() => {
 		const canvas = canvas_ref.current;
