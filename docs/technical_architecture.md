@@ -88,13 +88,33 @@ MCP integrations are used for document and design tooling (LibreOffice, Obsidian
 │   └── vercel.json        # Vercel build + SPA rewrite
 ├── backend/               # FastAPI app (uv)
 │   ├── app/               # Application code
+│   │   ├── routers/       # /nasa live data proxy (facts, media)
+│   │   └── data/fallback/ # Bundled fallbacks for the proxy
 │   ├── Dockerfile         # uv multi-stage image (Docker path)
 │   └── pyproject.toml     # Dependencies + tool config
+├── data/                  # Committed NASA snapshots (sources + provenance)
+├── scripts/               # Data build + validation (Python, stdlib)
 ├── docs/                  # Design and submission documentation
 ├── docker-compose.yml     # Production-style local stack
 ├── justfile               # Dev task runner
 └── .github/workflows/     # CI
 ```
+
+## Data flow
+
+```mermaid
+flowchart LR
+    NSSDCA["NSSDCA fact sheets"] --> SCRIPT["scripts/build_space_data.py"]
+    HORIZONS["JPL Horizons API"] --> SCRIPT
+    SCRIPT --> DATA["data/ (committed snapshots)"]
+    DATA --> MIRROR["frontend-web/src/data"]
+    MIRROR --> GAME["React game (offline)"]
+    IMAGES["images-api.nasa.gov"] --> PROXY["FastAPI /nasa proxy"]
+    APOD["APOD (new endpoint)"] --> PROXY
+    PROXY --> GAME
+```
+
+Stable values (body constants, travel references) are snapshotted at build time and bundled with the frontend, so the game is playable with no network. Volatile content (daily APOD, image search) goes through the keyless proxy with TTL caching and bundled fallbacks.
 
 ## Deployment topology
 
