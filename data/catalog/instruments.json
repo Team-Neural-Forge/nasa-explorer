@@ -1,0 +1,62 @@
+{
+	"meta": {
+		"description": "Scientific instruments offered in the mission store. Real NASA instruments are referenced for authenticity; mass/power/cost are gameplay values where not published.",
+		"sources": [
+			"https://science.nasa.gov/mission/europa-clipper/",
+			"https://science.nasa.gov/mission/mars-2020-perseverance/"
+		],
+		"fetched_at": "2026-11-14"
+	},
+	"instruments": [
+		{
+			"id": "europa_imaging_system",
+			"name": "Europa Imaging System (EIS)",
+			"mission": "Europa Clipper",
+			"science_area": "imaging / geology",
+			"mass_kg": null,
+			"power_w": null,
+			"cost_usd_m": null,
+			"source_url": "https://science.nasa.gov/mission/europa-clipper/"
+		},
+		{
+			"id": "maspex",
+			"name": "MASPEX (mass spectrometer)",
+			"mission": "Europa Clipper",
+			"science_area": "chemistry / habitability",
+			"mass_kg": null,
+			"power_w": null,
+			"cost_usd_m": null,
+			"source_url": "https://science.nasa.gov/mission/europa-clipper/"
+		},
+		{
+			"id": "reason",
+			"name": "REASON (ice-penetrating radar)",
+			"mission": "Europa Clipper",
+			"science_area": "subsurface / ice",
+			"mass_kg": null,
+			"power_w": null,
+			"cost_usd_m": null,
+			"source_url": "https://science.nasa.gov/mission/europa-clipper/"
+		},
+		{
+			"id": "pixl",
+			"name": "PIXL (X-ray spectrometer)",
+			"mission": "Perseverance",
+			"science_area": "chemistry / minerals",
+			"mass_kg": null,
+			"power_w": null,
+			"cost_usd_m": null,
+			"source_url": "https://science.nasa.gov/mission/mars-2020-perseverance/"
+		},
+		{
+			"id": "sherloc",
+			"name": "SHERLOC (Raman / fluorescence)",
+			"mission": "Perseverance",
+			"science_area": "organic detection",
+			"mass_kg": null,
+			"power_w": null,
+			"cost_usd_m": null,
+			"source_url": "https://science.nasa.gov/mission/mars-2020-perseverance/"
+		}
+	]
+}

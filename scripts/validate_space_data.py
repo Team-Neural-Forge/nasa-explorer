@@ -1,0 +1,110 @@
+#!/usr/bin/env python3
+"""Validate the committed NASA data snapshots (offline, no network)."""
+
+from __future__ import annotations
+
+import json
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+DATA_DIR = ROOT / "data"
+
+errors: list[str] = []
+
+
+def fail(message: str) -> None:
+    errors.append(message)
+
+
+def load(path: Path) -> dict:
+    try:
+        with path.open(encoding="utf-8") as handle:
+            return json.load(handle)
+    except (OSError, json.JSONDecodeError) as exc:
+        fail(f"{path.relative_to(ROOT)}: {exc}")
+        return {}
+
+
+def require(condition: bool, message: str) -> None:
+    if not condition:
+        fail(message)
+
+
+def check_bodies() -> None:
+    payload = load(DATA_DIR / "bodies.json")
+    bodies = payload.get("bodies")
+    require(isinstance(bodies, dict) and bodies, "bodies.json: missing bodies")
+    for body_id, body in (bodies or {}).items():
+        for key in ("name", "mass_kg", "radius_km", "gm_km3_s2", "gravity_m_s2", "source_url"):
+            require(key in body, f"bodies.json: {body_id} missing {key}")
+        require(
+            str(body.get("source_url", "")).startswith("https://"),
+            f"bodies.json: {body_id} source_url must be https",
+        )
+
+
+def check_transfer_legs() -> None:
+    payload = load(DATA_DIR / "transfer_legs.json")
+    legs = payload.get("legs")
+    require(isinstance(legs, list) and legs, "transfer_legs.json: missing legs")
+    for leg in legs or []:
+        for key in ("id", "from", "to", "source_url"):
+            require(key in leg, f"transfer_legs.json: leg missing {key}")
+
+
+def check_quizzes() -> None:
+    payload = load(DATA_DIR / "quizzes.json")
+    quizzes = payload.get("quizzes")
+    require(isinstance(quizzes, list) and quizzes, "quizzes.json: missing quizzes")
+    for quiz in quizzes or []:
+        for key in ("id", "stage", "question", "options", "answer", "source_url"):
+            require(key in quiz, f"quizzes.json: {quiz.get('id', '?')} missing {key}")
+        require(
+            isinstance(quiz.get("options"), list) and len(quiz["options"]) >= 2,
+            f"quizzes.json: {quiz.get('id', '?')} needs >= 2 options",
+        )
+
+
+def check_catalogs() -> None:
+    for name in ("launch_vehicles.json", "instruments.json", "spacecraft.json"):
+        payload = load(DATA_DIR / "catalog" / name)
+        entries = payload.get("vehicles") or payload.get("instruments") or payload.get("spacecraft")
+        require(isinstance(entries, list) and entries, f"catalog/{name}: missing entries")
+        for entry in entries or []:
+            require("id" in entry, f"catalog/{name}: entry missing id")
+            require("source_url" in entry, f"catalog/{name}: {entry.get('id', '?')} missing source_url")
+
+
+def check_credits() -> None:
+    payload = load(DATA_DIR / "assets" / "credits.json")
+    images = payload.get("images")
+    require(isinstance(images, list) and images, "assets/credits.json: missing images")
+    for image in images or []:
+        require("id" in image, "assets/credits.json: image missing id")
+        require("credit" in image, f"assets/credits.json: {image.get('id', '?')} missing credit")
+        file_name = image.get("file")
+        if file_name:
+            asset = DATA_DIR / "assets" / file_name
+            require(asset.is_file(), f"assets/credits.json: missing file {file_name}")
+
+
+def main() -> int:
+    check_bodies()
+    check_transfer_legs()
+    check_quizzes()
+    check_catalogs()
+    check_credits()
+
+    if errors:
+        print("data validation failed:", file=sys.stderr)
+        for error in errors:
+            print(f"  - {error}", file=sys.stderr)
+        return 1
+
+    print("data validation passed")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
