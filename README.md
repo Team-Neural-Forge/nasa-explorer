@@ -151,4 +151,4 @@ This project is built with AI assistance (OpenCode, Kilocode, Claude Code) and M
 
 ## License
 
-_TODO: add license._
+MIT — see [LICENSE](LICENSE).
