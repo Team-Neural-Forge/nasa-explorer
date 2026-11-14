@@ -4,7 +4,7 @@
 
 ## Design intent
 
-The game uses a **full numerical simulation everywhere**: all motion — launch, orbit, interplanetary cruise, EVA, rovers, and landing — is integrated from forces rather than scripted. Space is not shortened by bending physics. Instead, the player is given **time acceleration**, and the presentation changes scale while the real coordinates are computed underneath.
+The long-term goal is a full numerical simulation. The current build uses separate approximations for launch, orbit, guided cruise and lunar landing; these are not yet a single continuous physical trajectory. Time acceleration and changes of visual scale make long journeys playable.
 
 Two requirements run in tension:
 
@@ -20,6 +20,16 @@ The model below resolves that tension: adaptive integration plus step-budgeted t
   - `radius_km`, `semi_major_axis_km`, `distance_km` → metres (× `1e3`).
 - **World frame:** heliocentric inertial frame; bodies are placed from their orbital elements/leg references and propagated by the same integrator.
 - **Local frames:** each body has a body-centred inertial frame for approach and surface operations (e.g. launch, landing, EVA). Switching frames does not change the physics, only the reference point used for rendering and control.
+
+### Navigation display in the current build
+
+The clock starts from the player's system time when a mission starts or restarts. It advances with gameplay: Earth and lunar descent at ×1, launch at the existing ×4 simulation rate, and orbit and cruise at their selected warp rate. During the guided cruise the clock advances only by the transfer time actually simulated, and returns to ×1 after arrival. It is paused on the main menu and when the browser/game loop is not running; it is not a persistent real-time clock.
+
+The navigation guide calculates geometric Solar System barycentric body centers in the J2000 mean equator (EQJ) frame using the offline [Astronomy Engine](https://github.com/cosinekitty/astronomy) model. EQJ is approximately aligned with ICRF, not identical. Compare with [NASA/JPL Horizons](https://ssd.jpl.nasa.gov/horizons/) when precision is important. The model is an approximation, not a live NASA feed; accuracy outside the tested dates is not guaranteed.
+
+The surface, launch, orbit and lunar descent simulations do not specify their local axes or landing sites in EQJ. The displayed spacecraft Solar System position therefore uses the Earth or Moon center as a clearly marked proxy. During guided cruise, a clearly marked estimate interpolates between those moving body centers; it is not the simulated spacecraft trajectory. Europa and Enceladus positions are not available yet. Local launch, orbital and lunar position information is displayed separately.
+
+The navigation panel's restart control returns the player to a fresh Earth scene and starter selection and resets the clock to the current system time. Budget and purchases are not implemented yet.
 
 ## Gravity model
 
