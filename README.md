@@ -27,3 +27,21 @@ Build settings come from `frontend-web/vercel.json` (`pnpm build` → `dist`, SP
 
 - Merging to `main` triggers a Production deployment.
 - Each pull request gets its own Preview URL.
+
+## Deploy backend to Vercel
+
+The FastAPI backend is deployed as a second Vercel project from the same repo. Vercel auto-detects FastAPI and uses `uv` with `backend/uv.lock`; no Dockerfile is involved on Vercel.
+
+### One-time project setup (Vercel dashboard)
+
+1. Create a **New Project** and import `Team-Neural-Forge/space-explorer-cheat`.
+2. Set **Root Directory** to `backend`.
+3. Leave the framework preset on **Auto** (it detects FastAPI), and leave install/build/output settings at their defaults.
+4. Deploy — the first deployment becomes Production.
+
+The function duration and region are set in `backend/vercel.json` (60s max, `iad1` / US East).
+
+### CORS
+
+The backend reads allowed origins from the `CORS_ORIGINS` environment variable (comma-separated, defaults to `*`). Set it in the Vercel project's environment variables when the frontend starts calling the API.
+
