@@ -1,5 +1,6 @@
 import { useGameState } from "../state/game_state";
 import { AssemblyPanel } from "./assembly/assembly_panel";
+import { CruiseHud } from "./cruise/cruise_hud";
 import { GameCanvas } from "./game_canvas";
 import { LaunchHud } from "./launch/launch_hud";
 import { MenuOverlay } from "./menu/menu_overlay";
@@ -16,6 +17,7 @@ export function GameShell() {
 				{scene === "assembly" ? <AssemblyPanel /> : null}
 				{scene === "launch" ? <LaunchHud /> : null}
 				{scene === "orbit" ? <OrbitHud /> : null}
+				{scene === "cruise" ? <CruiseHud /> : null}
 			</div>
 		</main>
 	);

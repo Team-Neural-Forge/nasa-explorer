@@ -35,7 +35,7 @@ export function OrbitHud() {
 		getOrbitTelemetry,
 		getOrbitTelemetry,
 	);
-	const { returnToLaunch, returnToMenu } = useGameState();
+	const { beginCruise, returnToLaunch, returnToMenu } = useGameState();
 	const is_eva = telemetry.mode === "eva";
 	const can_toggle_eva = !is_eva || telemetry.can_reenter;
 
@@ -128,12 +128,14 @@ export function OrbitHud() {
 				Keyboard: E exit/enter · W/A/S/D or arrows RCS · [ / ] time warp
 			</p>
 
-			<div className="orbit-note">
-				Interplanetary cruise and the Moon transfer arrive in the next build
-				step.
-			</div>
-
 			<div className="launch-actions">
+				<button
+					type="button"
+					className="launch-button launch-button-primary"
+					onClick={beginCruise}
+				>
+					Set course for the Moon
+				</button>
 				<button
 					type="button"
 					className="launch-button"
