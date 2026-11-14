@@ -10,20 +10,21 @@
 
 ## Summary
 
-NASA Explorer is an interactive, physics-based space exploration game built for the NASA Space Apps Challenge 2026 "Space Mission Design Game" challenge. Players step into the role of a NASA astronaut and journey from an Earth launch pad through low Earth orbit, the Moon, and Mars, branching onward to Europa, Enceladus, and a colony on Mars. Along the way the game quietly introduces new movement abilities — jetpack flight, swimming, and more — while environmental interactions surface real NASA science. A mission-store menu lets players spend a slowly growing budget on scientific instruments, spacecraft upgrades, and launch vehicles, so every purchase reflects the trade-offs between power, mass, orbit, and budget that real mission designers face. With melodic music, physics-driven environments, and a light quiz between journeys, NASA Explorer makes mission design feel like an adventure.
+NASA Explorer is an interactive, physics-based space exploration game built for the NASA Space Apps Challenge 2026 "Space Mission Design Game" challenge. The game opens on a live menu — there is no cut between menu and play, because the world behind the menu is already the game. Players assemble a rocket on Earth, balancing mass, thrust, and budget, then launch into a fully simulated solar system. Travel takes realistic time, but players can accelerate it from real time up to ×100,000; space stays enormous while the presentation changes scale and the real coordinates are computed underneath. The astronaut can leave and re-enter the rocket, land carefully on other worlds (or crash and learn why), and switch between a character-level view and a whole-planet view that reveals what humanity has discovered on the far side. A slowly growing budget turns assembly into mission design, so every choice reflects the trade-offs between power, mass, reach, and budget. With melodic music, cited NASA science, and optional per-body quizzes, NASA Explorer makes mission design feel like an adventure.
 
 ## What does it do and how does it work?
 
 The game turns **mission design** into a playable journey:
 
-1. The player controls a NASA astronaut and spacecraft across a series of destinations: **Rocket launch → Low Earth orbit → Moon → Mars → { Europa · Living on Mars · Enceladus }**.
-2. Movement is **physics-based**. Gravity, mass, collisions, and forces change per environment, so moving on the Moon feels different from moving on Mars or swimming on Europa.
-3. A **mission store** offers scientific instruments, spacecraft upgrades, and launch vehicles. The player's **budget grows slowly**, encouraging exploration while saving for purchases.
-4. **Player movement triggers environmental information**, so NASA facts are discovered in context rather than delivered as a wall of text.
-5. A short **quiz between journeys** reinforces learning.
-6. **Launch mechanics** let the player tune launch power and direction and choose a launch vehicle, tying gameplay directly to real mission constraints.
+1. The player starts from a **live menu** — the world behind it is already running — then **assembles a rocket on Earth**. Assembly is the only place where the design can change, and it balances budget, mass, and thrust.
+2. The player **launches**, controlling rotation, power, and staging through atmospheric ascent to orbit.
+3. The player travels a series of destinations: **Low Earth orbit → Moon → Mars → { Europa · Living on Mars · Enceladus }**, with **realistic travel times** and **time acceleration** up to ×100,000.
+4. Movement is **fully physics-simulated**. Gravity, mass, and forces change per body, so moving on the Moon feels different from moving on Mars or swimming on Europa. The astronaut can **exit and re-enter the rocket**, including in space.
+5. Arrival is dangerous: the player must **land within safe speed and angle limits** or crash — and the game explains why.
+6. Each body offers **two views**: a **character-level view** and a **whole-planet view** that reveals what humanity has discovered on the far side.
+7. **Mission-control coaching, science cards, and optional quizzes** surface cited NASA facts in context rather than as a wall of text.
 
-The result is a game where the player *feels* the trade-offs of mission design: spending on instruments, saving mass, reaching orbit, and staying within budget.
+The result is a game where the player *feels* the trade-offs of mission design: spending on instruments, saving mass, reaching orbit, landing safely, and staying within budget.
 
 ## What benefits does it have?
 
@@ -60,11 +61,14 @@ The result is a game where the player *feels* the trade-offs of mission design: 
 ## Future implementation
 
 - Complete all journey branches (**Europa**, **Living on Mars**, **Enceladus**) with distinct mechanics.
-- Deepen the **mission store** with more instruments, vehicles, and meaningful trade-offs.
+- Deepen **Earth-side assembly** with more parts, instruments, and meaningful trade-offs.
 - Add **communications** and **mission lifetime** as mission dimensions.
+- Implement **multiplayer** and **account login** (present as menu stubs in this build).
 - Expand **NASA data** coverage and tie each fact to a cited source.
-- Add progression, replayability, and accessibility options (remapping, reduced motion).
-- Polish audio, art, and performance across devices.
+- Add replayability and deeper accessibility options (remapping, reduced motion).
+- Replace procedural visuals with generated art; polish audio and performance across devices.
+
+See [`game_design.md`](game_design.md), [`flight_model.md`](flight_model.md), and [`learning_design.md`](learning_design.md) for the detailed design.
 
 ## Links
 

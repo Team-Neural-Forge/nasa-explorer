@@ -16,17 +16,25 @@
   - [x] LSP
   - [x] GitHub workflow
   - [x] Vercel
-- [ ] Rocket launch
-- [ ] Low Earth orbit
-- [ ] Moon
-- [ ] Mars
-- [ ] Living on Mars
+- [x] Document the game vision
+  - [x] Live menu, Earth-only assembly, flight, time warp, two views (`game_design.md`, `journey_map.md`)
+  - [x] Simulation and landing spec (`flight_model.md`)
+  - [x] Teaching and quiz design (`learning_design.md`)
+- [ ] Game shell + live menu (persistent world, scene FSM, input)
+- [ ] Earth-side rocket assembly + budget/economy
+- [ ] Launch → ascent → orbital insertion
+- [ ] Low Earth orbit + EVA enter/exit
+- [ ] Moon: approach, landing, surface view
+- [ ] Mars: interplanetary cruise, time warp, landing
 
 ## 15 November 2026
 
+- [ ] Living on Mars
 - [ ] Europa
 - [ ] Enceladus
-- [ ] Docs (`docs/*` + `README.md`)
+- [ ] Two-view planet exploration + far-side discoveries
+- [ ] Optional per-body quizzes
+- [ ] Polish: audio hooks, accessibility, procedural art pass
 - [ ] Demo recordings (for Lovable)
 - [ ] Slides (Build with MCP, for Lovable)
 - [ ] Create presentation video (with Lovable)
@@ -44,7 +52,8 @@
 ## Roadmap (post-hackathon)
 
 - Complete all journey branches and unique mechanics.
-- Expand the mission store and mission-design trade-offs.
+- Deepen Earth-side assembly and mission-design trade-offs.
+- Implement real **multiplayer** and **account login** (stubs in this build).
 - Add **communications** and **mission lifetime** dimensions.
 - Broaden NASA data coverage and citation.
-- Add accessibility and replayability options.
+- Expand accessibility and replayability options.

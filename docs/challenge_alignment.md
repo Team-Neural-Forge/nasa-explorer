@@ -8,26 +8,28 @@ NASA Explorer maps those dimensions onto playable systems. The table below is th
 
 | Dimension | How NASA Explorer covers it | Status |
 |---|---|---|
-| **Spacecraft** | The player travels in a spacecraft; upgrades are bought in the mission store and affect how the journey plays. | Implemented (core) |
-| **Scientific instruments** | The mission store offers a menu of space tools / instruments that the player buys with a limited budget. | Implemented (core) |
-| **Launch vehicle** | Launch vehicles are available in the store; the player controls launch power and direction. | Implemented (core) |
-| **Orbit** | Movement and trajectories follow physics; reaching and holding an orbit is part of the journey. | Implemented (physics-based) |
-| **Power** | Power is a gameplay constraint modelled through physics and upgrades. | Implemented (physics-based) |
-| **Mass** | Mass affects movement and performance in the physics simulation; heavier loadouts behave differently. | Implemented (physics-based) |
-| **Budget** | The player has a budget that slowly increases over time and is spent in the store; slow growth forces exploration while saving. | Implemented (core) |
+| **Spacecraft** | The player assembles the spacecraft **on Earth** before launch; it carries the astronaut, determines landing capability, and is locked once launched. | Implemented (core) |
+| **Scientific instruments** | Instruments are chosen during Earth-side assembly and add mass, power draw, and cost, directly affecting the rocket's performance. | Implemented (core) |
+| **Launch vehicle** | Launch vehicles and stages are selected during assembly; the player then controls rotation, power, and staging through ascent. | Implemented (core) |
+| **Orbit** | Motion is **fully numerically integrated** (not scripted); reaching and holding an orbit is a physical result of the player's ascent. | Implemented (physics-based) |
+| **Power** | Power is a gameplay constraint modelled through physics and assembly choices. | Implemented (physics-based) |
+| **Mass** | Mass affects thrust-to-weight, acceleration, propellant budget, and surface movement; heavier loadouts behave differently. | Implemented (physics-based) |
+| **Budget** | The player has a budget that slowly increases over time and is spent during Earth-side assembly; slow growth forces exploration while saving. | Implemented (core) |
 | **Communications** | Not implemented in the current build. | NIL |
 | **Mission lifetime** | Not implemented in the current build. | NIL |
 
 ## The trade-off principle
 
-The challenge's central idea — *a decision that improves one aspect can create limitations in another* — is expressed through the store economy and physics:
+The challenge's central idea — *a decision that improves one aspect can create limitations in another* — is expressed through Earth-only assembly and full physics:
 
-- **Instruments vs. budget:** better science tools cost more, delaying other purchases.
-- **Power vs. mass:** more capability often means more mass, which changes movement.
-- **Reach vs. launch:** reaching farther destinations demands more launch power and a better vehicle.
+- **Instruments vs. budget:** better science tools cost more and add mass, delaying other purchases and reducing performance.
+- **Power vs. mass:** more capability often means more mass, which lowers thrust-to-weight and Δv.
+- **Reach vs. launch:** reaching farther destinations demands more propellant and a better vehicle, which costs more budget.
 - **Exploration vs. saving:** slow budget growth pushes the player to explore while saving for the next upgrade.
+- **Speed vs. safety:** arriving with more speed shortens the trip but makes landing harder; the player must shed velocity before touchdown or crash.
+- **Design vs. commitment:** assembly happens only on Earth, so the player must anticipate the mission before launch.
 
-These tensions are what make the game a *mission design* game rather than a simple explorer.
+These tensions are what make the game a *mission design* game rather than a simple explorer. Because trajectories are fully simulated, the consequences of these choices are physical, not scripted.
 
 ## Official challenge resources we used
 

@@ -8,6 +8,7 @@ flowchart LR
 
     subgraph Frontend["frontend-web — Vercel"]
         FE["React 19 + TypeScript<br/>Rsbuild (Rspack)"]
+        FE --> ENGINE["Game engine<br/>scene FSM · N-body integrator<br/>time warp · camera/scale"]
         FE --> LIB["GSAP · p5.js · matter.js · keydrown"]
         FE --> HOOKS["React hooks"]
     end
@@ -34,11 +35,37 @@ The game runs primarily in the browser. The FastAPI backend is a thin API that p
 
 Role of the libraries:
 
-- **matter.js** — 2D physics engine driving movement, gravity, collisions, and environmental interaction.
-- **p5.js** — creative coding for procedural visuals and effects.
-- **GSAP** — timeline and tween animations for transitions and UI motion.
+- **matter.js** — 2D collisions and surface contact (walking, rovers, EVA contact). The orbital/gravity simulation uses the custom engine integrator, not matter.js gravity.
+- **p5.js** — the render loop and procedural visuals (starfields, gradients, silhouettes, HUD-adjacent effects).
+- **GSAP** — timeline and tween animations for menu transitions and UI motion.
 - **keydrown** — keyboard input handling for movement and controls.
 - **React hooks** — state and lifecycle for the game shell and UI overlays.
+
+## Game engine
+
+The game runs in a **single persistent canvas** that is mounted for the whole session. The menu is an overlay on top of the live world, so starting the game retires the overlay instead of loading a new scene.
+
+```text
+src/
+  scenes/          # menu, rocket_assembly, flight, space_travel,
+                   # planet_surface, planet_orbit
+  engine/          # game_loop, scene_manager, camera, time_warp,
+                   # gravity_bodies, integrator, atmosphere, input
+  rendering/       # starfield, earth, rocket, astronaut, hud
+  state/           # game_state, rocket_config, economy,
+                   # journey_progress, save_load
+  education/       # mission_control, science_cards, quizzes
+  interface/       # menu, assembly, hud, quiz, two_view_switcher
+```
+
+- **Scene FSM** — `menu → assembly → launch → ascent → orbit → cruise → approach → landed`, plus `planet_surface` ↔ `planet_orbit` views. The world is never unmounted.
+- **Integrator** — symplectic velocity Verlet with adaptive step and a per-frame step budget. See [`flight_model.md`](flight_model.md).
+- **Time warp** — multiplier over simulated steps (×1 → ×100,000), with a "simulating…" indicator when the step budget is exceeded.
+- **Web Worker** — optional off-thread integration at high warp, posting position snapshots to the render thread.
+- **Camera/scale** — local, orbital, cruise, system-map, and whole-planet views over the same physical coordinates.
+- **Save/load** — local guest profile in `localStorage` (no account system in this build).
+
+The FastAPI backend remains a thin API; multiplayer and login are menu stubs in this build.
 
 ## Backend
 
@@ -82,7 +109,8 @@ MCP integrations are used for document and design tooling (LibreOffice, Obsidian
 ```text
 .
 ├── frontend-web/          # React + TypeScript + Rsbuild game client
-│   ├── src/               # App entry and components
+│   ├── src/               # App entry, scenes, engine, rendering, state,
+│   │                      # education, interface, and mirrored data
 │   ├── public/            # Static assets
 │   ├── Dockerfile         # nginx static build (Docker path)
 │   └── vercel.json        # Vercel build + SPA rewrite
@@ -106,6 +134,8 @@ MCP integrations are used for document and design tooling (LibreOffice, Obsidian
 flowchart LR
     NSSDCA["NSSDCA fact sheets"] --> SCRIPT["scripts/build_space_data.py"]
     HORIZONS["JPL Horizons API"] --> SCRIPT
+    TUNING["Gameplay tuning<br/>(part stats, costs)"] --> SCRIPT
+    CONTENT["Science cards / quizzes<br/>(NASA-cited)"] --> SCRIPT
     SCRIPT --> DATA["data/ (committed snapshots)"]
     DATA --> MIRROR["frontend-web/src/data"]
     MIRROR --> GAME["React game (offline)"]
@@ -114,7 +144,7 @@ flowchart LR
     PROXY --> GAME
 ```
 
-Stable values (body constants, travel references) are snapshotted at build time and bundled with the frontend, so the game is playable with no network. Volatile content (daily APOD, image search) goes through the keyless proxy with TTL caching and bundled fallbacks.
+Stable values (body constants, travel references, gameplay tuning, cited educational content) are snapshotted at build time and bundled with the frontend, so the game is playable with no network. Volatile content (daily APOD, image search) goes through the keyless proxy with TTL caching and bundled fallbacks. Gameplay tuning values are explicitly **not** NASA specifications and are labelled as such in the data files.
 
 ## Deployment topology
 
@@ -128,6 +158,8 @@ The frontend is a static site, so it is served from Vercel's CDN. The backend mu
 
 ## Non-functional notes
 
-- **Responsive by default** — UI and layout target desktop and mobile.
-- **Physics consistency** — behaviour emerges from `matter.js` rather than scripted animation.
-- **Performance** — static hosting plus a thin backend keeps the runtime footprint small.
+- **Responsive by default** — UI and layout target desktop and mobile; touch controls mirror keyboard.
+- **Physics consistency** — all motion emerges from the numerical integrator rather than scripted animation; matter.js handles collisions and surface contact.
+- **Time warp** — step-budgeted so high warp never blocks the render loop; heavy integration can move to a Web Worker.
+- **Offline-first** — committed NASA snapshots and educational content bundle with the frontend.
+- **Performance** — a single persistent canvas, static hosting, and a thin backend keep the runtime footprint small.
