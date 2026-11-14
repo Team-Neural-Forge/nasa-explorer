@@ -142,7 +142,12 @@ This project is built with AI assistance (OpenCode, Kilocode, Claude Code) and M
 
 ## Team
 
-_TODO: add team name and members._
+| Name | GitHub | Country | Role |
+|---|---|---|---|
+| Mohammad Hisan | [@mohammadabkarinh](https://github.com/mohammadabkarinh) | United States | Team Owner |
+| Soo Zhan Thong | [@szt_00](https://github.com/szt_00) | Malaysia | Member |
+| Bulbul Hassan | [@supernova77](https://github.com/supernova77) | India | Member |
+| Harshit Bansal | [@survivoro](https://github.com/survivoro) | India | Member |
 
 ## License
 
