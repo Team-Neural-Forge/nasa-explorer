@@ -35,7 +35,7 @@ The game runs primarily in the browser. The FastAPI backend is a thin API that p
 
 Role of the libraries:
 
-- **matter.js** — 2D collisions and surface contact (walking, rovers, EVA contact). The orbital/gravity simulation uses the custom engine integrator, not matter.js gravity.
+- **matter.js** — 2D collisions and surface contact for surface vehicles and future interactions. The current Earth walking controller is a meter-scale kinematic model; the orbital/gravity simulation uses the custom engine integrator, not matter.js gravity.
 - **p5.js** — the render loop and procedural visuals (starfields, gradients, silhouettes, HUD-adjacent effects).
 - **GSAP** — timeline and tween animations for menu transitions and UI motion.
 - **keydrown** — keyboard input handling for movement and controls.
@@ -159,7 +159,8 @@ The frontend is a static site, so it is served from Vercel's CDN. The backend mu
 ## Non-functional notes
 
 - **Responsive by default** — UI and layout target desktop and mobile; touch controls mirror keyboard.
-- **Physics consistency** — all motion emerges from the numerical integrator rather than scripted animation; matter.js handles collisions and surface contact.
+- **Physics consistency** — orbital motion uses the numerical integrator; the Earth walking controller uses meter-scale gravity, collision bounds, and a 60 kg mass-derived jump impulse. matter.js remains available for surface-vehicle collisions.
+- **Earth surface scale** — one meter-based render scale for the launch site: a 1.8 m / 60 kg astronaut, a 50 m medium rocket, and a 10 m × 20 m store. Invisible walls at ±200 m warn the player; the ground visual continues to ±1,200 m so its end is never visible.
 - **Time warp** — step-budgeted so high warp never blocks the render loop; heavy integration can move to a Web Worker.
 - **Offline-first** — committed NASA snapshots and educational content bundle with the frontend.
 - **Performance** — a single persistent canvas, static hosting, and a thin backend keep the runtime footprint small.
