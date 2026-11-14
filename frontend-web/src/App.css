@@ -78,6 +78,7 @@
 }
 
 .earth-hud {
+	position: relative;
 	width: 100%;
 	display: flex;
 	flex-direction: column;
@@ -87,6 +88,35 @@
 	pointer-events: none;
 	color: #fff;
 	text-shadow: 0 1px 4px #182331;
+}
+
+.earth-warning {
+	position: absolute;
+	top: 4.2rem;
+	left: 50%;
+	z-index: 2;
+	padding: 0.6rem 1rem;
+	border: 1px solid #ffb066;
+	border-radius: 0.4rem;
+	background: rgba(90, 30, 15, 0.92);
+	color: #fff;
+	font-size: 0.85rem;
+	font-weight: 600;
+	white-space: nowrap;
+	pointer-events: none;
+	transform: translateX(-50%);
+	animation: earth-warning-in 180ms ease-out;
+}
+
+@keyframes earth-warning-in {
+	from {
+		opacity: 0;
+		transform: translate(-50%, -6px);
+	}
+	to {
+		opacity: 1;
+		transform: translate(-50%, 0);
+	}
 }
 
 .earth-hud-top,

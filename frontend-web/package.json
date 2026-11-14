@@ -10,6 +10,7 @@
 		"check:fix": "biome check --write .",
 		"dev": "rsbuild",
 		"preview": "rsbuild preview",
+		"test:earth": "node --experimental-strip-types --test tests/earth_scene.test.mjs",
 		"test:navigation": "node --experimental-strip-types --test tests/solar_navigation.test.mjs",
 		"typecheck": "tsc --noEmit"
 	},

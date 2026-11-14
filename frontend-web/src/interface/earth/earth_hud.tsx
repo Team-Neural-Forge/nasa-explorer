@@ -2,8 +2,11 @@ import { useEffect, useState, useSyncExternalStore } from "react";
 import {
 	earth_input,
 	getEarthLocation,
+	getEarthWarning,
 	subscribeEarthLocation,
+	subscribeEarthWarning,
 } from "../../state/earth_interaction";
+import { ASTRONAUT_MASS_KG } from "../../state/earth_scene";
 import { useGameState } from "../../state/game_state";
 
 export function EarthHud() {
@@ -11,6 +14,11 @@ export function EarthHud() {
 		subscribeEarthLocation,
 		getEarthLocation,
 		getEarthLocation,
+	);
+	const warning = useSyncExternalStore(
+		subscribeEarthWarning,
+		getEarthWarning,
+		getEarthWarning,
 	);
 	const { beginLaunch, returnToMenu } = useGameState();
 	const [notice, set_notice] = useState("");
@@ -45,8 +53,16 @@ export function EarthHud() {
 					Menu
 				</button>
 			</div>
+			{warning ? (
+				<div className="earth-warning" role="alert">
+					Edge of the launch site — turn back.
+				</div>
+			) : null}
 			<div className="earth-hud-bottom">
-				<p>Move: A/D or ←/→ · Jump: Space/W/↑ · Interact: E</p>
+				<p>
+					Move: A/D or ←/→ · Jump: Space/W/↑ · Interact: E · Astronaut:{" "}
+					{ASTRONAUT_MASS_KG} kg
+				</p>
 				{location === "rocket" && (
 					<button type="button" onClick={beginLaunch}>
 						E · Launch starter rocket
