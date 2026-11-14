@@ -37,7 +37,7 @@ export function LaunchHud() {
 		getLaunchTelemetry,
 		getLaunchTelemetry,
 	);
-	const { returnToAssembly, returnToMenu } = useGameState();
+	const { beginOrbit, returnToAssembly, returnToMenu } = useGameState();
 	const status = telemetry.status;
 	const is_prelaunch = status === "prelaunch";
 	const is_terminal = status === "orbit" || status === "crashed";
@@ -161,6 +161,20 @@ export function LaunchHud() {
 			</p>
 
 			<div className="launch-actions">
+				{status === "orbit" ? (
+					<button
+						type="button"
+						className="launch-button launch-button-primary"
+						onClick={() =>
+							beginOrbit({
+								altitude_m: telemetry.altitude_m,
+								speed_m_s: telemetry.speed_m_s,
+							})
+						}
+					>
+						Continue to orbit
+					</button>
+				) : null}
 				{(is_terminal || status === "suborbital") && (
 					<button
 						type="button"

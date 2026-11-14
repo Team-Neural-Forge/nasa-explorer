@@ -541,6 +541,51 @@ body {
 	margin-top: auto;
 }
 
+.orbit-warp {
+	display: flex;
+	flex-direction: column;
+	gap: 0.45rem;
+	padding: 0.7rem;
+	border: 1px solid rgba(140, 180, 240, 0.14);
+	border-radius: 0.7rem;
+	background: rgba(8, 16, 32, 0.55);
+}
+
+.orbit-warp-header {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	font-size: 0.68rem;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: var(--ink-muted);
+}
+
+.orbit-warp-header strong {
+	font-size: 0.9rem;
+	letter-spacing: 0;
+	color: var(--ink-strong);
+}
+
+.orbit-warp-buttons {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 0.4rem;
+}
+
+.launch-button-active {
+	border-color: var(--accent);
+	background: rgba(90, 150, 255, 0.22);
+	color: var(--ink-strong);
+}
+
+.orbit-note {
+	margin: 0;
+	font-size: 0.68rem;
+	line-height: 1.45;
+	color: var(--ink-muted);
+}
+
 @keyframes menu-reveal {
 	from {
 		opacity: 0;

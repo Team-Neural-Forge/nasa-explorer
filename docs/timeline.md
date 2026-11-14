@@ -20,10 +20,10 @@
   - [x] Live menu, Earth-only assembly, flight, time warp, two views (`game_design.md`, `journey_map.md`)
   - [x] Simulation and landing spec (`flight_model.md`)
   - [x] Teaching and quiz design (`learning_design.md`)
-- [ ] Game shell + live menu (persistent world, scene FSM, input)
-- [ ] Earth-side rocket assembly + budget/economy
-- [ ] Launch → ascent → orbital insertion
-- [ ] Low Earth orbit + EVA enter/exit
+- [x] Game shell + live menu (persistent world, scene FSM, input)
+- [x] Earth-side rocket assembly + budget/economy
+- [x] Launch → ascent → orbital insertion
+- [x] Low Earth orbit + EVA enter/exit
 - [ ] Moon: approach, landing, surface view
 - [ ] Mars: interplanetary cruise, time warp, landing
 
