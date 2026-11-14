@@ -81,6 +81,41 @@ def check_catalogs() -> None:
             require("source_url" in entry, f"catalog/{name}: {entry.get('id', '?')} missing source_url")
 
 
+def check_gameplay_tuning() -> None:
+    payload = load(DATA_DIR / "gameplay_tuning.json")
+    economy = payload.get("economy")
+    require(isinstance(economy, dict), "gameplay_tuning.json: missing economy")
+    if isinstance(economy, dict):
+        require(
+            economy.get("starting_budget_usd_m", 0) > 0,
+            "gameplay_tuning.json: starting budget must be positive",
+        )
+    for group in ("launch_vehicles", "spacecraft", "instruments"):
+        entries = payload.get(group)
+        require(isinstance(entries, dict) and entries, f"gameplay_tuning.json: missing {group}")
+        for entry_id, entry in (entries or {}).items():
+            require(
+                isinstance(entry, dict) and entry.get("cost_usd_m", 0) > 0,
+                f"gameplay_tuning.json: {group}/{entry_id} needs a positive cost_usd_m",
+            )
+    for vehicle_id, vehicle in (payload.get("launch_vehicles") or {}).items():
+        for key in ("dry_mass_kg", "propellant_kg", "thrust_kn", "isp_s"):
+            require(
+                vehicle.get(key, 0) > 0,
+                f"gameplay_tuning.json: launch_vehicles/{vehicle_id} needs positive {key}",
+            )
+    destinations = payload.get("destinations")
+    require(
+        isinstance(destinations, list) and destinations,
+        "gameplay_tuning.json: missing destinations",
+    )
+    for destination in destinations or []:
+        require(
+            destination.get("id") and destination.get("required_delta_v_m_s", 0) > 0,
+            "gameplay_tuning.json: destination needs id and positive required_delta_v_m_s",
+        )
+
+
 def check_credits() -> None:
     payload = load(DATA_DIR / "assets" / "credits.json")
     images = payload.get("images")
@@ -99,6 +134,7 @@ def main() -> int:
     check_transfer_legs()
     check_quizzes()
     check_catalogs()
+    check_gameplay_tuning()
     check_credits()
 
     if errors:
