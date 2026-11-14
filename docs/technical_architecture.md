@@ -47,18 +47,20 @@ The game runs in a **single persistent canvas** that is mounted for the whole se
 
 ```text
 src/
-  scenes/          # menu, rocket_assembly, flight, space_travel,
-                   # planet_surface, planet_orbit
-  engine/          # game_loop, scene_manager, camera, time_warp,
-                   # gravity_bodies, integrator, atmosphere, input
-  rendering/       # starfield, earth, rocket, astronaut, hud
-  state/           # game_state, rocket_config, economy,
-                   # journey_progress, save_load
+  engine/          # game_loop, time_warp, gravity_bodies,
+                   # integrator, atmosphere, input
+  rendering/       # sandbox_world, earth_surface_world, launch_world,
+                   # orbit_world, cruise_world, lunar_landing_world,
+                   # rocket_renderer, starfield, earth, astronaut, hud
+  state/           # game_state, sandbox_mode, sandbox_actions,
+                   # earth_scene, earth_navigation, rocket_config,
+                   # economy, launch/orbit/cruise/landing telemetry
   education/       # mission_control, science_cards, quizzes
-  interface/       # menu, assembly, hud, quiz, two_view_switcher
+  interface/       # menu, earth, launch, orbit, cruise, landing,
+                   # navigation, hud, two_view_switcher
 ```
 
-- **Scene FSM** — `menu → assembly → launch → ascent → orbit → cruise → approach → landed`, plus `planet_surface` ↔ `planet_orbit` views. The world is never unmounted.
+- **Persistent sandbox** — a single `SandboxWorld` is mounted for the whole mission. Earth, the entered rocket, launch, orbit, cruise, and landing are internal modes; the HUD changes contextually, but the canvas, astronaut, and rocket persist. The menu is an overlay, and phase changes crossfade inside the same canvas.
 - **Integrator** — symplectic velocity Verlet with adaptive step and a per-frame step budget. See [`flight_model.md`](flight_model.md).
 - **Time warp** — multiplier over simulated steps (×1 → ×100,000), with a "simulating…" indicator when the step budget is exceeded.
 - **Web Worker** — optional off-thread integration at high warp, posting position snapshots to the render thread.
@@ -161,6 +163,7 @@ The frontend is a static site, so it is served from Vercel's CDN. The backend mu
 - **Responsive by default** — UI and layout target desktop and mobile; touch controls mirror keyboard.
 - **Physics consistency** — orbital motion uses the numerical integrator; the Earth walking controller uses meter-scale gravity, collision bounds, and a 60 kg mass-derived jump impulse. matter.js remains available for surface-vehicle collisions.
 - **Earth surface scale** — one meter-based render scale for the launch site: a 1.8 m / 60 kg astronaut, a 50 m medium rocket, and a 10 m × 20 m store. Invisible walls at ±200 m warn the player; the ground visual continues to ±1,200 m so its end is never visible.
+- **No screen swaps after start** — the canvas is never replaced during play; the same rocket geometry is used from the pad through launch. Restart is an explicit reset.
 - **Time warp** — step-budgeted so high warp never blocks the render loop; heavy integration can move to a Web Worker.
 - **Offline-first** — committed NASA snapshots and educational content bundle with the frontend.
 - **Performance** — a single persistent canvas, static hosting, and a thin backend keep the runtime footprint small.

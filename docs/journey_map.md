@@ -1,5 +1,7 @@
 # Journey Map — NASA Explorer
 
+> Stages are internal modes of one persistent sandbox, not separate screens. The menu overlays the Earth scene, and the same rocket is used from the pad through launch.
+
 The game is a sequence of journeys. Each journey introduces new movement, new facts, and new decisions, then branches after Mars.
 
 ```mermaid
