@@ -14,6 +14,7 @@ const SAFE_TILT_DEG = 15;
 export type LandingStatus = "flying" | "landed" | "crashed";
 
 export type LandingSnapshot = {
+	horizontal_position_m: number;
 	status: LandingStatus;
 	altitude_m: number;
 	vertical_speed_m_s: number;
@@ -192,6 +193,7 @@ export class LunarLandingSimulation {
 		const hover_throttle =
 			this.thrust_n > 0 ? (mass * this.moon_gravity_m_s2) / this.thrust_n : 0;
 		return {
+			horizontal_position_m: this.position_x,
 			status: this.status,
 			altitude_m: Math.max(0, this.altitude_m),
 			vertical_speed_m_s: this.velocity_y,

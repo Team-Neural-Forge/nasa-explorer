@@ -3,6 +3,9 @@ import type { OrbitSnapshot } from "../engine/orbit_simulation";
 export type OrbitTelemetry = OrbitSnapshot;
 
 const INITIAL: OrbitTelemetry = {
+	orbit_angle_rad: 0,
+	astronaut_x_m: 0,
+	astronaut_y_m: 0,
 	altitude_m: 200_000,
 	speed_m_s: 7_788,
 	period_s: 5_310,

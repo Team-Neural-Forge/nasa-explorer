@@ -28,6 +28,8 @@ jobs:
         run: pnpm check
       - name: Typecheck
         run: pnpm typecheck
+      - name: Navigation model tests
+        run: pnpm test:navigation
 
   backend:
     name: Backend lint, format, typecheck

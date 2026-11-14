@@ -20,6 +20,8 @@ export type LaunchStatus =
 	| "crashed";
 
 export type LaunchSnapshot = {
+	position_x_m: number;
+	position_y_m: number;
 	status: LaunchStatus;
 	altitude_m: number;
 	speed_m_s: number;
@@ -262,6 +264,8 @@ export class LaunchSimulation {
 				: 0;
 
 		return {
+			position_x_m: this.position_x,
+			position_y_m: this.position_y,
 			status: this.status,
 			altitude_m: altitude,
 			speed_m_s: speed,

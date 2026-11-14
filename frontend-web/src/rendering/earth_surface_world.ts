@@ -2,6 +2,7 @@ import Matter from "matter-js";
 import type { GameWorld } from "../engine/game_world";
 import type { KeyboardState } from "../engine/input";
 import { earth_input, publishEarthLocation } from "../state/earth_interaction";
+import { advanceSimulationTime } from "../state/simulation_clock";
 
 const ground_y = 500;
 const rocket_x = 700;
@@ -36,6 +37,7 @@ export class EarthSurfaceWorld implements GameWorld {
 	}
 
 	update(dt_seconds: number): void {
+		if (this.playing) advanceSimulationTime(dt_seconds);
 		const direction = this.playing
 			? Number(
 					this.input.isDown("ArrowRight") ||

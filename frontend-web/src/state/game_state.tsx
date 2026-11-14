@@ -4,6 +4,7 @@ import {
 	useCallback,
 	useContext,
 	useMemo,
+	useRef,
 	useState,
 } from "react";
 import type { OrbitInsertion } from "../engine/orbit_simulation";
@@ -15,9 +16,12 @@ import {
 	type RocketSelection,
 	type SpacecraftId,
 } from "./rocket_config";
+import { resetSimulationTime } from "./simulation_clock";
 
 type GameStateValue = {
 	scene: SceneId;
+	mission_id: number;
+	restartMission: () => void;
 	selection: RocketSelection;
 	orbit_state: OrbitInsertion | null;
 	beginMission: () => void;
@@ -40,14 +44,29 @@ const GameStateContext = createContext<GameStateValue | null>(null);
 
 export function GameStateProvider({ children }: { children: ReactNode }) {
 	const [scene, setScene] = useState<SceneId>("menu");
+	const [mission_id, set_mission_id] = useState(0);
+	const started_ref = useRef(false);
 	const [selection, set_selection] =
 		useState<RocketSelection>(DEFAULT_SELECTION);
 	const [orbit_state, set_orbit_state] = useState<OrbitInsertion | null>(null);
 
 	const beginMission = useCallback(() => {
+		if (!started_ref.current) {
+			resetSimulationTime();
+			started_ref.current = true;
+		}
 		setScene((current) =>
 			canTransition(current, "earth") ? "earth" : current,
 		);
+	}, []);
+
+	const restartMission = useCallback(() => {
+		resetSimulationTime();
+		started_ref.current = true;
+		set_selection(DEFAULT_SELECTION);
+		set_orbit_state(null);
+		set_mission_id((current) => current + 1);
+		setScene("earth");
 	}, []);
 
 	const returnToMenu = useCallback(() => {
@@ -135,6 +154,8 @@ export function GameStateProvider({ children }: { children: ReactNode }) {
 	const value = useMemo(
 		() => ({
 			scene,
+			mission_id,
+			restartMission,
 			selection,
 			orbit_state,
 			beginMission,
@@ -154,6 +175,8 @@ export function GameStateProvider({ children }: { children: ReactNode }) {
 		}),
 		[
 			scene,
+			mission_id,
+			restartMission,
 			selection,
 			orbit_state,
 			beginMission,

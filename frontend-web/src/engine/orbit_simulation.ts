@@ -19,6 +19,9 @@ export type OrbitInsertion = {
 };
 
 export type OrbitSnapshot = {
+	orbit_angle_rad: number;
+	astronaut_x_m: number;
+	astronaut_y_m: number;
 	altitude_m: number;
 	speed_m_s: number;
 	period_s: number;
@@ -179,6 +182,9 @@ export class OrbitSimulation {
 		const distance = Math.hypot(this.astronaut_x, this.astronaut_y);
 		const astronaut_speed = Math.hypot(this.astronaut_vx, this.astronaut_vy);
 		return {
+			orbit_angle_rad: this.angle_rad,
+			astronaut_x_m: this.astronaut_x,
+			astronaut_y_m: this.astronaut_y,
 			altitude_m: this.altitude_m,
 			speed_m_s: this.speed_m_s,
 			period_s: this.period_s,

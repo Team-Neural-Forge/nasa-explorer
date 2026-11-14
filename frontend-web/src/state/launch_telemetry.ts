@@ -3,6 +3,8 @@ import type { LaunchSnapshot } from "../engine/launch_simulation";
 export type LaunchTelemetry = LaunchSnapshot;
 
 const INITIAL: LaunchTelemetry = {
+	position_x_m: 0,
+	position_y_m: 6_371_010,
 	status: "prelaunch",
 	altitude_m: 0,
 	speed_m_s: 0,

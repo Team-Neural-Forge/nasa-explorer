@@ -28,6 +28,8 @@ No NASA-partner datasets are currently used. If partner data is added, list it h
 
 ## How the data is used
 
+The in-game navigation guide uses the third-party, offline [Astronomy Engine](https://github.com/cosinekitty/astronomy) approximation for time-dependent barycentric positions; it does not query JPL at runtime. Its EQJ axes are approximately aligned with ICRF. Earth and Mars results for 2026-11-14 and 2026-11-15 are checked against geometric [JPL Horizons](https://ssd.jpl.nasa.gov/horizons/) vectors with a 5,000 km tolerance; these are selected-date checks, not an accuracy guarantee for other dates.
+
 - **Physics and movement** — body mass and `GM` from NSSDCA feed the full numerical gravity model, so gravity and trajectories are physical. Surface gravity drives walking, rovers, and landing limits.
 - **Journey pace and scoring** — Horizons-derived leg metrics provide reference travel times for Earth → Moon → Mars → Europa / Enceladus / Living on Mars, and validate the integrator.
 - **Earth-side assembly** — curated spacecraft, instruments, and launch vehicles provide authentic choices with gameplay trade-offs.

@@ -3,6 +3,7 @@ import type { LandingSnapshot } from "../engine/lunar_landing_simulation";
 export type LandingTelemetry = LandingSnapshot;
 
 const INITIAL: LandingTelemetry = {
+	horizontal_position_m: 0,
 	status: "flying",
 	altitude_m: 2000,
 	vertical_speed_m_s: -5,

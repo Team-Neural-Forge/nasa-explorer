@@ -3,6 +3,7 @@ import type { GameWorld } from "../engine/game_world";
 import type { KeyboardState } from "../engine/input";
 import { cruise_actions } from "../state/cruise_control";
 import { publishCruiseTelemetry } from "../state/cruise_telemetry";
+import { advanceSimulationTime } from "../state/simulation_clock";
 import { drawEarth } from "./earth_renderer";
 import { drawMoon } from "./moon_renderer";
 import { createStarfield, drawStarfield } from "./starfield";
@@ -36,7 +37,15 @@ export class CruiseWorld implements GameWorld {
 			this.simulation.decrease_warp();
 		}
 
+		const before = this.simulation.snapshot();
 		this.simulation.update(dt_seconds);
+		const after = this.simulation.snapshot();
+		advanceSimulationTime(
+			before.status === "arrived"
+				? dt_seconds
+				: (before.distance_remaining_m - after.distance_remaining_m) /
+						before.speed_m_s,
+		);
 
 		this.telemetry_timer += dt_seconds;
 		if (this.telemetry_timer >= TELEMETRY_INTERVAL_S) {
