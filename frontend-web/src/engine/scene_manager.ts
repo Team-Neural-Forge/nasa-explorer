@@ -1,15 +1,15 @@
 export type SceneId =
 	| "menu"
-	| "assembly"
+	| "earth"
 	| "launch"
 	| "orbit"
 	| "cruise"
 	| "landing";
 
 const ALLOWED_TRANSITIONS: Record<SceneId, SceneId[]> = {
-	menu: ["assembly"],
-	assembly: ["menu", "launch"],
-	launch: ["assembly", "menu", "orbit"],
+	menu: ["earth"],
+	earth: ["menu", "launch"],
+	launch: ["earth", "menu", "orbit"],
 	orbit: ["menu", "launch", "cruise"],
 	cruise: ["orbit", "menu", "landing"],
 	landing: ["cruise", "menu"],

@@ -189,7 +189,7 @@ export function LaunchHud() {
 					className="launch-button"
 					onClick={returnToAssembly}
 				>
-					Back to assembly
+					Back to Earth
 				</button>
 				<button type="button" className="assembly-back" onClick={returnToMenu}>
 					Return to menu
