@@ -1,0 +1,11 @@
+{
+	"$schema": "https://openapi.vercel.sh/vercel.json",
+	"functions": {
+		"app/main.py": {
+			"maxDuration": 60,
+			"excludeFiles": "{Dockerfile,.dockerignore,tests/**,**/*.test.py}"
+		}
+	},
+	"regions": ["iad1"],
+	"ignoreCommand": "git diff --quiet HEAD^ HEAD -- ."
+}
