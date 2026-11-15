@@ -1,5 +1,5 @@
 import { useSyncExternalStore } from "react";
-import { TIME_WARP_FACTORS } from "../../engine/time_warp";
+import { CRUISE_TIME_WARP_FACTORS } from "../../engine/time_warp";
 import { cruise_actions } from "../../state/cruise_control";
 import {
 	getCruiseTelemetry,
@@ -21,6 +21,9 @@ function formatSpeed(speed_m_s: number): string {
 function formatEta(seconds: number): string {
 	if (seconds <= 0) {
 		return "arrived";
+	}
+	if (seconds < 60) {
+		return `${Math.max(1, Math.round(seconds))}s`;
 	}
 	const days = Math.floor(seconds / 86_400);
 	const hours = Math.floor((seconds % 86_400) / 3600);
@@ -62,6 +65,28 @@ export function CruiseHud() {
 				</p>
 			</header>
 
+			<div className="orbit-warp">
+				<div className="orbit-warp-header">
+					<span>Time warp</span>
+					<strong>{formatWarp(telemetry.warp)}</strong>
+				</div>
+				<div className="orbit-warp-buttons">
+					{CRUISE_TIME_WARP_FACTORS.map((factor, index) => (
+						<button
+							key={factor}
+							type="button"
+							className={`launch-button${telemetry.warp === factor ? " launch-button-active" : ""}`}
+							onClick={() => cruise_actions.current?.set_warp_index(index)}
+						>
+							{formatWarp(factor)}
+						</button>
+					))}
+				</div>
+				<p className="orbit-note">
+					The distance is real; time warp only changes how fast the clock runs.
+				</p>
+			</div>
+
 			<div className="orbit-progress">
 				<div className="orbit-progress-header">
 					<span>Progress</span>
@@ -97,35 +122,13 @@ export function CruiseHud() {
 				</div>
 				<div className="assembly-readout">
 					<dt>Arrival in</dt>
-					<dd>{formatEta(telemetry.eta_seconds)}</dd>
+					<dd>{formatEta(telemetry.eta_seconds / telemetry.warp)}</dd>
 				</div>
 				<div className="assembly-readout">
 					<dt>Time warp</dt>
 					<dd>{formatWarp(telemetry.warp)}</dd>
 				</div>
 			</dl>
-
-			<div className="orbit-warp">
-				<div className="orbit-warp-header">
-					<span>Time warp</span>
-					<strong>{formatWarp(telemetry.warp)}</strong>
-				</div>
-				<div className="orbit-warp-buttons">
-					{TIME_WARP_FACTORS.map((factor, index) => (
-						<button
-							key={factor}
-							type="button"
-							className={`launch-button${telemetry.warp === factor ? " launch-button-active" : ""}`}
-							onClick={() => cruise_actions.current?.set_warp_index(index)}
-						>
-							{formatWarp(factor)}
-						</button>
-					))}
-				</div>
-				<p className="orbit-note">
-					The distance is real; time warp only changes how fast the clock runs.
-				</p>
-			</div>
 
 			<p className="launch-keys">Keyboard: [ / ] time warp</p>
 
