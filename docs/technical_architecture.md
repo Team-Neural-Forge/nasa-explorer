@@ -62,7 +62,7 @@ src/
 
 - **Persistent sandbox** — a single `SandboxWorld` is mounted for the whole mission. Earth, the entered rocket, launch, orbit, cruise, and landing are internal modes; the HUD changes contextually, but the canvas, astronaut, and rocket persist. The menu is an overlay, and phase changes crossfade inside the same canvas.
 - **Integrator** — symplectic velocity Verlet with adaptive step and a per-frame step budget. See [`flight_model.md`](flight_model.md).
-- **Time warp** — multiplier over simulated steps (×1 → ×100,000), with a "simulating…" indicator when the step budget is exceeded.
+- **Time warp** — multiplier over simulated steps (×1 → ×100,000,000), with a "simulating…" indicator when the step budget is exceeded.
 - **Web Worker** — optional off-thread integration at high warp, posting position snapshots to the render thread.
 - **Camera/scale** — local, orbital, cruise, system-map, and whole-planet views over the same physical coordinates.
 - **Save/load** — local guest profile in `localStorage` (no account system in this build).

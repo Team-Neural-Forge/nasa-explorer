@@ -74,7 +74,10 @@ Time warp multiplies the **number of simulated steps**, not the step size:
 | ×100 | Nearby transfers |
 | ×1,000 | Earth→Moon cruise |
 | ×10,000 | Inner-system cruise |
-| ×100,000 | Earth→Mars / outer-system cruise |
+| ×100,000 | Earth→Mars cruise in minutes |
+| ×1,000,000 | Earth→Mars in ~30 s wall-clock |
+| ×10,000,000 | Mars→Europa / Enceladus legs in under ~30 s |
+| ×100,000,000 | Maximum dial — any leg in `transfer_legs.json` in seconds |
 
 Rules:
 
@@ -93,7 +96,7 @@ These are reference targets for the integrator; the actual simulated duration de
 
 ### Current implementation note
 
-The first cruise build advances along the real Earth→Moon leg (`384,400 km`, `~3 days`) at the average speed implied by its transfer time, with time warp from ×1 to ×100,000. This is a **guided transfer**, not yet a patched-conic integration. The next refinement integrates the cruise under Earth and Moon gravity.
+The first cruise build advances along the real Earth→Moon leg (`384,400 km`, `~3 days`) at the average speed implied by its transfer time, with time warp from ×1 to ×100,000,000. The highest dials finish any leg in `transfer_legs.json` in about 30 seconds of wall-clock, and the HUD "Arrival in" readout shows that wall-clock estimate (simulated ETA divided by warp). This is a **guided transfer**, not yet a patched-conic integration. The next refinement integrates the cruise under Earth and Moon gravity.
 
 ## Performance
 
@@ -169,7 +172,7 @@ The lunar descent build starts `2 km` above the surface with a small horizontal 
 - Compare simulated Earth→Moon and Earth→Mars durations against `transfer_legs.json` within an agreed tolerance (target: ±10% for a nominal trajectory).
 - Energy drift check over many orbits (symplectic sanity).
 - Regression tests for the integrator, gravity sum, rocket mass/staging math, and landing thresholds.
-- Warp stress test: ×100,000 must remain responsive under the per-frame step budget.
+- Warp stress test: ×100,000,000 must remain responsive under the per-frame step budget.
 
 ## Open questions / TODO
 
