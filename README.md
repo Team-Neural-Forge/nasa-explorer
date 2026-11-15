@@ -21,7 +21,7 @@ NASA Explorer is an interactive, physics-based space exploration game built for 
 ## Features
 
 - **Live menu** — menu options sit over the running game world; starting the game retires the menu instead of loading a new scene.
-- **One persistent sandbox** — after Start Game the world never swaps; the astronaut enters the same rocket on the pad and launches it. Phase changes are smooth transitions in the same canvas.
+- **One persistent sandbox** — after Start Game the world never swaps; the astronaut enters the same rocket on the pad and launches it. Phase changes are smooth transitions in the same canvas. Restart on Earth explicitly starts a fresh mission.
 - **Play as a NASA astronaut** on a journey from Earth to the outer solar system.
 - **Earth-only rocket assembly** — choose a launch vehicle, stages, and instruments, balancing mass, thrust, Δv, and budget. The design locks at launch.
 - **Full physics simulation** — launch, orbit, interplanetary cruise, EVA, rovers, and landing are numerically integrated, not scripted.

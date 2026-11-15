@@ -86,7 +86,7 @@ Existing quiz coverage: Mars (moons, transfer time), Moon (gravity), Low Earth o
 
 - **New players:** coaching prompts are on by default; the first launch is guided step by step; quizzes are skippable.
 - **Experienced players:** prompts collapse into a compact checklist; quizzes remain optional; advanced numbers (Δv, apoapsis/periapsis, fuel fractions) are always available in a details panel.
-- **No fail-gating:** a crash teaches and respawns; it does not erase progress or require a quiz.
+- **No quiz gate:** a crash teaches its cause; restarting the mission is an explicit player choice and does not require a quiz.
 - **Reduced cognitive load:** one prompt at a time; dismissible; no timed decisions outside of active flight.
 
 ## Accessibility
