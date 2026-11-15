@@ -1,5 +1,8 @@
 import { getTransferLeg } from "../lib/nasa";
-import { TIME_WARP_FACTORS, type TimeWarpFactor } from "./time_warp";
+import {
+	CRUISE_TIME_WARP_FACTORS,
+	type CruiseTimeWarpFactor,
+} from "./time_warp";
 
 const DEFAULT_WARP_INDEX = 4;
 const SECONDS_PER_DAY = 86_400;
@@ -14,7 +17,7 @@ export type CruiseSnapshot = {
 	distance_remaining_m: number;
 	eta_seconds: number;
 	speed_m_s: number;
-	warp: TimeWarpFactor;
+	warp: CruiseTimeWarpFactor;
 	status: CruiseStatus;
 	message: string;
 };
@@ -37,8 +40,8 @@ export class CruiseSimulation {
 		this.average_speed_m_s = this.distance_total_m / this.travel_seconds;
 	}
 
-	get warp(): TimeWarpFactor {
-		return TIME_WARP_FACTORS[this.warp_index];
+	get warp(): CruiseTimeWarpFactor {
+		return CRUISE_TIME_WARP_FACTORS[this.warp_index];
 	}
 
 	get total_distance_m(): number {
@@ -48,7 +51,7 @@ export class CruiseSimulation {
 	increase_warp(): void {
 		this.warp_index = Math.min(
 			this.warp_index + 1,
-			TIME_WARP_FACTORS.length - 1,
+			CRUISE_TIME_WARP_FACTORS.length - 1,
 		);
 	}
 
@@ -59,7 +62,7 @@ export class CruiseSimulation {
 	set_warp_index(index: number): void {
 		this.warp_index = Math.max(
 			0,
-			Math.min(TIME_WARP_FACTORS.length - 1, index),
+			Math.min(CRUISE_TIME_WARP_FACTORS.length - 1, index),
 		);
 	}
 

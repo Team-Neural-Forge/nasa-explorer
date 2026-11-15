@@ -73,7 +73,7 @@ Travel is simulated with realistic durations (see [`flight_model.md`](flight_mod
 ### 2.5. Cruise (Earth → Moon)
 
 - **Narrative:** The spacecraft leaves low Earth orbit for the Moon.
-- **Gameplay:** Set course and accelerate time; the distance is real and the clock can run up to ×100,000.
+- **Gameplay:** Set course and accelerate time; the distance is real and the clock can run up to ×100,000,000.
 - **Mechanic:** The `384,400 km` leg at a `~3 day` transfer time, advanced by time warp (see [`flight_model.md`](flight_model.md)).
 - **Learning focus:** Distance, transfer duration, and why time acceleration is needed for real spaceflight.
 - **NASA facts:** _TODO._

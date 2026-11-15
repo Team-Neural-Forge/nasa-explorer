@@ -112,7 +112,7 @@ This keeps the game honest: abilities feel different because the underlying phys
 Space is enormous, and the game does not hide it by shortening the physics. Instead:
 
 - **Travel takes realistic time.** An Earth→Moon transfer is measured in days; Earth→Mars in months; the outer system in years. Timings are drawn from [`transfer_legs.json`](../data/transfer_legs.json).
-- **The player accelerates time** with warp factors (planned: ×1, ×10, ×100, ×1,000, ×10,000, ×100,000). Warping changes how many simulation steps run, not the laws of motion.
+- **The player accelerates time** with warp factors (cruise: ×1, ×10, ×100, ×1,000, ×10,000, ×100,000, ×1,000,000, ×10,000,000, ×100,000,000; orbit caps at ×100,000). Warping changes how many simulation steps run, not the laws of motion.
 - **Visual tricks keep the screen alive.** Because most of space is empty, the game changes what it shows while the simulation continues underneath: a local launch view, an orbital view, a compressed system map, and body-centred views. The coordinates are always real; only the presentation changes.
 - **A simulation indicator** appears at high warp so the player understands that time, not the game, is passing quickly.
 

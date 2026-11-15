@@ -4,7 +4,7 @@
 
 ## Summary
 
-NASA Explorer is an interactive, physics-based space exploration game built for the NASA Space Apps Challenge 2026 "Space Mission Design Game" challenge. The game opens on a live menu — the world behind it is already the game — then the player assembles a rocket on Earth, balancing mass, thrust, and budget before launch. Flight is fully simulated: the astronaut controls rotation, power, and staging, can leave and re-enter the rocket in space, and travels real distances that take real time, accelerated up to ×100,000. Arrival is dangerous — land within safe speed and angle limits or crash and learn why. On every body the player can switch between a character-level view and a whole-planet view that reveals what humanity has discovered on the far side, while cited NASA science and optional quizzes reinforce the journey. With melodic music and physics-driven environments, NASA Explorer makes mission design feel like an adventure.
+NASA Explorer is an interactive, physics-based space exploration game built for the NASA Space Apps Challenge 2026 "Space Mission Design Game" challenge. The game opens on a live menu — the world behind it is already the game — then the player assembles a rocket on Earth, balancing mass, thrust, and budget before launch. Flight is fully simulated: the astronaut controls rotation, power, and staging, can leave and re-enter the rocket in space, and travels real distances that take real time, accelerated up to ×100,000,000. Arrival is dangerous — land within safe speed and angle limits or crash and learn why. On every body the player can switch between a character-level view and a whole-planet view that reveals what humanity has discovered on the far side, while cited NASA science and optional quizzes reinforce the journey. With melodic music and physics-driven environments, NASA Explorer makes mission design feel like an adventure.
 
 ## Links
 
@@ -25,7 +25,7 @@ NASA Explorer is an interactive, physics-based space exploration game built for 
 - **Play as a NASA astronaut** on a journey from Earth to the outer solar system.
 - **Earth-only rocket assembly** — choose a launch vehicle, stages, and instruments, balancing mass, thrust, Δv, and budget. The design locks at launch.
 - **Full physics simulation** — launch, orbit, interplanetary cruise, EVA, rovers, and landing are numerically integrated, not scripted.
-- **Realistic travel time with time warp** — accelerate from real time up to ×100,000 while the real coordinates keep simulating.
+- **Realistic travel time with time warp** — accelerate from real time up to ×100,000,000 while the real coordinates keep simulating.
 - **Exit and re-enter the rocket** — including during spaceflight.
 - **Careful landings** — arrive within safe speed and angle limits or crash; the game explains why.
 - **Two planet views** — character-level and whole-planet, revealing humanity's discoveries on the far side.
