@@ -1,4 +1,5 @@
 import { useSyncExternalStore } from "react";
+import { FLIGHT_SPEED_FACTORS } from "../../engine/flight_speed";
 import type { LaunchStatus } from "../../engine/launch_simulation";
 import { useGameState } from "../../state/game_state";
 import { launch_actions } from "../../state/launch_control";
@@ -156,9 +157,32 @@ export function LaunchHud() {
 				</button>
 			</div>
 
+			<div className="orbit-warp">
+				<div className="orbit-warp-header">
+					<span>Flight speed</span>
+					<strong>×{telemetry.speed_factor}</strong>
+				</div>
+				<div className="orbit-warp-buttons">
+					{FLIGHT_SPEED_FACTORS.map((factor, index) => (
+						<button
+							key={factor}
+							type="button"
+							className={`launch-button${telemetry.speed_factor === factor ? " launch-button-active" : ""}`}
+							onClick={() => launch_actions.current?.set_speed(index)}
+						>
+							×{factor}
+						</button>
+					))}
+				</div>
+				<p className="orbit-note">
+					Scales the ×4 simulation rate during ascent and coast — physics per
+					simulated second is unchanged.
+				</p>
+			</div>
+
 			<p className="launch-keys">
 				Keyboard: Enter ignite · ↑/↓ throttle · ←/→ pitch · Space stage · R
-				retry
+				retry · [ / ] flight speed
 			</p>
 
 			<div className="launch-actions">
