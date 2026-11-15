@@ -9,6 +9,7 @@ import { publishLandingTelemetry } from "../state/landing_telemetry";
 import type { LanderStats } from "../state/rocket_config";
 import { advanceSimulationTime } from "../state/simulation_clock";
 import { drawEarth } from "./earth_renderer";
+import { ExplosionEffect } from "./explosion_effect";
 import { createStarfield, drawStarfield } from "./starfield";
 
 const TELEMETRY_INTERVAL_S = 0.08;
@@ -24,6 +25,7 @@ export class LunarLandingWorld implements GameWorld {
 	private readonly stars = createStarfield(220);
 	private elapsed_seconds = 0;
 	private telemetry_timer = 0;
+	private explosion: ExplosionEffect | null = null;
 
 	constructor(stats: LanderStats, input: KeyboardState) {
 		this.simulation = new LunarLandingSimulation(stats);
@@ -59,6 +61,10 @@ export class LunarLandingWorld implements GameWorld {
 		}
 
 		this.simulation.update(dt_seconds);
+		if (this.simulation.snapshot().status === "crashed" && !this.explosion) {
+			this.explosion = new ExplosionEffect();
+		}
+		this.explosion?.update(dt_seconds);
 
 		this.telemetry_timer += dt_seconds;
 		if (this.telemetry_timer >= TELEMETRY_INTERVAL_S) {
@@ -88,7 +94,23 @@ export class LunarLandingWorld implements GameWorld {
 
 		this.drawGround(ctx, width, height, ground_y, scale, snapshot);
 		this.drawGuideline(ctx, lander_x, lander_y, ground_y);
-		this.drawLander(ctx, lander_x, lander_y, minimum / 520, snapshot);
+		if (snapshot.status === "crashed") {
+			ctx.fillStyle = "rgba(30, 25, 25, 0.65)";
+			ctx.beginPath();
+			ctx.ellipse(
+				lander_x,
+				ground_y,
+				minimum * 0.06,
+				minimum * 0.012,
+				0,
+				0,
+				Math.PI * 2,
+			);
+			ctx.fill();
+			this.explosion?.draw(ctx, lander_x, lander_y, minimum * 0.22);
+		} else {
+			this.drawLander(ctx, lander_x, lander_y, minimum / 520, snapshot);
+		}
 	}
 
 	private publish(): void {
@@ -278,13 +300,6 @@ export class LunarLandingWorld implements GameWorld {
 		ctx.beginPath();
 		ctx.arc(0, -42, 3, 0, Math.PI * 2);
 		ctx.fill();
-
-		if (snapshot.status === "crashed") {
-			ctx.fillStyle = "rgba(255, 120, 60, 0.35)";
-			ctx.beginPath();
-			ctx.arc(0, 0, 60, 0, Math.PI * 2);
-			ctx.fill();
-		}
 
 		ctx.restore();
 	}

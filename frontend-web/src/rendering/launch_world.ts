@@ -15,6 +15,7 @@ import { launch_actions } from "../state/launch_control";
 import { publishLaunchTelemetry } from "../state/launch_telemetry";
 import type { RocketStats } from "../state/rocket_config";
 import { advanceSimulationTime } from "../state/simulation_clock";
+import { ExplosionEffect } from "./explosion_effect";
 import { drawRocketStack } from "./rocket_renderer";
 import { createStarfield, drawStarfield } from "./starfield";
 
@@ -53,6 +54,7 @@ export class LaunchWorld implements GameWorld {
 	private time_seconds = 0;
 	private telemetry_timer = 0;
 	private speed_index = 0;
+	private explosion: ExplosionEffect | null = null;
 
 	constructor(
 		stats: RocketStats,
@@ -136,6 +138,10 @@ export class LaunchWorld implements GameWorld {
 			this.simulation.update(step);
 			remaining -= step;
 		}
+		if (this.simulation.status_value === "crashed" && !this.explosion) {
+			this.explosion = new ExplosionEffect();
+		}
+		this.explosion?.update(dt_seconds);
 
 		this.telemetry_timer += dt_seconds;
 		if (this.telemetry_timer >= TELEMETRY_INTERVAL_S) {
@@ -167,7 +173,16 @@ export class LaunchWorld implements GameWorld {
 
 		this.drawPlanet(ctx, width, height, altitude);
 		this.drawGuidance(ctx, width, height, snapshot);
-		this.drawRocket(ctx, width, height, snapshot);
+		if (snapshot.status !== "crashed") {
+			this.drawRocket(ctx, width, height, snapshot);
+		} else {
+			this.explosion?.draw(
+				ctx,
+				width * 0.5,
+				height * 0.86,
+				Math.min(width, height) * 0.3,
+			);
+		}
 	}
 
 	private publish(): void {
