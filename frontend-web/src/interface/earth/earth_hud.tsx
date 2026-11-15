@@ -40,7 +40,6 @@ export function EarthHud() {
 				event.target instanceof HTMLButtonElement
 			)
 				return;
-			if (location === "rocket") sandbox_actions.current?.enter_rocket();
 			if (location === "store")
 				set_notice("The Mission Store arrives in the next milestone.");
 		}
