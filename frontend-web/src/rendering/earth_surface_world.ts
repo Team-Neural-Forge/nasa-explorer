@@ -33,7 +33,7 @@ import { drawRocketStack } from "./rocket_renderer";
 
 const WARNING_DURATION_S = 2.5;
 const CAMERA_FOLLOW_RATE = 6;
-const WALK_VIEW_WIDTH_M = 12;
+const WALK_VIEW_WIDTH_M = 16;
 
 export class EarthSurfaceWorld implements GameWorld {
 	private readonly input: KeyboardState;
