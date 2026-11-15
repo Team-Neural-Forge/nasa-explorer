@@ -82,6 +82,11 @@ export class SandboxWorld implements GameWorld {
 		}
 
 		if (this.mode === "earth") {
+			if (this.input.consumePress("KeyE") && getEarthLocation() === "rocket") {
+				this.enter_rocket();
+				this.tick_transition(dt_seconds);
+				return;
+			}
 			this.earth.setPlaying(true);
 			this.earth.setInsideRocket(false);
 			this.earth.update(dt_seconds);
