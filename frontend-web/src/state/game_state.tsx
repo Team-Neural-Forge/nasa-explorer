@@ -7,6 +7,8 @@ import {
 	useRef,
 	useState,
 } from "react";
+import { LifeSupport } from "../engine/life_support";
+import { publishLifeSupportTelemetry } from "./life_support_telemetry";
 import {
 	DEFAULT_SELECTION,
 	type InstrumentId,
@@ -55,6 +57,7 @@ export function GameStateProvider({ children }: { children: ReactNode }) {
 
 	const restartMission = useCallback(() => {
 		resetSimulationTime();
+		publishLifeSupportTelemetry(new LifeSupport().snapshot());
 		started_ref.current = true;
 		set_started(true);
 		set_selection(DEFAULT_SELECTION);
