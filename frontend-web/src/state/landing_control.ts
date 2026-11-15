@@ -4,7 +4,6 @@ export type LandingActions = {
 	rotate_left: () => void;
 	rotate_right: () => void;
 	toggle_autopilot: () => void;
-	retry: () => void;
 };
 
 export const landing_actions: { current: LandingActions | null } = {

@@ -5,7 +5,6 @@ import {
 	getLandingTelemetry,
 	subscribeLandingTelemetry,
 } from "../../state/landing_telemetry";
-import { sandbox_actions } from "../../state/sandbox_actions";
 
 const STATUS_LABELS = {
 	flying: "Descent",
@@ -149,18 +148,15 @@ export function LandingHud() {
 			</div>
 
 			<p className="launch-keys">
-				Keyboard: ↑/↓ throttle · ←/→ pitch · P autopilot · R retry landing
+				Keyboard: ↑/↓ throttle · ←/→ pitch · P autopilot
 			</p>
 
 			<div className="launch-actions">
 				{status === "crashed" ? (
-					<button
-						type="button"
-						className="launch-button launch-button-primary"
-						onClick={() => landing_actions.current?.retry()}
-					>
-						Retry landing
-					</button>
+					<p className="orbit-note">
+						The lander was destroyed — use Restart on Earth (top-left) to fly
+						again.
+					</p>
 				) : null}
 				{status === "landed" ? (
 					<div className="orbit-note">
@@ -168,13 +164,6 @@ export function LandingHud() {
 						step.
 					</div>
 				) : null}
-				<button
-					type="button"
-					className="launch-button"
-					onClick={() => sandbox_actions.current?.return_to_cruise()}
-				>
-					Return to cruise
-				</button>
 				<button type="button" className="assembly-back" onClick={openMenu}>
 					Return to menu
 				</button>

@@ -5,7 +5,6 @@ import { cruise_actions } from "../state/cruise_control";
 import { getEarthLocation } from "../state/earth_interaction";
 import type { RocketDimensions } from "../state/earth_scene";
 import { STARTING_BUDGET_USD_M } from "../state/economy";
-import { landing_actions } from "../state/landing_control";
 import { launch_actions } from "../state/launch_control";
 import { orbit_actions } from "../state/orbit_control";
 import {
@@ -37,7 +36,6 @@ export class SandboxWorld implements GameWorld {
 	private orbit: OrbitWorld | null = null;
 	private cruise: CruiseWorld | null = null;
 	private landing: LunarLandingWorld | null = null;
-	private last_orbit_state: OrbitInsertion | null = null;
 
 	constructor(
 		input: KeyboardState,
@@ -56,9 +54,6 @@ export class SandboxWorld implements GameWorld {
 			continue_to_orbit: (insertion) => this.continue_to_orbit(insertion),
 			begin_cruise: () => this.begin_cruise(),
 			begin_landing: () => this.begin_landing(),
-			return_to_earth: () => this.return_to_earth(),
-			return_to_orbit: () => this.return_to_orbit(),
-			return_to_cruise: () => this.return_to_cruise(),
 		};
 	}
 
@@ -185,7 +180,6 @@ export class SandboxWorld implements GameWorld {
 		if (this.mode !== "launch" || !this.launch) {
 			return;
 		}
-		this.last_orbit_state = insertion;
 		const next = new OrbitWorld(insertion, this.input);
 		this.orbit = next;
 		this.set_mode("orbit", next);
@@ -216,56 +210,6 @@ export class SandboxWorld implements GameWorld {
 		this.set_mode("landing", next);
 		this.cruise = null;
 		cruise_actions.current = null;
-	}
-
-	private return_to_earth(): void {
-		const previous = this.current_draw_world();
-		this.earth.setInsideRocket(false);
-		this.earth.setPlaying(true);
-		this.mode = "earth";
-		this.active = this.earth;
-		if (previous !== this.earth) {
-			this.outgoing = previous;
-			this.transition_elapsed_s = TRANSITION_SECONDS;
-		} else {
-			this.outgoing = null;
-			this.transition_elapsed_s = 0;
-		}
-		this.launch = null;
-		this.orbit = null;
-		this.cruise = null;
-		this.landing = null;
-		this.last_orbit_state = null;
-		launch_actions.current = null;
-		orbit_actions.current = null;
-		cruise_actions.current = null;
-		landing_actions.current = null;
-		publishSandboxMode("earth");
-	}
-
-	private return_to_orbit(): void {
-		if (!this.last_orbit_state) {
-			this.return_to_earth();
-			return;
-		}
-		const next = new OrbitWorld(this.last_orbit_state, this.input);
-		this.orbit = next;
-		this.set_mode("orbit", next);
-		this.cruise = null;
-		this.landing = null;
-		cruise_actions.current = null;
-		landing_actions.current = null;
-	}
-
-	private return_to_cruise(): void {
-		if (this.mode !== "landing") {
-			return;
-		}
-		const next = new CruiseWorld(this.input);
-		this.cruise = next;
-		this.set_mode("cruise", next);
-		this.landing = null;
-		landing_actions.current = null;
 	}
 
 	private set_mode(mode: SandboxMode, next: GameWorld): void {

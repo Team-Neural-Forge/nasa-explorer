@@ -137,13 +137,6 @@ export function OrbitHud() {
 				>
 					Set course for the Moon
 				</button>
-				<button
-					type="button"
-					className="launch-button"
-					onClick={() => sandbox_actions.current?.return_to_earth()}
-				>
-					Return to Earth
-				</button>
 				<button type="button" className="assembly-back" onClick={openMenu}>
 					Return to menu
 				</button>

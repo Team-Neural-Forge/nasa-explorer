@@ -94,21 +94,6 @@ export class LunarLandingSimulation {
 		this.autopilot_active = !this.autopilot_active;
 	}
 
-	retry(): void {
-		this.position_x = 0;
-		this.altitude_m = START_ALTITUDE_M;
-		this.velocity_x = START_HORIZONTAL_SPEED_M_S;
-		this.velocity_y = START_VERTICAL_SPEED_M_S;
-		this.fuel_kg = this.propellant_kg;
-		this.attitude_rad = 0;
-		this.throttle = 0;
-		this.status = "flying";
-		this.autopilot_active = false;
-		this.impact_vertical_m_s = 0;
-		this.impact_horizontal_m_s = 0;
-		this.impact_tilt_deg = 0;
-	}
-
 	update(dt_seconds: number): void {
 		if (this.status !== "flying") {
 			return;

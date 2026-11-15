@@ -134,22 +134,13 @@ export function CruiseHud() {
 
 			<div className="launch-actions">
 				{arrived ? (
-					<>
-						<button
-							type="button"
-							className="launch-button launch-button-primary"
-							onClick={() => sandbox_actions.current?.begin_landing()}
-						>
-							Begin lunar approach
-						</button>
-						<button
-							type="button"
-							className="launch-button"
-							onClick={() => sandbox_actions.current?.return_to_orbit()}
-						>
-							Return to orbit
-						</button>
-					</>
+					<button
+						type="button"
+						className="launch-button launch-button-primary"
+						onClick={() => sandbox_actions.current?.begin_landing()}
+					>
+						Begin lunar approach
+					</button>
 				) : null}
 				<button type="button" className="assembly-back" onClick={openMenu}>
 					Return to menu

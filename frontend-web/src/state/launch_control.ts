@@ -1,6 +1,5 @@
 export type LaunchActions = {
 	ignite: () => void;
-	retry: () => void;
 	throttle_up: () => void;
 	throttle_down: () => void;
 	rotate_left: () => void;
