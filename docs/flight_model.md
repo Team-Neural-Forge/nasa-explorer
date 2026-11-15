@@ -23,7 +23,7 @@ The model below resolves that tension: adaptive integration plus step-budgeted t
 
 ### Navigation display in the current build
 
-The clock starts from the player's system time when a mission starts or restarts. It advances with gameplay: Earth and lunar descent at ×1, launch at the existing ×4 simulation rate, and orbit and cruise at their selected warp rate. During the guided cruise the clock advances only by the transfer time actually simulated, and returns to ×1 after arrival. It is paused on the main menu and when the browser/game loop is not running; it is not a persistent real-time clock.
+The clock starts from the player's system time when a mission starts or restarts. It advances with gameplay: Earth and lunar descent at ×1, launch at the ×4 simulation rate scaled by the selected flight speed (×1–×16, up to ×64 real time), and orbit and cruise at their selected warp rate. During the guided cruise the clock advances only by the transfer time actually simulated, and returns to ×1 after arrival. It is paused on the main menu and when the browser/game loop is not running; it is not a persistent real-time clock.
 
 The navigation guide calculates geometric Solar System barycentric body centers in the J2000 mean equator (EQJ) frame using the offline [Astronomy Engine](https://github.com/cosinekitty/astronomy) model. EQJ is approximately aligned with ICRF, not identical. Compare with [NASA/JPL Horizons](https://ssd.jpl.nasa.gov/horizons/) when precision is important. The model is an approximation, not a live NASA feed; accuracy outside the tested dates is not guaranteed.
 
