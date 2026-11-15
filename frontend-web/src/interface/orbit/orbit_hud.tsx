@@ -133,6 +133,7 @@ export function OrbitHud() {
 				<button
 					type="button"
 					className="launch-button launch-button-primary"
+					disabled={is_eva}
 					onClick={() => sandbox_actions.current?.begin_cruise()}
 				>
 					Set course for the Moon

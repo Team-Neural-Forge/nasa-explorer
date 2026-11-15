@@ -8,6 +8,46 @@
 	--accent-strong: #b8dcff;
 }
 
+.life-support {
+	display: flex;
+	flex-direction: column;
+	gap: 0.3rem;
+	padding-bottom: 0.5rem;
+	border-bottom: 1px solid #49647a;
+}
+.life-support details {
+	line-height: 1.4;
+}
+.life-support summary {
+	cursor: pointer;
+}
+.life-support a {
+	color: #a9dfff;
+}
+.life-support-failure {
+	position: absolute;
+	inset: 0;
+	z-index: 20;
+	display: grid;
+	place-items: center;
+	padding: 1rem;
+	background: rgba(0, 0, 0, 0.8);
+	pointer-events: auto;
+}
+.life-support-failure > div {
+	max-width: 32rem;
+	max-height: 90dvh;
+	overflow: auto;
+	padding: 1.5rem;
+	border: 1px solid #ff9b9b;
+	background: #102033;
+	color: white;
+}
+.life-support-failure button {
+	padding: 0.75rem 1rem;
+	cursor: pointer;
+}
+
 .navigation-panel {
 	position: absolute;
 	top: 1rem;

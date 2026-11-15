@@ -32,6 +32,8 @@ jobs:
         run: pnpm test:navigation
       - name: Earth scene tests
         run: pnpm test:earth
+      - name: Life support tests
+        run: pnpm test:life-support
 
   backend:
     name: Backend lint, format, typecheck

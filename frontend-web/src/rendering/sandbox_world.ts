@@ -1,11 +1,13 @@
 import type { GameWorld } from "../engine/game_world";
 import type { KeyboardState } from "../engine/input";
+import { LifeSupport } from "../engine/life_support";
 import type { OrbitInsertion } from "../engine/orbit_simulation";
 import { cruise_actions } from "../state/cruise_control";
 import { getEarthLocation } from "../state/earth_interaction";
 import type { RocketDimensions } from "../state/earth_scene";
 import { STARTING_BUDGET_USD_M } from "../state/economy";
 import { launch_actions } from "../state/launch_control";
+import { publishLifeSupportTelemetry } from "../state/life_support_telemetry";
 import { orbit_actions } from "../state/orbit_control";
 import {
 	computeLanderStats,
@@ -36,6 +38,8 @@ export class SandboxWorld implements GameWorld {
 	private orbit: OrbitWorld | null = null;
 	private cruise: CruiseWorld | null = null;
 	private landing: LunarLandingWorld | null = null;
+	private readonly life_support = new LifeSupport();
+	private life_support_timer = 0;
 
 	constructor(
 		input: KeyboardState,
@@ -72,6 +76,23 @@ export class SandboxWorld implements GameWorld {
 
 	update(dt_seconds: number): void {
 		if (this.paused) {
+			this.input.endFrame();
+			return;
+		}
+		const environment =
+			this.mode === "earth"
+				? "earth"
+				: this.mode === "orbit" && this.orbit?.astronaut_mode === "eva"
+					? "eva"
+					: "cabin";
+		this.life_support.update(dt_seconds, environment);
+		this.life_support_timer += dt_seconds;
+		const life_support = this.life_support.snapshot();
+		if (this.life_support_timer >= 0.25 || life_support.deceased) {
+			publishLifeSupportTelemetry(life_support);
+			this.life_support_timer = 0;
+		}
+		if (life_support.deceased) {
 			this.input.endFrame();
 			return;
 		}
@@ -188,7 +209,11 @@ export class SandboxWorld implements GameWorld {
 	}
 
 	private begin_cruise(): void {
-		if (this.mode !== "orbit" || !this.orbit) {
+		if (
+			this.mode !== "orbit" ||
+			!this.orbit ||
+			this.orbit.astronaut_mode === "eva"
+		) {
 			return;
 		}
 		const next = new CruiseWorld(this.input);

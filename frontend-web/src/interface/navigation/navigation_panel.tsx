@@ -25,6 +25,7 @@ import {
 } from "../../state/orbit_telemetry";
 import { useSandboxMode } from "../../state/sandbox_mode";
 import { getSimulationTime } from "../../state/simulation_clock";
+import { LifeSupportPanel } from "./life_support_panel";
 
 export function NavigationPanel() {
 	const { restartMission } = useGameState();
@@ -85,6 +86,7 @@ export function NavigationPanel() {
 	return (
 		<aside className="navigation-panel" aria-label="Navigation">
 			<div className="navigation-summary">
+				<LifeSupportPanel />
 				<strong>
 					Solar navigation ·{" "}
 					{new Date(time_ms).toISOString().replace("T", " ").slice(0, 19)} UTC

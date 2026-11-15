@@ -135,6 +135,10 @@ Gameplay-only part values (thrust, Isp, dry mass, propellant, cost) live in `gam
 
 ## Landing and failure
 
+### Astronaut life support
+
+The navigation panel shows health, oxygen supply, CO₂ scrubber, battery, pressure and modeled CO₂ concentration. NASA describes [typical five-to-eight-hour spacewalks](https://www.nasa.gov/learning-resources/for-kids-and-students/what-is-a-spacewalk-grades-5-8/) and the [suit oxygen, pressure regulation, CO₂ removal and electrical systems](https://www.nasa.gov/missions/station/spacewalk-spacesuit-basics/). The independent eight-hour oxygen, 7.5-hour scrubber and nine-hour battery capacities are game assumptions, not NASA equipment specifications. The pressure-loss rate, CO₂ buildup, danger threshold and two-minute health decline are simplified gameplay tuning, not medical predictions. Resources persist across EVAs; returning to the cabin stops depletion but does not refill them. Cabin pressure and CO₂ are assumed constant and safe indefinitely; this is not a mass-balanced model of a real long-duration mission. The mission reset restores health and supplies.
+
 Landing is evaluated against per-body thresholds:
 
 - **Vertical speed** at contact must be below the body's safe limit.

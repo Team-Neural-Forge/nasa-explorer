@@ -21,6 +21,10 @@ export class OrbitWorld implements GameWorld {
 	private elapsed_seconds = 0;
 	private telemetry_timer = 0;
 
+	get astronaut_mode(): "inside" | "eva" {
+		return this.simulation.snapshot().mode;
+	}
+
 	constructor(insertion: OrbitInsertion | null, input: KeyboardState) {
 		this.simulation = new OrbitSimulation(insertion);
 		this.input = input;
