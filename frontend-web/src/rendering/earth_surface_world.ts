@@ -33,6 +33,7 @@ import { drawRocketStack } from "./rocket_renderer";
 
 const WARNING_DURATION_S = 2.5;
 const CAMERA_FOLLOW_RATE = 6;
+const WALK_VIEW_WIDTH_M = 12;
 
 export class EarthSurfaceWorld implements GameWorld {
 	private readonly input: KeyboardState;
@@ -46,6 +47,9 @@ export class EarthSurfaceWorld implements GameWorld {
 	private grounded = true;
 	private jump_held = false;
 	private camera_x_m = ROCKET_X_M - 4;
+	private zoom_pixels_per_meter = 0;
+	private viewport_width_px = 0;
+	private viewport_height_px = 0;
 	private warning_timer_s = 0;
 	private walk_phase = 0;
 	private rocket_height_m: number;
@@ -68,6 +72,17 @@ export class EarthSurfaceWorld implements GameWorld {
 	set_rocket_dimensions(height_m: number, diameter_m: number): void {
 		this.rocket_height_m = Math.max(1, height_m);
 		this.rocket_diameter_m = Math.max(0.5, diameter_m);
+	}
+
+	private computeTargetZoom(width: number, height: number): number {
+		const rocket_fit_zoom = Math.max(
+			1,
+			Math.min((height * 0.72) / this.rocket_height_m, width / 35),
+		);
+		if (this.inside_rocket || !this.playing) {
+			return rocket_fit_zoom;
+		}
+		return Math.max(1, width / WALK_VIEW_WIDTH_M);
 	}
 
 	update(dt_seconds: number): void {
@@ -135,6 +150,20 @@ export class EarthSurfaceWorld implements GameWorld {
 		this.camera_x_m +=
 			(target_camera - this.camera_x_m) * Math.min(1, dt * CAMERA_FOLLOW_RATE);
 
+		if (this.viewport_width_px > 0 && this.viewport_height_px > 0) {
+			const target_zoom = this.computeTargetZoom(
+				this.viewport_width_px,
+				this.viewport_height_px,
+			);
+			if (this.zoom_pixels_per_meter === 0) {
+				this.zoom_pixels_per_meter = target_zoom;
+			} else {
+				this.zoom_pixels_per_meter +=
+					(target_zoom - this.zoom_pixels_per_meter) *
+					Math.min(1, dt * CAMERA_FOLLOW_RATE);
+			}
+		}
+
 		if (this.playing && this.grounded && Math.abs(this.vx_m_s) > 0.1) {
 			this.walk_phase += dt * Math.abs(this.vx_m_s) * 4;
 		} else {
@@ -155,10 +184,12 @@ export class EarthSurfaceWorld implements GameWorld {
 	}
 
 	draw(ctx: CanvasRenderingContext2D, width: number, height: number): void {
-		const pixels_per_meter = Math.max(
-			1,
-			Math.min((height * 0.72) / this.rocket_height_m, width / 35),
-		);
+		this.viewport_width_px = width;
+		this.viewport_height_px = height;
+		if (this.zoom_pixels_per_meter === 0) {
+			this.zoom_pixels_per_meter = this.computeTargetZoom(width, height);
+		}
+		const pixels_per_meter = this.zoom_pixels_per_meter;
 		const camera_x = this.inside_rocket
 			? ROCKET_X_M
 			: this.playing
