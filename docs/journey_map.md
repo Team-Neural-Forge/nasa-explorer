@@ -59,7 +59,7 @@ Travel is simulated with realistic durations (see [`flight_model.md`](flight_mod
 - **Gameplay:** Control rotation, power/throttle, and staging through the atmosphere.
 - **Mechanic:** Force-based ascent with atmospheric drag and gravity; a good gravity turn saves propellant.
 - **Learning focus:** Thrust-to-weight ratio, gravity turn, staging, and orbital insertion.
-- **Failure:** A TWR below 1 or a failed insertion explains itself and lets the player retry assembly.
+- **Failure:** A TWR below 1 or a failed insertion explains itself; **Restart on Earth** starts a fresh mission.
 - **NASA facts:** _TODO — add the fact(s) surfaced here and link them in [`nasa_data_sources.md`](nasa_data_sources.md)._
 
 ### 2. Low Earth orbit

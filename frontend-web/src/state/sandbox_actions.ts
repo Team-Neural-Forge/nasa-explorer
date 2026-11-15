@@ -6,9 +6,6 @@ export type SandboxActions = {
 	continue_to_orbit: (insertion: OrbitInsertion) => void;
 	begin_cruise: () => void;
 	begin_landing: () => void;
-	return_to_earth: () => void;
-	return_to_orbit: () => void;
-	return_to_cruise: () => void;
 };
 
 export const sandbox_actions: { current: SandboxActions | null } = {

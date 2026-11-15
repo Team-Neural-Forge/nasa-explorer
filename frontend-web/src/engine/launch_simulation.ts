@@ -108,18 +108,6 @@ export class LaunchSimulation {
 		this.throttle = 1;
 	}
 
-	retry(): void {
-		this.position_x = 0;
-		this.position_y = this.earth_radius_m + PAD_ALTITUDE_M;
-		this.velocity_x = 0;
-		this.velocity_y = 0;
-		this.fuel_kg = this.propellant_kg;
-		this.attitude_rad = 0;
-		this.throttle = 0;
-		this.status = "prelaunch";
-		this.impact_speed_m_s = 0;
-	}
-
 	adjustThrottle(delta: number): void {
 		if (this.status === "orbit" || this.status === "crashed") {
 			return;

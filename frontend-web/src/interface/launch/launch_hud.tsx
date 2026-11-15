@@ -181,8 +181,8 @@ export function LaunchHud() {
 			</div>
 
 			<p className="launch-keys">
-				Keyboard: Enter ignite · ↑/↓ throttle · ←/→ pitch · Space stage · R
-				retry · [ / ] flight speed
+				Keyboard: Enter ignite · ↑/↓ throttle · ←/→ pitch · Space stage · [ / ]
+				flight speed
 			</p>
 
 			<div className="launch-actions">
@@ -200,15 +200,11 @@ export function LaunchHud() {
 						Continue to orbit
 					</button>
 				) : null}
-				{(is_terminal || status === "suborbital") && (
-					<button
-						type="button"
-						className="launch-button launch-button-primary"
-						onClick={() => launch_actions.current?.retry()}
-					>
-						Retry launch
-					</button>
-				)}
+				{status === "crashed" || status === "suborbital" ? (
+					<p className="orbit-note">
+						This run is over — use Restart on Earth (top-left) to fly again.
+					</p>
+				) : null}
 				{is_prelaunch ? (
 					<button
 						type="button"
@@ -218,13 +214,6 @@ export function LaunchHud() {
 						Exit rocket
 					</button>
 				) : null}
-				<button
-					type="button"
-					className="launch-button"
-					onClick={() => sandbox_actions.current?.return_to_earth()}
-				>
-					Back to Earth
-				</button>
 				<button type="button" className="assembly-back" onClick={openMenu}>
 					Return to menu
 				</button>

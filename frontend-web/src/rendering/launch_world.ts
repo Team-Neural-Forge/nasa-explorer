@@ -65,7 +65,6 @@ export class LaunchWorld implements GameWorld {
 		this.rocket_diameter_m = Math.max(0.5, rocket.diameter_m);
 		launch_actions.current = {
 			ignite: () => this.simulation.ignite(),
-			retry: () => this.simulation.retry(),
 			throttle_up: () => this.simulation.adjustThrottle(0.1),
 			throttle_down: () => this.simulation.adjustThrottle(-0.1),
 			rotate_left: () => this.simulation.adjustAttitude(-Math.PI / 36),
@@ -111,9 +110,6 @@ export class LaunchWorld implements GameWorld {
 		}
 		if (this.input.consumePress("Space")) {
 			this.simulation.stage();
-		}
-		if (this.input.consumePress("KeyR")) {
-			this.simulation.retry();
 		}
 		if (this.input.consumePress("BracketRight")) {
 			launch_actions.current?.increase_speed();

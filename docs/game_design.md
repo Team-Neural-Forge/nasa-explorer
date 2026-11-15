@@ -30,6 +30,10 @@ The game opens on a **menu that is also the game**. There is no separate menu sc
 
 After Start Game the game is a **single persistent sandbox**. There are no page or canvas swaps: the astronaut walks the launch site, enters the same rocket that stands on the pad, and launches it. The launch, orbit, cruise, and landing views are internal modes with contextual HUDs; phase changes are smooth transitions within the same canvas.
 
+### Sandbox contract
+
+The world persists through gameplay; mode changes represent the mission's progress, not independent levels. Entering and exiting a spacecraft remains part of normal exploration. Do not add phase-specific retry controls or buttons that teleport the player backwards between mission phases. Failure remains visible in the world and explains its cause. **Restart on Earth** in the navigation panel is the explicit full-mission reset; it starts a fresh world and resets mission progress and the clock.
+
 **Menu options (current build):**
 
 | Option | Status | Behaviour |
@@ -122,8 +126,8 @@ Every body has **realistic gravity**, and arriving is not automatic:
 
 - The player must slow down and touch down within safe **velocity and angle limits** for that body.
 - A landing that is too fast, too steep, or badly oriented **destroys the vehicle and kills the astronaut**.
-- Death is a teaching moment, not a punishment: the game explains *why* the landing failed (for example, "you hit the surface at 180 m/s; a safe landing on the Moon is under about 3 m/s") and offers a respawn.
-- Respawn returns the player to a safe checkpoint — typically the last stable orbit or the previous body — without erasing mission progress.
+- Failure is a teaching moment: the game explains *why* the landing failed, including impact and safe-limit numbers.
+- A failed mission remains in the sandbox until the player explicitly chooses **Restart on Earth**; there is no checkpoint respawn in the current build.
 
 Landing thresholds and the crash model live in [`flight_model.md`](flight_model.md).
 

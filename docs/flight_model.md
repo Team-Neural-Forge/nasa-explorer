@@ -144,8 +144,8 @@ Landing is evaluated against per-body thresholds:
 On failure:
 
 1. The vehicle is destroyed and the astronaut dies.
-2. The game shows a short cause-of-failure card with the actual numbers and the safe limit for that body.
-3. The player respawns at a safe checkpoint (last stable orbit or previous body); mission progress and budget are not lost.
+2. The HUD explains the impact using the actual numbers and the safe limit for that body.
+3. The failed state persists. The player may explicitly start a fresh mission with **Restart on Earth** in the navigation panel.
 
 Illustrative safe-descent limits (tuned during implementation):
 

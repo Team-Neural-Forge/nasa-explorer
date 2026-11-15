@@ -34,7 +34,6 @@ export class LunarLandingWorld implements GameWorld {
 			rotate_left: () => this.simulation.adjustAttitude(-Math.PI / 36),
 			rotate_right: () => this.simulation.adjustAttitude(Math.PI / 36),
 			toggle_autopilot: () => this.simulation.toggle_autopilot(),
-			retry: () => this.simulation.retry(),
 		};
 		this.publish();
 	}
@@ -43,9 +42,6 @@ export class LunarLandingWorld implements GameWorld {
 		advanceSimulationTime(dt_seconds);
 		this.elapsed_seconds += dt_seconds;
 
-		if (this.input.consumePress("KeyR")) {
-			this.simulation.retry();
-		}
 		if (this.input.consumePress("KeyP")) {
 			this.simulation.toggle_autopilot();
 		}
