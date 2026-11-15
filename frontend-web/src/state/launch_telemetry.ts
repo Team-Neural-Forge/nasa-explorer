@@ -1,6 +1,6 @@
 import type { LaunchSnapshot } from "../engine/launch_simulation";
 
-export type LaunchTelemetry = LaunchSnapshot;
+export type LaunchTelemetry = LaunchSnapshot & { speed_factor: number };
 
 const INITIAL: LaunchTelemetry = {
 	position_x_m: 0,
@@ -17,6 +17,7 @@ const INITIAL: LaunchTelemetry = {
 	periapsis_m: 0,
 	guidance_angle_deg: 0,
 	attitude_deg: 0,
+	speed_factor: 1,
 	message: "Press Ignite to start the ascent.",
 };
 

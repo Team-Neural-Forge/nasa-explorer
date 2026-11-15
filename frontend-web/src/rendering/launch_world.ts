@@ -1,3 +1,8 @@
+import {
+	FLIGHT_SPEED_FACTORS,
+	nextFlightSpeed,
+	previousFlightSpeed,
+} from "../engine/flight_speed";
 import type { GameWorld } from "../engine/game_world";
 import type { KeyboardState } from "../engine/input";
 import {
@@ -47,6 +52,7 @@ export class LaunchWorld implements GameWorld {
 	private readonly stars = createStarfield(190);
 	private time_seconds = 0;
 	private telemetry_timer = 0;
+	private speed_index = 0;
 
 	constructor(
 		stats: RocketStats,
@@ -65,6 +71,22 @@ export class LaunchWorld implements GameWorld {
 			rotate_left: () => this.simulation.adjustAttitude(-Math.PI / 36),
 			rotate_right: () => this.simulation.adjustAttitude(Math.PI / 36),
 			stage: () => this.simulation.stage(),
+			set_speed: (index) => {
+				this.speed_index = Math.max(
+					0,
+					Math.min(FLIGHT_SPEED_FACTORS.length - 1, index),
+				);
+			},
+			increase_speed: () => {
+				const next = nextFlightSpeed(FLIGHT_SPEED_FACTORS[this.speed_index]);
+				this.speed_index = FLIGHT_SPEED_FACTORS.indexOf(next);
+			},
+			decrease_speed: () => {
+				const previous = previousFlightSpeed(
+					FLIGHT_SPEED_FACTORS[this.speed_index],
+				);
+				this.speed_index = FLIGHT_SPEED_FACTORS.indexOf(previous);
+			},
 		};
 		this.publish();
 	}
@@ -73,9 +95,14 @@ export class LaunchWorld implements GameWorld {
 		return this.simulation.status_value;
 	}
 
+	get speed_factor(): number {
+		return FLIGHT_SPEED_FACTORS[this.speed_index];
+	}
+
 	update(dt_seconds: number): void {
+		const speed = this.speed_factor;
 		if (this.simulation.status_value !== "prelaunch") {
-			advanceSimulationTime(dt_seconds * SIMULATION_SPEED);
+			advanceSimulationTime(dt_seconds * SIMULATION_SPEED * speed);
 		}
 		this.time_seconds += dt_seconds;
 
@@ -87,6 +114,12 @@ export class LaunchWorld implements GameWorld {
 		}
 		if (this.input.consumePress("KeyR")) {
 			this.simulation.retry();
+		}
+		if (this.input.consumePress("BracketRight")) {
+			launch_actions.current?.increase_speed();
+		}
+		if (this.input.consumePress("BracketLeft")) {
+			launch_actions.current?.decrease_speed();
 		}
 		if (this.input.isDown("ArrowUp") || this.input.isDown("KeyW")) {
 			this.simulation.adjustThrottle(THROTTLE_RATE_PER_S * dt_seconds);
@@ -101,7 +134,7 @@ export class LaunchWorld implements GameWorld {
 			this.simulation.adjustAttitude(ROTATION_RATE_RAD_S * dt_seconds);
 		}
 
-		let remaining = dt_seconds * SIMULATION_SPEED;
+		let remaining = dt_seconds * SIMULATION_SPEED * speed;
 		while (remaining > 0) {
 			const step = Math.min(0.02, remaining);
 			this.simulation.update(step);
@@ -142,7 +175,10 @@ export class LaunchWorld implements GameWorld {
 	}
 
 	private publish(): void {
-		publishLaunchTelemetry(this.simulation.snapshot());
+		publishLaunchTelemetry({
+			...this.simulation.snapshot(),
+			speed_factor: this.speed_factor,
+		});
 	}
 
 	private drawSky(
